@@ -3,60 +3,75 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Нумеролог — рассчитай число судьбы</title>
+    <title>Дарья Погосян — нумеролог и психолог</title>
     <style>
       :root {
         --bg-main: #1a1035;
-        --bg-card: rgba(255, 255, 255, 0.1);
-        --violet: #7d3cff;
+        --bg-deep: #120a2a;
+        --bg-card: rgba(255, 255, 255, 0.08);
         --gold: #f4c96a;
         --white: #ffffff;
         --text-soft: #ece6ff;
+        --line: rgba(255, 255, 255, 0.18);
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: var(--white);
-        background: radial-gradient(circle at top, #3f2188, var(--bg-main) 60%);
+        background: radial-gradient(circle at top, #3f2188, var(--bg-main) 56%, var(--bg-deep));
         min-height: 100vh;
       }
 
       .container {
-        width: min(960px, 92%);
+        width: min(1040px, 92%);
         margin: 0 auto;
       }
 
-      .hero {
-        padding: 72px 0 36px;
-        text-align: center;
+      .section {
+        padding: 34px 0;
+      }
+
+      .section-title {
+        margin: 0 0 18px;
+        font-size: clamp(28px, 4vw, 40px);
       }
 
       .badge {
         display: inline-block;
-        padding: 8px 16px;
-        border: 1px solid rgba(244, 201, 106, 0.7);
+        padding: 7px 14px;
+        border: 1px solid rgba(244, 201, 106, 0.65);
         border-radius: 999px;
         color: var(--gold);
         font-size: 14px;
-        margin-bottom: 18px;
+        margin-bottom: 16px;
+      }
+
+      .hero {
+        padding: 72px 0 48px;
+        text-align: center;
       }
 
       h1 {
-        font-size: clamp(30px, 6vw, 56px);
-        margin: 0 0 14px;
+        font-size: clamp(32px, 6.2vw, 56px);
         line-height: 1.1;
+        margin: 0 0 14px;
       }
 
       .subtitle {
-        margin: 0 auto 28px;
-        max-width: 620px;
+        margin: 0 auto 24px;
+        max-width: 760px;
         color: var(--text-soft);
-        font-size: clamp(16px, 2.6vw, 20px);
+        font-size: clamp(17px, 2.5vw, 22px);
+        line-height: 1.45;
       }
 
       .btn {
@@ -65,10 +80,12 @@
         justify-content: center;
         text-decoration: none;
         border: none;
-        cursor: pointer;
-        border-radius: 12px;
-        padding: 14px 24px;
+        border-radius: 14px;
+        padding: 15px 26px;
         font-weight: 700;
+        color: #2c165d;
+        background: linear-gradient(140deg, #f7d98b, #d3a742);
+        box-shadow: 0 10px 24px rgba(244, 201, 106, 0.35);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
 
@@ -76,228 +93,269 @@
         transform: translateY(-2px);
       }
 
-      .btn-primary {
-        background: linear-gradient(135deg, #f7d98b, #d3a742);
-        color: #2c165d;
-        box-shadow: 0 10px 22px rgba(244, 201, 106, 0.35);
+      .hero-meta {
+        margin: 12px 0 24px;
+        color: #d8cbff;
+        font-size: 14px;
       }
 
-      .btn-secondary {
-        background: transparent;
-        color: var(--gold);
-        border: 1px solid rgba(244, 201, 106, 0.65);
-      }
-
-      .calculator {
-        margin: 8px auto 44px;
-        background: var(--bg-card);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 20px;
-        padding: clamp(20px, 4vw, 34px);
-        max-width: 760px;
-      }
-
-      .calculator h2 {
-        margin-top: 0;
-        margin-bottom: 16px;
-        font-size: clamp(24px, 4vw, 34px);
-      }
-
-      .form-row {
+      .chips {
+        list-style: none;
         display: flex;
-        gap: 12px;
         flex-wrap: wrap;
-        margin-bottom: 18px;
-      }
-
-      input[type='date'] {
-        flex: 1;
-        min-width: 220px;
-        padding: 14px;
-        border: 1px solid rgba(255, 255, 255, 0.35);
-        border-radius: 12px;
-        font-size: 16px;
-        background: rgba(255, 255, 255, 0.08);
-        color: var(--white);
-      }
-
-      .result {
-        border-top: 1px solid rgba(255, 255, 255, 0.22);
-        padding-top: 18px;
-      }
-
-      .number {
-        font-size: 56px;
-        margin: 6px 0;
-        color: var(--gold);
-        font-weight: 800;
-      }
-
-      .meaning {
-        color: var(--text-soft);
-        line-height: 1.6;
-        margin: 0;
-      }
-
-      .about {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 18px;
-        align-items: center;
-        margin: 0 auto 72px;
-      }
-
-      .about-card {
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 18px;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        padding: 24px;
-      }
-
-      .about h3 {
-        margin-top: 0;
-        font-size: 30px;
-      }
-
-      .about p {
-        margin-bottom: 0;
-        color: var(--text-soft);
-        line-height: 1.6;
-      }
-
-      .about .cta {
-        display: flex;
+        gap: 10px;
         justify-content: center;
+        margin: 0;
+        padding: 0;
+      }
+
+      .chips li {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 10px 14px;
+        color: var(--text-soft);
+        font-size: 14px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px;
+      }
+
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--text-soft);
+        line-height: 1.5;
+      }
+
+      .steps .card {
+        position: relative;
+        padding-top: 44px;
+      }
+
+      .step-number {
+        position: absolute;
+        top: 16px;
+        left: 18px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #2c165d;
+        background: linear-gradient(140deg, #f7d98b, #d3a742);
+      }
+
+      .note {
+        margin-top: 12px;
+        color: #d8cbff;
+        font-size: 14px;
+      }
+
+      .benefits {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+
+      .benefits li {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 12px;
+        padding: 12px 14px;
+        color: var(--text-soft);
+      }
+
+      .benefits li::before {
+        content: '✦ ';
+        color: var(--gold);
+      }
+
+      .final-cta {
+        text-align: center;
+        margin: 20px 0 56px;
+      }
+
+      .final-cta .card {
+        padding: clamp(22px, 5vw, 34px);
       }
 
       footer {
         text-align: center;
         color: #d2c5ff;
-        padding-bottom: 30px;
+        padding: 0 0 24px;
+        font-size: 14px;
       }
 
-      @media (max-width: 760px) {
+      @media (max-width: 900px) {
+        .grid-3 {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
         .hero {
           padding-top: 52px;
         }
 
-        .form-row {
-          flex-direction: column;
-        }
-
-        .form-row .btn {
-          width: 100%;
-        }
-
-        .about {
+        .grid-3 {
           grid-template-columns: 1fr;
-          margin-bottom: 46px;
         }
 
-        .about .cta {
+        .btn {
+          width: 100%;
+          max-width: 360px;
+        }
+
+        .chips {
           justify-content: flex-start;
+        }
+
+        .chips li {
+          width: 100%;
+          border-radius: 12px;
         }
       }
     </style>
   </head>
   <body>
-    <header class="hero container">
-      <span class="badge">Мистическая нумерология</span>
-      <h1>Узнайте код своей судьбы</h1>
+    <header class="hero container" id="top">
+      <span class="badge">Онлайн-консультации</span>
+      <h1>Дарья Погосян — нумеролог и психолог (онлайн)</h1>
       <p class="subtitle">
-        Дата рождения хранит ключ к талантам, урокам и предназначению. Рассчитайте
-        своё число судьбы прямо сейчас.
+        Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясное направление.
+        Нумерология + психологический подход — бережно и по делу.
       </p>
-      <a href="#calc" class="btn btn-primary">Рассчитать судьбу</a>
+      <a href="#final-cta" class="btn">Записаться на онлайн-консультацию</a>
+      <p class="hero-meta">30–60 минут • онлайн • конфиденциально</p>
+      <ul class="chips">
+        <li>Онлайн • конфиденциально</li>
+        <li>Нумерология + психология</li>
+        <li>Понятные шаги после встречи</li>
+      </ul>
     </header>
 
     <main class="container">
-      <section id="calc" class="calculator">
-        <h2>Калькулятор числа судьбы</h2>
-        <div class="form-row">
-          <input id="birthdate" type="date" aria-label="Дата рождения" />
-          <button id="calculateBtn" class="btn btn-primary" type="button">
-            Рассчитать
-          </button>
-        </div>
-
-        <div class="result" aria-live="polite">
-          <p>Ваше число судьбы:</p>
-          <p id="resultNumber" class="number">—</p>
-          <p id="resultMeaning" class="meaning">
-            Введите дату рождения, чтобы увидеть персональное значение.
-          </p>
+      <section class="section" id="help">
+        <h2 class="section-title">С чем я могу помочь</h2>
+        <div class="grid grid-3">
+          <article class="card">
+            <h3>Тревога и тяжесть на душе</h3>
+            <p>Когда хочется выдохнуть и вернуть спокойствие</p>
+          </article>
+          <article class="card">
+            <h3>Отношения и сценарии</h3>
+            <p>Понять, почему повторяется одно и то же, и как изменить</p>
+          </article>
+          <article class="card">
+            <h3>Самооценка и границы</h3>
+            <p>Перестать тащить всё на себе и начать выбирать себя</p>
+          </article>
+          <article class="card">
+            <h3>Деньги и реализация</h3>
+            <p>Ясность в целях, сильные стороны, направление</p>
+          </article>
+          <article class="card">
+            <h3>Сложный период</h3>
+            <p>Развод, переезд, выгорание: поддержка и опора</p>
+          </article>
+          <article class="card">
+            <h3>Внутренняя ясность</h3>
+            <p>Понять себя и собрать жизнь в понятный план</p>
+          </article>
         </div>
       </section>
 
-      <section class="about">
-        <div class="about-card">
-          <h3>Обо мне</h3>
-          <p>
-            Меня зовут Дарья Погосян. Я нумеролог и психолог-практик. Работаю онлайн и помогаю мягко пройти сложные периоды: разобраться в переживаниях, вернуть внутреннюю опору и найти понятное направление.
-            Нумерология для меня — инструмент самопознания (сильные стороны, задачи, жизненные циклы), а психологический подход помогает перевести это в реальные шаги и устойчивые изменения в повседневной жизни.
-            У меня есть сертификаты по нумерологии, я мама троих детей. Работаю бережно и конфиденциально.
-          </p>
+      <section class="section steps" id="process">
+        <h2 class="section-title">Как проходит онлайн-консультация</h2>
+        <div class="grid grid-3">
+          <article class="card">
+            <span class="step-number">1</span>
+            <h3>Запрос</h3>
+            <p>Вы коротко описываете ситуацию и цель</p>
+          </article>
+          <article class="card">
+            <span class="step-number">2</span>
+            <h3>Разбор</h3>
+            <p>Нумерология (цифры/циклы/сильные стороны) + психологический анализ</p>
+          </article>
+          <article class="card">
+            <span class="step-number">3</span>
+            <h3>План</h3>
+            <p>Понятные шаги на 7–14 дней и рекомендации по состоянию</p>
+          </article>
         </div>
-        <div class="cta">
-          <a class="btn btn-secondary" href="https://t.me/username" target="_blank" rel="noopener noreferrer">
-            Записаться в Telegram
+        <p class="note">Формат: онлайн (видео/аудио). Конфиденциально.</p>
+      </section>
+
+      <section class="section" id="result">
+        <h2 class="section-title">Что вы получите после встречи</h2>
+        <ul class="benefits">
+          <li>Ясность в ситуации и причинах</li>
+          <li>Понимание сильных сторон и точек опоры</li>
+          <li>План действий на ближайшие 1–2 недели</li>
+          <li>Рекомендации по ресурсу и состоянию</li>
+          <li>Чувство, что стало легче и спокойнее внутри</li>
+          <li>Понимание текущего жизненного периода и как его проживать</li>
+        </ul>
+      </section>
+
+      <section class="section" id="reviews">
+        <h2 class="section-title">Отзывы</h2>
+        <div class="grid grid-3">
+          <article class="card">
+            <p>
+              «После консультации стало спокойнее. Появилась ясность и конкретные шаги, что делать дальше.»
+            </p>
+          </article>
+          <article class="card">
+            <p>
+              «Очень бережная подача. Я увидела свои сильные стороны и перестала сомневаться в решении.»
+            </p>
+          </article>
+          <article class="card">
+            <p>
+              «Разобрали отношения и мои сценарии. На душе стало легче, появилось чувство опоры.»
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="final-cta" id="final-cta">
+        <div class="card">
+          <h2 class="section-title">Готовы начать?</h2>
+          <p class="subtitle">
+            Напишите мне короткое сообщение — я отвечу и предложу ближайшее время для онлайн-консультации.
+          </p>
+          <a class="btn" href="https://t.me/username" target="_blank" rel="noopener noreferrer">
+            Записаться на онлайн-консультацию
           </a>
+          <p class="hero-meta">Ответ обычно в течение дня</p>
         </div>
       </section>
     </main>
 
-    <footer class="container">© 2026 Нумерология и предназначение</footer>
-
-    <script>
-      const meanings = {
-        1: 'Лидерство и сила воли. Вы пришли создавать новое и вдохновлять других своим примером.',
-        2: 'Дипломатия и чувствительность. Ваш дар — объединять людей и создавать гармонию.',
-        3: 'Творчество и общение. Через самовыражение вы открываете двери к успеху и радости.',
-        4: 'Стабильность и дисциплина. Ваш путь строится на ответственности и умении доводить до результата.',
-        5: 'Свобода и перемены. Вы расцветаете там, где есть движение, открытия и новые горизонты.',
-        6: 'Забота и служение. Ваша энергия направлена на поддержку близких и создание уюта.',
-        7: 'Мудрость и интуиция. Вам важно углубляться в знания и искать истинный смысл событий.',
-        8: 'Сила реализации и успех. Ваш потенциал связан с управлением, достижением и материальным ростом.',
-        9: 'Сострадание и духовность. Вы несёте людям свет, завершаете циклы и исцеляете опытом.'
-      };
-
-      const birthInput = document.getElementById('birthdate');
-      const btn = document.getElementById('calculateBtn');
-      const resultNumber = document.getElementById('resultNumber');
-      const resultMeaning = document.getElementById('resultMeaning');
-
-      const reduceToSingleDigit = (value) => {
-        let sum = value;
-
-        while (sum > 9) {
-          sum = sum
-            .toString()
-            .split('')
-            .reduce((acc, digit) => acc + Number(digit), 0);
-        }
-
-        return sum;
-      };
-
-      const getDestinyNumber = (date) => {
-        const digits = date.replaceAll('-', '').split('');
-        const total = digits.reduce((acc, digit) => acc + Number(digit), 0);
-        return reduceToSingleDigit(total);
-      };
-
-      btn.addEventListener('click', () => {
-        if (!birthInput.value) {
-          resultNumber.textContent = '—';
-          resultMeaning.textContent = 'Пожалуйста, выберите дату рождения.';
-          return;
-        }
-
-        const destinyNumber = getDestinyNumber(birthInput.value);
-        resultNumber.textContent = destinyNumber;
-        resultMeaning.textContent = meanings[destinyNumber];
-      });
-    </script>
+    <footer class="container">© 2026 Дарья Погосян — нумерология и психологическая поддержка</footer>
   </body>
 </html>
