@@ -3,9 +3,301 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Привет, Армен</title>
+    <title>Нумеролог — рассчитай число судьбы</title>
+    <style>
+      :root {
+        --bg-main: #1a1035;
+        --bg-card: rgba(255, 255, 255, 0.1);
+        --violet: #7d3cff;
+        --gold: #f4c96a;
+        --white: #ffffff;
+        --text-soft: #ece6ff;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        color: var(--white);
+        background: radial-gradient(circle at top, #3f2188, var(--bg-main) 60%);
+        min-height: 100vh;
+      }
+
+      .container {
+        width: min(960px, 92%);
+        margin: 0 auto;
+      }
+
+      .hero {
+        padding: 72px 0 36px;
+        text-align: center;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 1px solid rgba(244, 201, 106, 0.7);
+        border-radius: 999px;
+        color: var(--gold);
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        font-size: clamp(30px, 6vw, 56px);
+        margin: 0 0 14px;
+        line-height: 1.1;
+      }
+
+      .subtitle {
+        margin: 0 auto 28px;
+        max-width: 620px;
+        color: var(--text-soft);
+        font-size: clamp(16px, 2.6vw, 20px);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 12px;
+        padding: 14px 24px;
+        font-weight: 700;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #f7d98b, #d3a742);
+        color: #2c165d;
+        box-shadow: 0 10px 22px rgba(244, 201, 106, 0.35);
+      }
+
+      .btn-secondary {
+        background: transparent;
+        color: var(--gold);
+        border: 1px solid rgba(244, 201, 106, 0.65);
+      }
+
+      .calculator {
+        margin: 8px auto 44px;
+        background: var(--bg-card);
+        backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        padding: clamp(20px, 4vw, 34px);
+        max-width: 760px;
+      }
+
+      .calculator h2 {
+        margin-top: 0;
+        margin-bottom: 16px;
+        font-size: clamp(24px, 4vw, 34px);
+      }
+
+      .form-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+      }
+
+      input[type='date'] {
+        flex: 1;
+        min-width: 220px;
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 12px;
+        font-size: 16px;
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--white);
+      }
+
+      .result {
+        border-top: 1px solid rgba(255, 255, 255, 0.22);
+        padding-top: 18px;
+      }
+
+      .number {
+        font-size: 56px;
+        margin: 6px 0;
+        color: var(--gold);
+        font-weight: 800;
+      }
+
+      .meaning {
+        color: var(--text-soft);
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      .about {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 18px;
+        align-items: center;
+        margin: 0 auto 72px;
+      }
+
+      .about-card {
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 24px;
+      }
+
+      .about h3 {
+        margin-top: 0;
+        font-size: 30px;
+      }
+
+      .about p {
+        margin-bottom: 0;
+        color: var(--text-soft);
+        line-height: 1.6;
+      }
+
+      .about .cta {
+        display: flex;
+        justify-content: center;
+      }
+
+      footer {
+        text-align: center;
+        color: #d2c5ff;
+        padding-bottom: 30px;
+      }
+
+      @media (max-width: 760px) {
+        .hero {
+          padding-top: 52px;
+        }
+
+        .form-row {
+          flex-direction: column;
+        }
+
+        .form-row .btn {
+          width: 100%;
+        }
+
+        .about {
+          grid-template-columns: 1fr;
+          margin-bottom: 46px;
+        }
+
+        .about .cta {
+          justify-content: flex-start;
+        }
+      }
+    </style>
   </head>
   <body>
-    <p>Привет, Армен</p>
+    <header class="hero container">
+      <span class="badge">Мистическая нумерология</span>
+      <h1>Узнайте код своей судьбы</h1>
+      <p class="subtitle">
+        Дата рождения хранит ключ к талантам, урокам и предназначению. Рассчитайте
+        своё число судьбы прямо сейчас.
+      </p>
+      <a href="#calc" class="btn btn-primary">Рассчитать судьбу</a>
+    </header>
+
+    <main class="container">
+      <section id="calc" class="calculator">
+        <h2>Калькулятор числа судьбы</h2>
+        <div class="form-row">
+          <input id="birthdate" type="date" aria-label="Дата рождения" />
+          <button id="calculateBtn" class="btn btn-primary" type="button">
+            Рассчитать
+          </button>
+        </div>
+
+        <div class="result" aria-live="polite">
+          <p>Ваше число судьбы:</p>
+          <p id="resultNumber" class="number">—</p>
+          <p id="resultMeaning" class="meaning">
+            Введите дату рождения, чтобы увидеть персональное значение.
+          </p>
+        </div>
+      </section>
+
+      <section class="about">
+        <div class="about-card">
+          <h3>Обо мне</h3>
+          <p>
+            Меня зовут Лилия, я практикующий нумеролог. Уже более 7 лет помогаю
+            людям находить сильные стороны, понимать жизненные циклы и принимать
+            решения в гармонии с собой.
+          </p>
+        </div>
+        <div class="cta">
+          <a class="btn btn-secondary" href="https://t.me/username" target="_blank" rel="noopener noreferrer">
+            Записаться в Telegram
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">© 2026 Нумерология и предназначение</footer>
+
+    <script>
+      const meanings = {
+        1: 'Лидерство и сила воли. Вы пришли создавать новое и вдохновлять других своим примером.',
+        2: 'Дипломатия и чувствительность. Ваш дар — объединять людей и создавать гармонию.',
+        3: 'Творчество и общение. Через самовыражение вы открываете двери к успеху и радости.',
+        4: 'Стабильность и дисциплина. Ваш путь строится на ответственности и умении доводить до результата.',
+        5: 'Свобода и перемены. Вы расцветаете там, где есть движение, открытия и новые горизонты.',
+        6: 'Забота и служение. Ваша энергия направлена на поддержку близких и создание уюта.',
+        7: 'Мудрость и интуиция. Вам важно углубляться в знания и искать истинный смысл событий.',
+        8: 'Сила реализации и успех. Ваш потенциал связан с управлением, достижением и материальным ростом.',
+        9: 'Сострадание и духовность. Вы несёте людям свет, завершаете циклы и исцеляете опытом.'
+      };
+
+      const birthInput = document.getElementById('birthdate');
+      const btn = document.getElementById('calculateBtn');
+      const resultNumber = document.getElementById('resultNumber');
+      const resultMeaning = document.getElementById('resultMeaning');
+
+      const reduceToSingleDigit = (value) => {
+        let sum = value;
+
+        while (sum > 9) {
+          sum = sum
+            .toString()
+            .split('')
+            .reduce((acc, digit) => acc + Number(digit), 0);
+        }
+
+        return sum;
+      };
+
+      const getDestinyNumber = (date) => {
+        const digits = date.replaceAll('-', '').split('');
+        const total = digits.reduce((acc, digit) => acc + Number(digit), 0);
+        return reduceToSingleDigit(total);
+      };
+
+      btn.addEventListener('click', () => {
+        if (!birthInput.value) {
+          resultNumber.textContent = '—';
+          resultMeaning.textContent = 'Пожалуйста, выберите дату рождения.';
+          return;
+        }
+
+        const destinyNumber = getDestinyNumber(birthInput.value);
+        resultNumber.textContent = destinyNumber;
+        resultMeaning.textContent = meanings[destinyNumber];
+      });
+    </script>
   </body>
 </html>
