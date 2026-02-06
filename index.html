@@ -6,15 +6,16 @@
     <title>Дарья Погосян — нумеролог и психолог</title>
     <style>
       :root {
-        --bg-main: #1a1035;
-        --bg-deep: #120a2a;
-        --bg-card: rgba(255, 255, 255, 0.08);
+        --bg-main: #2b195f;
+        --bg-deep: #140b2f;
+        --bg-card: rgba(255, 255, 255, 0.95);
         --gold: #f4c96a;
         --white: #ffffff;
-        --text-soft: #ece6ff;
-        --line: rgba(255, 255, 255, 0.18);
-        --telegram-blue: #2aabee;
-        --telegram-blue-dark: #1d86ba;
+        --text-soft: #e9e3ff;
+        --text-dark: #2b2156;
+        --line: rgba(43, 33, 86, 0.08);
+        --telegram-blue: #4a8ac9;
+        --telegram-blue-dark: #2f6da5;
         --glow: rgba(244, 201, 106, 0.3);
         --glow-soft: rgba(120, 86, 255, 0.35);
       }
@@ -31,8 +32,40 @@
         margin: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: var(--white);
-        background: radial-gradient(circle at top, #3f2188, var(--bg-main) 56%, var(--bg-deep));
+        background: linear-gradient(160deg, #4a2d91 0%, #2a1b57 45%, #294b8b 100%);
         min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23noise)' opacity='0.35'/%3E%3C/svg%3E");
+        opacity: 0.12;
+        pointer-events: none;
+        mix-blend-mode: soft-light;
+        z-index: 0;
+      }
+
+      body::after {
+        content: '';
+        position: fixed;
+        inset: -10%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Crect width='800' height='800' fill='transparent'/%3E%3Ctext x='60' y='120' font-size='64' fill='white' opacity='0.06' font-family='Segoe UI, sans-serif'%3E1%3C/text%3E%3Ctext x='520' y='160' font-size='54' fill='white' opacity='0.05' font-family='Segoe UI, sans-serif'%3E9%3C/text%3E%3Ctext x='120' y='360' font-size='80' fill='white' opacity='0.05' font-family='Segoe UI, sans-serif'%3E22%3C/text%3E%3Ctext x='560' y='420' font-size='60' fill='white' opacity='0.05' font-family='Segoe UI, sans-serif'%3E7%3C/text%3E%3Ctext x='180' y='660' font-size='58' fill='white' opacity='0.04' font-family='Segoe UI, sans-serif'%3E11%3C/text%3E%3Ctext x='420' y='640' font-size='56' fill='white' opacity='0.04' font-family='Segoe UI, sans-serif'%3E3%3C/text%3E%3Ctext x='300' y='220' font-size='48' fill='white' opacity='0.04' font-family='Segoe UI, sans-serif'%3E5%3C/text%3E%3C/svg%3E");
+        opacity: 0.9;
+        pointer-events: none;
+        background-size: 800px 800px;
+        animation: cosmicDrift 28s linear infinite;
+        z-index: 0;
+      }
+
+      body > header,
+      body > main,
+      body > footer {
+        position: relative;
+        z-index: 1;
       }
 
       .container {
@@ -126,17 +159,18 @@
         justify-content: center;
         text-decoration: none;
         border: none;
-        border-radius: 14px;
-        padding: 15px 26px;
+        border-radius: 16px;
+        padding: 16px 28px;
         font-weight: 700;
         color: #2c165d;
-        background: linear-gradient(140deg, #f7d98b, #d3a742);
-        box-shadow: 0 10px 24px rgba(244, 201, 106, 0.35);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        background: linear-gradient(135deg, #f8dda3, #e7b85a);
+        box-shadow: 0 10px 24px rgba(244, 201, 106, 0.28);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
       }
 
       .btn:hover {
         transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(244, 201, 106, 0.42);
       }
 
       .btn:active {
@@ -146,13 +180,13 @@
       .telegram-btn {
         gap: 10px;
         color: #fff;
-        background: linear-gradient(145deg, rgba(42, 171, 238, 0.92), rgba(29, 134, 186, 0.92));
-        box-shadow: 0 8px 18px rgba(42, 171, 238, 0.24);
+        background: linear-gradient(150deg, rgba(90, 145, 203, 0.94), rgba(52, 113, 170, 0.94));
+        box-shadow: 0 10px 22px rgba(74, 138, 201, 0.25);
       }
 
       .telegram-btn:hover {
-        transform: translateY(-3px) scale(1.01);
-        box-shadow: 0 14px 28px rgba(42, 171, 238, 0.45);
+        transform: translateY(-2px);
+        box-shadow: 0 16px 30px rgba(74, 138, 201, 0.35);
       }
 
       .telegram-btn:active {
@@ -179,10 +213,10 @@
       }
 
       .birth-calculator .card {
-        padding: 22px;
+        padding: 26px;
         position: relative;
         z-index: 1;
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(8px);
       }
 
       .birth-calculator-title {
@@ -194,7 +228,7 @@
         display: block;
         margin-bottom: 8px;
         font-size: 14px;
-        color: var(--text-soft);
+        color: #4c3a80;
       }
 
       .birth-calculator input[type='date'] {
@@ -211,31 +245,59 @@
 
       .birth-calculator-result {
         margin-top: 14px;
-        padding: 18px;
-        border-radius: 16px;
-        border: 1px solid var(--line);
-        background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-        box-shadow: 0 16px 32px rgba(16, 8, 40, 0.45);
+        padding: 20px;
+        border-radius: 18px;
+        border: 1px solid rgba(120, 108, 170, 0.18);
+        background: rgba(239, 236, 255, 0.7);
+        box-shadow: 0 12px 26px rgba(43, 26, 80, 0.12);
       }
 
       .result-hero {
         display: flex;
-        align-items: center;
-        gap: 18px;
+        align-items: flex-start;
+        gap: 22px;
         flex-wrap: wrap;
       }
 
+      .result-highlight {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
       .result-number {
-        font-size: clamp(54px, 8vw, 78px);
-        font-weight: 700;
-        color: var(--gold);
-        text-shadow: 0 0 24px var(--glow), 0 0 50px rgba(244, 201, 106, 0.35);
-        line-height: 1;
+        font-size: clamp(72px, 12vw, 120px);
+        font-weight: 800;
+        line-height: 0.95;
+        background: linear-gradient(140deg, #7d5bff, #f4c96a);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        text-shadow: 0 0 16px rgba(125, 91, 255, 0.35), 0 0 32px rgba(244, 201, 106, 0.35);
+      }
+
+      .result-words {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+      }
+
+      .result-words li {
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(125, 91, 255, 0.12);
+        color: #4a317f;
+        font-size: 13px;
+        font-weight: 600;
       }
 
       .result-meta h3 {
         margin: 0 0 10px;
         font-size: 20px;
+        color: #3c2c6e;
       }
 
       .result-chips {
@@ -250,16 +312,16 @@
       .result-chips li {
         padding: 7px 12px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        color: var(--text-soft);
+        background: rgba(125, 91, 255, 0.12);
+        border: 1px solid rgba(125, 91, 255, 0.18);
+        color: #4a317f;
         font-size: 13px;
       }
 
       .result-description {
         margin: 12px 0 16px;
         line-height: 1.5;
-        color: var(--text-soft);
+        color: #4b3a7a;
       }
 
       .result-actions {
@@ -278,8 +340,8 @@
       }
 
       .chips li {
-        background: var(--bg-card);
-        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 999px;
         padding: 10px 14px;
         color: var(--text-soft);
@@ -297,14 +359,23 @@
 
       .card {
         background: var(--bg-card);
-        border: 1px solid var(--line);
+        border: none;
         border-radius: 18px;
-        padding: 20px;
+        padding: 24px;
+        color: var(--text-dark);
+        box-shadow: 0 12px 30px rgba(34, 22, 80, 0.12);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 40px rgba(34, 22, 80, 0.16);
       }
 
       .card h3 {
         margin: 0 0 10px;
         font-size: 20px;
+        color: var(--text-dark);
       }
 
       .card-header {
@@ -321,14 +392,14 @@
       .card-icon {
         width: 32px;
         height: 32px;
-        color: var(--gold);
+        color: #7b5cff;
         flex-shrink: 0;
-        opacity: 0.9;
+        opacity: 0.85;
       }
 
       .card p {
         margin: 0;
-        color: var(--text-soft);
+        color: #4b3a7a;
         line-height: 1.5;
       }
 
@@ -349,7 +420,7 @@
         justify-content: center;
         font-weight: 700;
         color: #2c165d;
-        background: linear-gradient(140deg, #f7d98b, #d3a742);
+        background: linear-gradient(140deg, #f8dda3, #e7b85a);
       }
 
       .note {
@@ -367,16 +438,16 @@
       }
 
       .benefits li {
-        background: rgba(255, 255, 255, 0.06);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(93, 82, 150, 0.1);
+        border-radius: 14px;
         padding: 12px 14px;
-        color: var(--text-soft);
+        color: #4b3a7a;
       }
 
       .benefits li::before {
         content: '✦ ';
-        color: var(--gold);
+        color: #7b5cff;
       }
 
       .benefits-grid .card {
@@ -396,7 +467,7 @@
 
       .result-cta-note {
         margin: 0 auto 12px;
-        color: var(--text-soft);
+        color: #dcd3ff;
         max-width: 580px;
       }
 
@@ -414,6 +485,51 @@
         color: #d2c5ff;
         padding: 0 0 24px;
         font-size: 14px;
+      }
+
+      @keyframes cosmicDrift {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        50% {
+          transform: translate3d(-20px, 30px, 0);
+        }
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .hero {
+          animation: fadeUp 0.9s ease both;
+        }
+
+        main .section {
+          animation: fadeUp 0.8s ease both;
+        }
+
+        main .section:nth-of-type(2) {
+          animation-delay: 0.1s;
+        }
+
+        main .section:nth-of-type(3) {
+          animation-delay: 0.2s;
+        }
+
+        main .section:nth-of-type(4) {
+          animation-delay: 0.3s;
+        }
       }
 
       @media (max-width: 900px) {
@@ -462,6 +578,10 @@
         .hero-decor {
           right: -160px;
           top: -80px;
+        }
+
+        .result-hero {
+          align-items: flex-start;
         }
       }
     </style>
@@ -782,10 +902,12 @@
         birthCalcResult.hidden = false;
         birthCalcResult.innerHTML = `
           <div class="result-hero">
-            <div class="result-number">${fateNumber}</div>
+            <div class="result-highlight">
+              <div class="result-number">${fateNumber}</div>
+              <ul class="result-words">${chips}</ul>
+            </div>
             <div class="result-meta">
               <h3>Ваше число судьбы</h3>
-              <ul class="result-chips">${chips}</ul>
             </div>
           </div>
           <p class="result-description">${description}</p>
