@@ -114,8 +114,8 @@
       .telegram-btn {
         gap: 10px;
         color: #fff;
-        background: linear-gradient(145deg, var(--telegram-blue), var(--telegram-blue-dark));
-        box-shadow: 0 12px 24px rgba(42, 171, 238, 0.35);
+        background: linear-gradient(145deg, rgba(42, 171, 238, 0.92), rgba(29, 134, 186, 0.92));
+        box-shadow: 0 8px 18px rgba(42, 171, 238, 0.24);
       }
 
       .telegram-btn:hover {
@@ -236,6 +236,12 @@
       .result-cta {
         margin-top: 24px;
         text-align: center;
+      }
+
+      .result-cta-note {
+        margin: 0 auto 12px;
+        color: var(--text-soft);
+        max-width: 580px;
       }
 
       .final-cta {
@@ -384,8 +390,9 @@
           <li>Понимание текущего жизненного периода и как его проживать</li>
         </ul>
         <div class="result-cta">
+          <p class="result-cta-note">Это базовая расшифровка… Полный разбор в Telegram.</p>
           <a
-            href="https://t.me/username"
+            href="https://t.me/USERNAME"
             class="btn telegram-btn"
             data-telegram-link
             target="_blank"
@@ -455,11 +462,10 @@
     <footer class="container">© 2026 Дарья Погосян — нумерология и психологическая поддержка</footer>
 
     <script type="module">
-      const TELEGRAM_USERNAME = 'USERNAME';
-      const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}`;
+      const TELEGRAM_URL = 'https://t.me/USERNAME'; // заменить на реальную
 
       document.querySelectorAll('[data-telegram-link]').forEach((button) => {
-        button.setAttribute('href', telegramUrl);
+        button.setAttribute('href', TELEGRAM_URL);
       });
     </script>
   </body>
