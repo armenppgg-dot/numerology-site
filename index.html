@@ -13,6 +13,8 @@
         --white: #ffffff;
         --text-soft: #ece6ff;
         --line: rgba(255, 255, 255, 0.18);
+        --telegram-blue: #2aabee;
+        --telegram-blue-dark: #1d86ba;
       }
 
       * {
@@ -74,6 +76,13 @@
         line-height: 1.45;
       }
 
+      .actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
       .btn {
         display: inline-flex;
         align-items: center;
@@ -91,6 +100,33 @@
 
       .btn:hover {
         transform: translateY(-2px);
+      }
+
+      .btn:active {
+        transform: translateY(1px) scale(0.98);
+      }
+
+      .telegram-btn {
+        gap: 10px;
+        color: #fff;
+        background: linear-gradient(145deg, var(--telegram-blue), var(--telegram-blue-dark));
+        box-shadow: 0 12px 24px rgba(42, 171, 238, 0.35);
+      }
+
+      .telegram-btn:hover {
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 14px 28px rgba(42, 171, 238, 0.45);
+      }
+
+      .telegram-btn:active {
+        transform: translateY(1px) scale(0.98);
+        box-shadow: 0 8px 18px rgba(42, 171, 238, 0.3);
+      }
+
+      .telegram-btn svg {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
       }
 
       .hero-meta {
@@ -192,6 +228,11 @@
         color: var(--gold);
       }
 
+      .result-cta {
+        margin-top: 24px;
+        text-align: center;
+      }
+
       .final-cta {
         text-align: center;
         margin: 20px 0 56px;
@@ -247,7 +288,25 @@
         Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясное направление.
         Нумерология + психологический подход — бережно и по делу.
       </p>
-      <a href="#final-cta" class="btn">Записаться на онлайн-консультацию</a>
+      <div class="actions">
+        <a href="#final-cta" class="btn">Рассчитать</a>
+        <a
+          href="https://t.me/username"
+          class="btn telegram-btn"
+          data-telegram-link
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Открыть Telegram"
+        >
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path
+              fill="currentColor"
+              d="M20.665 3.717a1.47 1.47 0 0 0-1.497-.224L3.6 9.487a1.487 1.487 0 0 0 .091 2.804l3.394 1.124 1.335 4.215a1.488 1.488 0 0 0 2.39.667l2.03-1.653 3.63 2.68a1.488 1.488 0 0 0 2.37-.84l2.74-13.14a1.47 1.47 0 0 0-.915-1.627Zm-9.589 13.164-.49 1.494-.966-3.053 8.799-7.288-7.343 8.847Zm6.947 1.332-4.228-3.12a1.49 1.49 0 0 0-1.854.033l-1.045.851.833-2.543a1.49 1.49 0 0 0-.325-1.507L6.37 9.131l13.59-5.24-1.937 14.322Z"
+            />
+          </svg>
+          Получить расшифровку в Telegram
+        </a>
+      </div>
       <p class="hero-meta">30–60 минут • онлайн • конфиденциально</p>
       <ul class="chips">
         <li>Онлайн • конфиденциально</li>
@@ -319,6 +378,24 @@
           <li>Чувство, что стало легче и спокойнее внутри</li>
           <li>Понимание текущего жизненного периода и как его проживать</li>
         </ul>
+        <div class="result-cta">
+          <a
+            href="https://t.me/username"
+            class="btn telegram-btn"
+            data-telegram-link
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Открыть Telegram"
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path
+                fill="currentColor"
+                d="M20.665 3.717a1.47 1.47 0 0 0-1.497-.224L3.6 9.487a1.487 1.487 0 0 0 .091 2.804l3.394 1.124 1.335 4.215a1.488 1.488 0 0 0 2.39.667l2.03-1.653 3.63 2.68a1.488 1.488 0 0 0 2.37-.84l2.74-13.14a1.47 1.47 0 0 0-.915-1.627Zm-9.589 13.164-.49 1.494-.966-3.053 8.799-7.288-7.343 8.847Zm6.947 1.332-4.228-3.12a1.49 1.49 0 0 0-1.854.033l-1.045.851.833-2.543a1.49 1.49 0 0 0-.325-1.507L6.37 9.131l13.59-5.24-1.937 14.322Z"
+              />
+            </svg>
+            Получить расшифровку в Telegram
+          </a>
+        </div>
       </section>
 
       <section class="section" id="reviews">
@@ -341,7 +418,6 @@
           </article>
         </div>
       </section>
-
 
       <section class="section" id="about">
         <h2 class="section-title">Обо мне</h2>
@@ -372,5 +448,14 @@
     </main>
 
     <footer class="container">© 2026 Дарья Погосян — нумерология и психологическая поддержка</footer>
+
+    <script type="module">
+      const TELEGRAM_USERNAME = 'USERNAME';
+      const telegramUrl = `https://t.me/${TELEGRAM_USERNAME}`;
+
+      document.querySelectorAll('[data-telegram-link]').forEach((button) => {
+        button.setAttribute('href', telegramUrl);
+      });
+    </script>
   </body>
 </html>
