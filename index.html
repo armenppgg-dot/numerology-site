@@ -140,6 +140,58 @@
         font-size: 14px;
       }
 
+      .birth-calculator {
+        margin: 30px auto 0;
+        max-width: 520px;
+        text-align: left;
+      }
+
+      .birth-calculator .card {
+        padding: 22px;
+      }
+
+      .birth-calculator-title {
+        margin: 0 0 12px;
+        font-size: 20px;
+      }
+
+      .birth-calculator label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        color: var(--text-soft);
+      }
+
+      .birth-calculator input[type='date'] {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--white);
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+
+      .birth-calculator-result {
+        margin-top: 14px;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .birth-calculator-result h3 {
+        margin: 0 0 8px;
+        font-size: 22px;
+      }
+
+      .birth-calculator-result p {
+        margin: 0;
+        line-height: 1.5;
+        color: var(--text-soft);
+      }
+
       .chips {
         list-style: none;
         display: flex;
@@ -288,6 +340,10 @@
           width: 100%;
           border-radius: 12px;
         }
+
+        .birth-calculator {
+          max-width: 100%;
+        }
       }
     </style>
   </head>
@@ -324,6 +380,16 @@
         <li>Нумерология + психология</li>
         <li>Понятные шаги после встречи</li>
       </ul>
+
+      <section class="birth-calculator" aria-label="Калькулятор даты рождения">
+        <div class="card">
+          <h2 class="birth-calculator-title">Мини-калькулятор судьбы</h2>
+          <label for="birth-date">Введите дату рождения</label>
+          <input id="birth-date" type="date" />
+          <button id="birth-calc-button" class="btn" type="button">Получить расшифровку</button>
+          <div id="birth-calc-result" class="birth-calculator-result" hidden aria-live="polite"></div>
+        </div>
+      </section>
     </header>
 
     <main class="container">
@@ -463,6 +529,59 @@
 
     <script type="module">
       const TELEGRAM_URL = 'https://t.me/USERNAME'; // заменить на реальную
+
+      const fateDescriptions = {
+        1: 'Вы — инициатор: легче всего раскрываетесь, когда берёте лидерство и действуете смело. В полном разборе покажу, где ваша сила раскрывается быстрее.',
+        2: 'Ваша сила в тонкости, дипломатии и умении чувствовать людей. Полный анализ подскажет, как превратить чувствительность в устойчивую опору.',
+        3: 'У вас яркая энергия самовыражения, общения и творчества. На разборе можно увидеть, как направить этот ресурс в стабильные результаты.',
+        4: 'Ваш путь — через структуру, дисциплину и надёжные решения. В полном разборе станет ясно, где именно ваши усилия дадут максимум.',
+        5: 'Вам близки свобода, перемены и движение вперёд. Полная расшифровка покажет, как сохранить баланс между риском и стабильностью.',
+        6: 'Вы несёте энергию заботы, гармонии и ответственности за близких. На консультации разберём, как помогать другим и не терять себя.',
+        7: 'Ваша сильная сторона — глубина, аналитика и внутренняя мудрость. Полный разбор поможет понять, где ваша интуиция уже ведёт к важным решениям.',
+        8: 'У вас мощный потенциал управления, денег и влияния. В расширенной расшифровке видно, как раскрыть этот потенциал экологично и стабильно.',
+        9: 'Ваше число про масштаб, смысл и вклад в других людей. На полном анализе можно увидеть, как соединить призвание и личный ресурс.',
+        11: 'Мастер-число 11 усиливает интуицию и вдохновение: вы тонко чувствуете направления и людей. В полном разборе можно точно настроить этот дар на практический результат.',
+        22: 'Мастер-число 22 даёт потенциал создавать крупные и устойчивые проекты. На консультации покажу, как реализовать этот масштаб без перегрузки.'
+      };
+
+      const birthDateInput = document.getElementById('birth-date');
+      const birthCalcButton = document.getElementById('birth-calc-button');
+      const birthCalcResult = document.getElementById('birth-calc-result');
+
+      const reduceToFateNumber = (sum) => {
+        let current = sum;
+
+        while (current > 9 && current !== 11 && current !== 22) {
+          current = String(current)
+            .split('')
+            .reduce((acc, digit) => acc + Number(digit), 0);
+        }
+
+        return current;
+      };
+
+      const calculateFateNumber = (dateValue) => {
+        const digits = dateValue.replace(/\D/g, '').split('');
+        const sum = digits.reduce((acc, digit) => acc + Number(digit), 0);
+        return reduceToFateNumber(sum);
+      };
+
+      birthCalcButton?.addEventListener('click', () => {
+        if (!birthDateInput?.value) {
+          birthCalcResult.hidden = false;
+          birthCalcResult.innerHTML = '<p>Введите дату рождения</p>';
+          return;
+        }
+
+        const fateNumber = calculateFateNumber(birthDateInput.value);
+        const description = fateDescriptions[fateNumber];
+
+        birthCalcResult.hidden = false;
+        birthCalcResult.innerHTML = `
+          <h3>Ваше число судьбы: ${fateNumber}</h3>
+          <p>${description}</p>
+        `;
+      });
 
       document.querySelectorAll('[data-telegram-link]').forEach((button) => {
         button.setAttribute('href', TELEGRAM_URL);
