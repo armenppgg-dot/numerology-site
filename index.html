@@ -15,6 +15,8 @@
         --line: rgba(255, 255, 255, 0.18);
         --telegram-blue: #2aabee;
         --telegram-blue-dark: #1d86ba;
+        --glow: rgba(244, 201, 106, 0.3);
+        --glow-soft: rgba(120, 86, 255, 0.35);
       }
 
       * {
@@ -60,6 +62,36 @@
       .hero {
         padding: 72px 0 48px;
         text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::after {
+        content: '';
+        position: absolute;
+        width: 460px;
+        height: 460px;
+        right: -120px;
+        top: -80px;
+        background: radial-gradient(circle, rgba(244, 201, 106, 0.25), transparent 70%);
+        filter: blur(10px);
+        opacity: 0.7;
+        pointer-events: none;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-decor {
+        position: absolute;
+        right: -140px;
+        top: -40px;
+        width: min(520px, 70vw);
+        opacity: 0.24;
+        pointer-events: none;
+        z-index: 1;
       }
 
       h1 {
@@ -150,6 +182,7 @@
         padding: 22px;
         position: relative;
         z-index: 1;
+        backdrop-filter: blur(12px);
       }
 
       .birth-calculator-title {
@@ -178,21 +211,60 @@
 
       .birth-calculator-result {
         margin-top: 14px;
-        padding: 14px;
-        border-radius: 12px;
+        padding: 18px;
+        border-radius: 16px;
         border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.05);
+        background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+        box-shadow: 0 16px 32px rgba(16, 8, 40, 0.45);
       }
 
-      .birth-calculator-result h3 {
-        margin: 0 0 8px;
-        font-size: 22px;
+      .result-hero {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
       }
 
-      .birth-calculator-result p {
+      .result-number {
+        font-size: clamp(54px, 8vw, 78px);
+        font-weight: 700;
+        color: var(--gold);
+        text-shadow: 0 0 24px var(--glow), 0 0 50px rgba(244, 201, 106, 0.35);
+        line-height: 1;
+      }
+
+      .result-meta h3 {
+        margin: 0 0 10px;
+        font-size: 20px;
+      }
+
+      .result-chips {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0;
         margin: 0;
+      }
+
+      .result-chips li {
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--text-soft);
+        font-size: 13px;
+      }
+
+      .result-description {
+        margin: 12px 0 16px;
         line-height: 1.5;
         color: var(--text-soft);
+      }
+
+      .result-actions {
+        display: flex;
+        justify-content: flex-start;
       }
 
       .chips {
@@ -235,6 +307,25 @@
         font-size: 20px;
       }
 
+      .card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .card-header h3 {
+        margin: 0;
+      }
+
+      .card-icon {
+        width: 32px;
+        height: 32px;
+        color: var(--gold);
+        flex-shrink: 0;
+        opacity: 0.9;
+      }
+
       .card p {
         margin: 0;
         color: var(--text-soft);
@@ -243,7 +334,7 @@
 
       .steps .card {
         position: relative;
-        padding-top: 44px;
+        padding-top: 52px;
       }
 
       .step-number {
@@ -288,6 +379,16 @@
         color: var(--gold);
       }
 
+      .benefits-grid .card {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .benefits-grid .card p {
+        font-size: 15px;
+      }
+
       .result-cta {
         margin-top: 24px;
         text-align: center;
@@ -326,6 +427,12 @@
           padding-top: 52px;
         }
 
+        .hero::after {
+          width: 320px;
+          height: 320px;
+          right: -140px;
+        }
+
         .grid-3 {
           grid-template-columns: 1fr;
         }
@@ -347,52 +454,64 @@
         .birth-calculator {
           max-width: 100%;
         }
+
+        .result-actions {
+          justify-content: center;
+        }
+
+        .hero-decor {
+          right: -160px;
+          top: -80px;
+        }
       }
     </style>
   </head>
   <body>
     <header class="hero container" id="top">
-      <span class="badge">Онлайн-консультации</span>
-      <h1>Дарья Погосян — нумеролог и психолог (онлайн)</h1>
-      <p class="subtitle">
-        Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясное направление.
-        Нумерология + психологический подход — бережно и по делу.
-      </p>
-      <div class="actions">
-        <a href="#final-cta" class="btn">Рассчитать судьбу</a>
-        <a
-          href="https://t.me/username"
-          class="btn telegram-btn"
-          data-telegram-link
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Открыть Telegram"
-        >
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-            <path
-              fill="currentColor"
-              d="M20.665 3.717a1.47 1.47 0 0 0-1.497-.224L3.6 9.487a1.487 1.487 0 0 0 .091 2.804l3.394 1.124 1.335 4.215a1.488 1.488 0 0 0 2.39.667l2.03-1.653 3.63 2.68a1.488 1.488 0 0 0 2.37-.84l2.74-13.14a1.47 1.47 0 0 0-.915-1.627Zm-9.589 13.164-.49 1.494-.966-3.053 8.799-7.288-7.343 8.847Zm6.947 1.332-4.228-3.12a1.49 1.49 0 0 0-1.854.033l-1.045.851.833-2.543a1.49 1.49 0 0 0-.325-1.507L6.37 9.131l13.59-5.24-1.937 14.322Z"
-            />
-          </svg>
-          Написать в Telegram
-        </a>
-      </div>
-      <p class="hero-meta">30–60 минут • онлайн • конфиденциально</p>
-      <ul class="chips">
-        <li>Онлайн • конфиденциально</li>
-        <li>Нумерология + психология</li>
-        <li>Понятные шаги после встречи</li>
-      </ul>
-
-      <section class="birth-calculator" aria-label="Калькулятор даты рождения">
-        <div class="card">
-          <h2 class="birth-calculator-title">Введите дату рождения</h2>
-          <label for="birth-date">Введите дату рождения</label>
-          <input id="birth-date" type="date" />
-          <button id="birth-calc-button" class="btn" type="button">Получить расшифровку</button>
-          <div id="birth-calc-result" class="birth-calculator-result" hidden aria-live="polite"></div>
+      <div class="hero-content">
+        <span class="badge">Онлайн-консультации</span>
+        <h1>Дарья Погосян — нумеролог и психолог (онлайн)</h1>
+        <p class="subtitle">
+          Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясное направление.
+          Нумерология + психологический подход — бережно и по делу.
+        </p>
+        <div class="actions">
+          <a href="#final-cta" class="btn">Рассчитать судьбу</a>
+          <a
+            href="https://t.me/username"
+            class="btn telegram-btn"
+            data-telegram-link
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Открыть Telegram"
+          >
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+              <path
+                fill="currentColor"
+                d="M20.665 3.717a1.47 1.47 0 0 0-1.497-.224L3.6 9.487a1.487 1.487 0 0 0 .091 2.804l3.394 1.124 1.335 4.215a1.488 1.488 0 0 0 2.39.667l2.03-1.653 3.63 2.68a1.488 1.488 0 0 0 2.37-.84l2.74-13.14a1.47 1.47 0 0 0-.915-1.627Zm-9.589 13.164-.49 1.494-.966-3.053 8.799-7.288-7.343 8.847Zm6.947 1.332-4.228-3.12a1.49 1.49 0 0 0-1.854.033l-1.045.851.833-2.543a1.49 1.49 0 0 0-.325-1.507L6.37 9.131l13.59-5.24-1.937 14.322Z"
+              />
+            </svg>
+            Написать в Telegram
+          </a>
         </div>
-      </section>
+        <p class="hero-meta">30–60 минут • онлайн • конфиденциально</p>
+        <ul class="chips">
+          <li>Онлайн • конфиденциально</li>
+          <li>Нумерология + психология</li>
+          <li>Понятные шаги после встречи</li>
+        </ul>
+
+        <section class="birth-calculator" aria-label="Калькулятор даты рождения">
+          <div class="card">
+            <h2 class="birth-calculator-title">Введите дату рождения</h2>
+            <label for="birth-date">Введите дату рождения</label>
+            <input id="birth-date" type="date" />
+            <button id="birth-calc-button" class="btn" type="button">Получить расшифровку</button>
+            <div id="birth-calc-result" class="birth-calculator-result" hidden aria-live="polite"></div>
+          </div>
+        </section>
+      </div>
+      <img class="hero-decor" src="assets/hero-bg.svg" alt="" aria-hidden="true" />
     </header>
 
     <main class="container">
@@ -400,27 +519,45 @@
         <h2 class="section-title">С чем я могу помочь</h2>
         <div class="grid grid-3">
           <article class="card">
-            <h3>Тревога и тяжесть на душе</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-anxiety.svg" alt="" aria-hidden="true" />
+              <h3>Тревога и тяжесть на душе</h3>
+            </div>
             <p>Когда хочется выдохнуть и вернуть спокойствие</p>
           </article>
           <article class="card">
-            <h3>Отношения и сценарии</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-relationships.svg" alt="" aria-hidden="true" />
+              <h3>Отношения и сценарии</h3>
+            </div>
             <p>Понять, почему повторяется одно и то же, и как изменить</p>
           </article>
           <article class="card">
-            <h3>Самооценка и границы</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-selfesteem.svg" alt="" aria-hidden="true" />
+              <h3>Самооценка и границы</h3>
+            </div>
             <p>Перестать тащить всё на себе и начать выбирать себя</p>
           </article>
           <article class="card">
-            <h3>Деньги и реализация</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-money.svg" alt="" aria-hidden="true" />
+              <h3>Деньги и реализация</h3>
+            </div>
             <p>Ясность в целях, сильные стороны, направление</p>
           </article>
           <article class="card">
-            <h3>Сложный период</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-period.svg" alt="" aria-hidden="true" />
+              <h3>Сложный период</h3>
+            </div>
             <p>Развод, переезд, выгорание: поддержка и опора</p>
           </article>
           <article class="card">
-            <h3>Внутренняя ясность</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-selfesteem.svg" alt="" aria-hidden="true" />
+              <h3>Внутренняя ясность</h3>
+            </div>
             <p>Понять себя и собрать жизнь в понятный план</p>
           </article>
         </div>
@@ -431,17 +568,26 @@
         <div class="grid grid-3">
           <article class="card">
             <span class="step-number">1</span>
-            <h3>Запрос</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-relationships.svg" alt="" aria-hidden="true" />
+              <h3>Запрос</h3>
+            </div>
             <p>Вы коротко описываете ситуацию и цель</p>
           </article>
           <article class="card">
             <span class="step-number">2</span>
-            <h3>Разбор</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-selfesteem.svg" alt="" aria-hidden="true" />
+              <h3>Разбор</h3>
+            </div>
             <p>Нумерология (цифры/циклы/сильные стороны) + психологический анализ</p>
           </article>
           <article class="card">
             <span class="step-number">3</span>
-            <h3>План</h3>
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-money.svg" alt="" aria-hidden="true" />
+              <h3>План</h3>
+            </div>
             <p>Понятные шаги на 7–14 дней и рекомендации по состоянию</p>
           </article>
         </div>
@@ -450,14 +596,50 @@
 
       <section class="section" id="result">
         <h2 class="section-title">Что вы получите после встречи</h2>
-        <ul class="benefits">
-          <li>Ясность в ситуации и причинах</li>
-          <li>Понимание сильных сторон и точек опоры</li>
-          <li>План действий на ближайшие 1–2 недели</li>
-          <li>Рекомендации по ресурсу и состоянию</li>
-          <li>Чувство, что стало легче и спокойнее внутри</li>
-          <li>Понимание текущего жизненного периода и как его проживать</li>
-        </ul>
+        <div class="grid grid-3 benefits-grid">
+          <article class="card">
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-period.svg" alt="" aria-hidden="true" />
+              <h3>Ясность в ситуации</h3>
+            </div>
+            <p>Понимание причин, динамики и личных триггеров</p>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-selfesteem.svg" alt="" aria-hidden="true" />
+              <h3>Сильные стороны</h3>
+            </div>
+            <p>Где ваша опора и какие ресурсы стоит включить</p>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-money.svg" alt="" aria-hidden="true" />
+              <h3>План действий</h3>
+            </div>
+            <p>Понятные шаги на ближайшие 1–2 недели</p>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-anxiety.svg" alt="" aria-hidden="true" />
+              <h3>Ресурс и состояние</h3>
+            </div>
+            <p>Поддержка, чтобы стало легче и спокойнее</p>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-relationships.svg" alt="" aria-hidden="true" />
+              <h3>Отношения и границы</h3>
+            </div>
+            <p>Как не растворяться в других и возвращать себе фокус</p>
+          </article>
+          <article class="card">
+            <div class="card-header">
+              <img class="card-icon" src="assets/icon-period.svg" alt="" aria-hidden="true" />
+              <h3>Текущий период</h3>
+            </div>
+            <p>Как проживать цикл без перегрузки и тревоги</p>
+          </article>
+        </div>
         <div class="result-cta">
           <p class="result-cta-note">Это базовая расшифровка… Полный разбор в Telegram.</p>
           <a
@@ -534,17 +716,31 @@
       const TELEGRAM_URL = 'https://t.me/USERNAME'; // заменить на реальную
 
       const fateDescriptions = {
-        1: 'Вы — инициатор: легче всего раскрываетесь, когда берёте лидерство и действуете смело. В полном разборе покажу, где ваша сила раскрывается быстрее.',
-        2: 'Ваша сила в тонкости, дипломатии и умении чувствовать людей. Полный анализ подскажет, как превратить чувствительность в устойчивую опору.',
-        3: 'У вас яркая энергия самовыражения, общения и творчества. На разборе можно увидеть, как направить этот ресурс в стабильные результаты.',
-        4: 'Ваш путь — через структуру, дисциплину и надёжные решения. В полном разборе станет ясно, где именно ваши усилия дадут максимум.',
-        5: 'Вам близки свобода, перемены и движение вперёд. Полная расшифровка покажет, как сохранить баланс между риском и стабильностью.',
-        6: 'Вы несёте энергию заботы, гармонии и ответственности за близких. На консультации разберём, как помогать другим и не терять себя.',
-        7: 'Ваша сильная сторона — глубина, аналитика и внутренняя мудрость. Полный разбор поможет понять, где ваша интуиция уже ведёт к важным решениям.',
-        8: 'У вас мощный потенциал управления, денег и влияния. В расширенной расшифровке видно, как раскрыть этот потенциал экологично и стабильно.',
-        9: 'Ваше число про масштаб, смысл и вклад в других людей. На полном анализе можно увидеть, как соединить призвание и личный ресурс.',
-        11: 'Мастер-число 11 усиливает интуицию и вдохновение: вы тонко чувствуете направления и людей. В полном разборе можно точно настроить этот дар на практический результат.',
-        22: 'Мастер-число 22 даёт потенциал создавать крупные и устойчивые проекты. На консультации покажу, как реализовать этот масштаб без перегрузки.'
+        1: 'Число 1 говорит о силе инициатора: вы включаете движение, когда берёте лидерство. В полном разборе покажу, где ваша энергия раскрывается быстрее.',
+        2: 'Число 2 про тонкость и чувствительность к людям. Расширенная расшифровка подскажет, как превратить это в устойчивую опору.',
+        3: 'Число 3 — про яркость, творчество и общение. В полном разборе покажу, как направить этот ресурс в стабильные результаты.',
+        4: 'Число 4 про структуру, надёжность и дисциплину. На консультации разберём, где ваши усилия дадут максимальный эффект.',
+        5: 'Число 5 — энергия свободы и перемен. Полный анализ поможет сохранить баланс между риском и стабильностью.',
+        6: 'Число 6 несёт заботу и гармонию в близких отношениях. На разборе увидим, как поддерживать других и не терять себя.',
+        7: 'Число 7 — глубина, аналитика и интуиция. Полная расшифровка покажет, где ваша мудрость уже ведёт к решениям.',
+        8: 'Число 8 раскрывает потенциал влияния и денег. На консультации увидим, как управлять этим экологично и стабильно.',
+        9: 'Число 9 про масштаб и смысл. В полном анализе соединяем призвание и личный ресурс.',
+        11: 'Мастер-число 11 усиливает интуицию и вдохновение. В полном разборе настроим этот дар на практический результат.',
+        22: 'Мастер-число 22 — потенциал крупных и устойчивых проектов. Покажу, как реализовать масштаб без перегрузки.'
+      };
+
+      const fateChips = {
+        1: ['Лидерство', 'Импульс', 'Старт'],
+        2: ['Дипломатия', 'Интуиция', 'Партнёрство'],
+        3: ['Творчество', 'Коммуникация', 'Сцена'],
+        4: ['Система', 'Надёжность', 'Дисциплина'],
+        5: ['Свобода', 'Перемены', 'Гибкость'],
+        6: ['Забота', 'Гармония', 'Семья'],
+        7: ['Глубина', 'Аналитика', 'Мудрость'],
+        8: ['Влияние', 'Деньги', 'Амбиции'],
+        9: ['Смысл', 'Масштаб', 'Вклад'],
+        11: ['Интуиция', 'Вдохновение', 'Проводник'],
+        22: ['Проекты', 'Структура', 'Масштаб']
       };
 
       const birthDateInput = document.getElementById('birth-date');
@@ -579,10 +775,31 @@
         const fateNumber = calculateFateNumber(birthDateInput.value);
         const description = fateDescriptions[fateNumber];
 
+        const chips = (fateChips[fateNumber] ?? ['Ясность', 'Сила', 'Направление'])
+          .map((chip) => `<li>${chip}</li>`)
+          .join('');
+
         birthCalcResult.hidden = false;
         birthCalcResult.innerHTML = `
-          <h3>Ваше число судьбы: ${fateNumber}</h3>
-          <p>${description}</p>
+          <div class="result-hero">
+            <div class="result-number">${fateNumber}</div>
+            <div class="result-meta">
+              <h3>Ваше число судьбы</h3>
+              <ul class="result-chips">${chips}</ul>
+            </div>
+          </div>
+          <p class="result-description">${description}</p>
+          <div class="result-actions">
+            <a
+              href="https://t.me/USERNAME"
+              class="btn telegram-btn"
+              data-telegram-link
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Получить полный разбор в Telegram
+            </a>
+          </div>
         `;
       });
 
