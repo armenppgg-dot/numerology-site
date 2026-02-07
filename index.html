@@ -589,6 +589,47 @@
         background: rgba(255, 255, 255, 0.8);
       }
 
+      .about-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+        padding: clamp(22px, 4vw, 30px);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(93, 82, 150, 0.14);
+        box-shadow: 0 16px 34px rgba(30, 20, 68, 0.16);
+        color: var(--text-dark);
+      }
+
+      .about-text {
+        flex: 1;
+      }
+
+      .about-text h2 {
+        margin-top: 0;
+      }
+
+      .about-text p {
+        margin: 0;
+        color: #4b3a7a;
+        line-height: 1.6;
+        font-size: 16px;
+      }
+
+      .about-photo {
+        flex: 0 0 min(320px, 38%);
+      }
+
+      .about-photo img {
+        width: 100%;
+        height: auto;
+        border-radius: 20px;
+        display: block;
+        box-shadow: 0 12px 28px rgba(34, 22, 80, 0.18);
+        object-fit: cover;
+      }
+
       .card h3 {
         margin: 0 0 10px;
         font-size: 20px;
@@ -702,6 +743,17 @@
         color: #d2c5ff;
         padding: 0 0 24px;
         font-size: 14px;
+      }
+
+      @media (max-width: 820px) {
+        .about-card {
+          flex-direction: column;
+          text-align: left;
+        }
+
+        .about-photo {
+          width: 100%;
+        }
       }
 
       @keyframes cosmicDrift {
@@ -1045,6 +1097,21 @@
     </header>
 
     <main class="container">
+      <section class="section" id="about">
+        <div class="about-card">
+          <div class="about-text">
+            <h2 class="section-title">Обо мне</h2>
+            <p>
+              Я — Дарья Погосян, нумеролог и психолог. Помогаю мягко разобраться в ситуации, увидеть причины
+              происходящего и выстроить понятные шаги без давления и оценок.
+            </p>
+          </div>
+          <div class="about-photo">
+            <img src="assets/daria.jpg" alt="Дарья Погосян" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="help">
         <h2 class="section-title">С чем я могу помочь</h2>
         <div class="grid grid-3">
@@ -1213,20 +1280,6 @@
               «Разобрали отношения и мои сценарии. На душе стало легче, появилось чувство опоры.»
             </p>
           </article>
-        </div>
-      </section>
-
-      <section class="section" id="about">
-        <h2 class="section-title">Обо мне</h2>
-        <div class="card">
-          <p>
-            Меня зовут Дарья Погосян. Я нумеролог и психолог-практик. Работаю онлайн и помогаю мягко пройти сложные
-            периоды: разобраться в переживаниях, вернуть внутреннюю опору и найти понятное направление.<br /><br />
-            Нумерология для меня — инструмент самопознания (сильные стороны, задачи, жизненные циклы), а
-            психологический подход помогает перевести это в реальные шаги и устойчивые изменения в повседневной
-            жизни.<br /><br />
-            У меня есть сертификаты по нумерологии, я мама троих детей. Работаю бережно и конфиденциально.
-          </p>
         </div>
       </section>
 
