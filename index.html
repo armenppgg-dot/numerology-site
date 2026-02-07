@@ -38,6 +38,132 @@
         overflow-x: hidden;
       }
 
+      .floating-numbers {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      .floating-numbers span {
+        position: absolute;
+        font-family: 'Segoe UI', sans-serif;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.04);
+        opacity: 0.04;
+        filter: blur(0.7px);
+        animation: floatNumberUp linear infinite;
+      }
+
+      .floating-numbers span:nth-child(1) {
+        left: 6%;
+        top: 82%;
+        font-size: 28px;
+        opacity: 0.06;
+        animation-duration: 90s;
+        animation-delay: -10s;
+      }
+
+      .floating-numbers span:nth-child(2) {
+        right: 5%;
+        top: 68%;
+        font-size: 72px;
+        opacity: 0.035;
+        animation-duration: 120s;
+        animation-delay: -40s;
+      }
+
+      .floating-numbers span:nth-child(3) {
+        left: 10%;
+        top: 28%;
+        font-size: 56px;
+        opacity: 0.04;
+        animation-duration: 110s;
+        animation-delay: -30s;
+      }
+
+      .floating-numbers span:nth-child(4) {
+        right: 8%;
+        top: 16%;
+        font-size: 44px;
+        opacity: 0.045;
+        animation-duration: 100s;
+        animation-delay: -50s;
+      }
+
+      .floating-numbers span:nth-child(5) {
+        left: 4%;
+        top: 52%;
+        font-size: 90px;
+        opacity: 0.03;
+        animation-duration: 140s;
+        animation-delay: -70s;
+      }
+
+      .floating-numbers span:nth-child(6) {
+        right: 12%;
+        top: 42%;
+        font-size: 66px;
+        opacity: 0.038;
+        animation-duration: 130s;
+        animation-delay: -20s;
+      }
+
+      .floating-numbers span:nth-child(7) {
+        left: 14%;
+        top: 10%;
+        font-size: 22px;
+        opacity: 0.07;
+        animation-duration: 80s;
+        animation-delay: -15s;
+      }
+
+      .floating-numbers span:nth-child(8) {
+        right: 4%;
+        top: 86%;
+        font-size: 34px;
+        opacity: 0.055;
+        animation-duration: 95s;
+        animation-delay: -60s;
+      }
+
+      .floating-numbers span:nth-child(9) {
+        left: 2%;
+        top: 18%;
+        font-size: 48px;
+        opacity: 0.045;
+        animation-duration: 105s;
+        animation-delay: -35s;
+      }
+
+      .floating-numbers span:nth-child(10) {
+        right: 15%;
+        top: 30%;
+        font-size: 16px;
+        opacity: 0.07;
+        animation-duration: 75s;
+        animation-delay: -25s;
+      }
+
+      .floating-numbers span:nth-child(11) {
+        left: 12%;
+        top: 72%;
+        font-size: 62px;
+        opacity: 0.035;
+        animation-duration: 125s;
+        animation-delay: -55s;
+      }
+
+      .floating-numbers span:nth-child(12) {
+        right: 2%;
+        top: 54%;
+        font-size: 58px;
+        opacity: 0.04;
+        animation-duration: 115s;
+        animation-delay: -45s;
+      }
+
       body::before {
         content: '';
         position: fixed;
@@ -748,6 +874,15 @@
         }
       }
 
+      @keyframes floatNumberUp {
+        0% {
+          transform: translateY(40px);
+        }
+        100% {
+          transform: translateY(-160px);
+        }
+      }
+
       @media (prefers-reduced-motion: no-preference) {
         .hero {
           animation: fadeUp 0.9s ease both;
@@ -773,7 +908,8 @@
       @media (prefers-reduced-motion: reduce) {
         .btn,
         body::before,
-        body::after {
+        body::after,
+        .floating-numbers span {
           animation: none;
         }
 
@@ -846,6 +982,20 @@
     </style>
   </head>
   <body>
+    <div class="floating-numbers" aria-hidden="true">
+      <span>1</span>
+      <span>2</span>
+      <span>3</span>
+      <span>4</span>
+      <span>5</span>
+      <span>6</span>
+      <span>7</span>
+      <span>8</span>
+      <span>9</span>
+      <span>11</span>
+      <span>22</span>
+      <span>1</span>
+    </div>
     <header class="hero container" id="top">
       <div class="hero-content">
         <span class="badge">Онлайн-консультации</span>
