@@ -589,6 +589,46 @@
         background: rgba(255, 255, 255, 0.8);
       }
 
+      .about-me-card {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+        padding: clamp(22px, 4vw, 32px);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.86);
+        border: 1px solid rgba(93, 82, 150, 0.14);
+        box-shadow: 0 16px 32px rgba(30, 20, 68, 0.16);
+        color: var(--text-dark);
+      }
+
+      .about-me-photo {
+        flex: 0 0 min(320px, 38%);
+      }
+
+      .about-me-photo img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 22px;
+        object-fit: cover;
+        box-shadow: 0 12px 24px rgba(34, 22, 80, 0.18);
+      }
+
+      .about-me-text {
+        flex: 1;
+      }
+
+      .about-me-text h2 {
+        margin-top: 0;
+      }
+
+      .about-me-text p {
+        margin: 0;
+        color: #4b3a7a;
+        line-height: 1.6;
+        font-size: 16px;
+      }
+
       .about-card {
         display: flex;
         align-items: center;
@@ -746,6 +786,15 @@
       }
 
       @media (max-width: 820px) {
+        .about-me-card {
+          flex-direction: column;
+          text-align: left;
+        }
+
+        .about-me-photo {
+          width: 100%;
+        }
+
         .about-card {
           flex-direction: column;
           text-align: left;
@@ -1097,6 +1146,26 @@
     </header>
 
     <main class="container">
+      <section class="section" id="about-me">
+        <div class="about-me-card">
+          <div class="about-me-photo">
+            <img src="/assets/darya.jpg" alt="Дарья Погосян" loading="lazy" />
+          </div>
+          <div class="about-me-text">
+            <h2 class="section-title">Обо мне</h2>
+            <p>
+              Меня зовут Дарья Погосян.<br />
+              Я нумеролог и психолог.
+              <br /><br />
+              Работаю с внутренними состояниями человека через цифры и психологию:
+              помогаю понять причины происходящего, снизить тревогу и увидеть ясное направление.
+              <br /><br />
+              Это не гадание — это разбор структуры личности, циклов и текущего периода жизни.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="about">
         <div class="about-card">
           <div class="about-text">
