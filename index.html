@@ -514,6 +514,16 @@
         transform: translateY(10px);
       }
 
+      .result-hook {
+        margin: 6px 0 10px;
+        max-width: 420px;
+        font-size: 13px;
+        line-height: 1.45;
+        color: rgba(60, 44, 110, 0.68);
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
       .result-actions {
         display: flex;
         justify-content: flex-start;
@@ -941,6 +951,10 @@
         animation: resultTextIn 0.6s ease-out 0.3s forwards;
       }
 
+      .birth-calculator-result.is-visible .result-hook {
+        animation: resultTextIn 0.55s ease-out 0.22s forwards;
+      }
+
       .birth-calculator-result.is-visible .result-telegram-invite {
         animation: resultTextIn 0.55s ease-out 0.7s forwards;
       }
@@ -1017,6 +1031,7 @@
         .birth-calculator-result,
         .result-number,
         .result-meta h3,
+        .result-hook,
         .result-description,
         .result-telegram-invite {
           opacity: 1;
@@ -1078,6 +1093,10 @@
 
         .result-hero {
           align-items: flex-start;
+        }
+
+        .result-hook {
+          font-size: 12.5px;
         }
       }
     </style>
@@ -1428,6 +1447,10 @@
               <h3>Ваше число судьбы</h3>
             </div>
           </div>
+          <p class="result-hook">
+            Число судьбы показывает ваш скрытый мотив, ключевые уроки и период силы — намёк на путь,
+            который стоит раскрыть глубже сегодня.
+          </p>
           <p class="result-description">${description}</p>
           <div class="result-actions">
             <a
