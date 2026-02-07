@@ -32,7 +32,7 @@
         margin: 0;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         color: var(--white);
-        background: linear-gradient(160deg, #4a2d91 0%, #2a1b57 45%, #294b8b 100%);
+        background: linear-gradient(165deg, #4a2d91 0%, #201240 42%, #0a0c1a 100%);
         min-height: 100vh;
         position: relative;
         overflow-x: hidden;
@@ -42,10 +42,16 @@
         content: '';
         position: fixed;
         inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='700' height='700' filter='url(%23noise)' opacity='0.35'/%3E%3C/svg%3E");
-        opacity: 0.12;
+        background-image: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px),
+          radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px),
+          radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.12) 0 1.5px, transparent 1.5px),
+          radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px);
+        background-size: 420px 420px, 520px 520px, 380px 380px, 460px 460px;
+        background-position: 0 0, 80px 120px, 180px 40px, -60px 200px;
+        opacity: 0.22;
         pointer-events: none;
-        mix-blend-mode: soft-light;
+        animation: particleFloat 36s linear infinite;
+        mix-blend-mode: screen;
         z-index: 0;
       }
 
@@ -165,16 +171,19 @@
         color: #2c165d;
         background: linear-gradient(135deg, #f8dda3, #e7b85a);
         box-shadow: 0 10px 24px rgba(244, 201, 106, 0.28);
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+        animation: btnBreath 7s ease-in-out infinite;
+        position: relative;
+        overflow: hidden;
       }
 
       .btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 14px 30px rgba(244, 201, 106, 0.42);
+        box-shadow: 0 14px 32px rgba(244, 201, 106, 0.5), 0 0 20px rgba(244, 201, 106, 0.35);
       }
 
       .btn:active {
-        transform: translateY(1px) scale(0.98);
+        transform: translateY(1px) scale(0.97);
       }
 
       .telegram-btn {
@@ -190,7 +199,7 @@
       }
 
       .telegram-btn:active {
-        transform: translateY(1px) scale(0.98);
+        transform: translateY(1px) scale(0.97);
         box-shadow: 0 8px 18px rgba(42, 171, 238, 0.3);
       }
 
@@ -241,6 +250,14 @@
         color: #2c165d;
         font-size: 16px;
         margin-bottom: 12px;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        box-shadow: 0 8px 16px rgba(68, 44, 128, 0.08);
+        outline: none;
+      }
+
+      .birth-calculator input[type='date']:focus {
+        border-color: rgba(180, 150, 255, 0.9);
+        box-shadow: 0 0 0 3px rgba(180, 150, 255, 0.25), 0 12px 26px rgba(125, 91, 255, 0.28);
       }
 
       .birth-calculator-result {
@@ -250,6 +267,14 @@
         border: 1px solid rgba(120, 108, 170, 0.18);
         background: rgba(239, 236, 255, 0.7);
         box-shadow: 0 12px 26px rgba(43, 26, 80, 0.12);
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .birth-calculator-result.is-visible {
+        opacity: 1;
+        transform: translateY(0);
       }
 
       .result-hero {
@@ -273,7 +298,9 @@
         background: linear-gradient(140deg, #7d5bff, #f4c96a);
         -webkit-text-fill-color: transparent;
         -webkit-background-clip: text;
-        text-shadow: 0 0 16px rgba(125, 91, 255, 0.35), 0 0 32px rgba(244, 201, 106, 0.35);
+        text-shadow: 0 0 18px rgba(244, 201, 106, 0.55), 0 0 32px rgba(125, 91, 255, 0.35);
+        opacity: 0;
+        transform: scale(0.94);
       }
 
       .result-words {
@@ -298,6 +325,8 @@
         margin: 0 0 10px;
         font-size: 20px;
         color: #3c2c6e;
+        opacity: 0;
+        transform: translateY(8px);
       }
 
       .result-chips {
@@ -322,6 +351,8 @@
         margin: 12px 0 16px;
         line-height: 1.5;
         color: #4b3a7a;
+        opacity: 0;
+        transform: translateY(10px);
       }
 
       .result-actions {
@@ -358,18 +389,20 @@
       }
 
       .card {
-        background: var(--bg-card);
-        border: none;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 18px;
         padding: 24px;
         color: var(--text-dark);
         box-shadow: 0 12px 30px rgba(34, 22, 80, 0.12);
-        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        backdrop-filter: blur(10px);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
       }
 
       .card:hover {
         transform: translateY(-4px);
         box-shadow: 0 18px 40px rgba(34, 22, 80, 0.16);
+        background: rgba(255, 255, 255, 0.8);
       }
 
       .card h3 {
@@ -499,6 +532,101 @@
         }
       }
 
+      @keyframes particleFloat {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        50% {
+          transform: translate3d(-20px, 25px, 0);
+        }
+        100% {
+          transform: translate3d(0, 0, 0);
+        }
+      }
+
+      @keyframes btnBreath {
+        0%,
+        100% {
+          box-shadow: 0 10px 24px rgba(244, 201, 106, 0.28);
+        }
+        50% {
+          box-shadow: 0 12px 28px rgba(244, 201, 106, 0.38);
+        }
+      }
+
+      @keyframes resultNumberIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @keyframes resultTextIn {
+        0% {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes resultMetaIn {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes lightPulse {
+        0% {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        60% {
+          opacity: 0.65;
+          transform: scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: scale(1.05);
+        }
+      }
+
+      .birth-calculator .btn::after {
+        content: '';
+        position: absolute;
+        inset: -30%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent 60%);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .birth-calculator .btn:active::after {
+        animation: lightPulse 0.5s ease-out;
+      }
+
+      .birth-calculator-result.is-visible .result-number {
+        animation: resultNumberIn 0.65s ease-out forwards;
+      }
+
+      .birth-calculator-result.is-visible .result-meta h3 {
+        animation: resultMetaIn 0.5s ease-out 0.15s forwards;
+      }
+
+      .birth-calculator-result.is-visible .result-description {
+        animation: resultTextIn 0.6s ease-out 0.3s forwards;
+      }
+
       @keyframes fadeUp {
         from {
           opacity: 0;
@@ -529,6 +657,22 @@
 
         main .section:nth-of-type(4) {
           animation-delay: 0.3s;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .btn,
+        body::before,
+        body::after {
+          animation: none;
+        }
+
+        .birth-calculator-result,
+        .result-number,
+        .result-meta h3,
+        .result-description {
+          opacity: 1;
+          transform: none;
         }
       }
 
@@ -888,6 +1032,7 @@
       birthCalcButton?.addEventListener('click', () => {
         if (!birthDateInput?.value) {
           birthCalcResult.hidden = false;
+          birthCalcResult.classList.remove('is-visible');
           birthCalcResult.innerHTML = '<p>Введите дату рождения</p>';
           return;
         }
@@ -900,6 +1045,7 @@
           .join('');
 
         birthCalcResult.hidden = false;
+        birthCalcResult.classList.remove('is-visible');
         birthCalcResult.innerHTML = `
           <div class="result-hero">
             <div class="result-highlight">
@@ -923,6 +1069,10 @@
             </a>
           </div>
         `;
+
+        requestAnimationFrame(() => {
+          birthCalcResult.classList.add('is-visible');
+        });
       });
 
       document.querySelectorAll('[data-telegram-link]').forEach((button) => {
