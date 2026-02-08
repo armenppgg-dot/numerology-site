@@ -400,126 +400,42 @@
         background: rgba(239, 236, 255, 0.7);
         box-shadow: 0 12px 26px rgba(43, 26, 80, 0.12);
         opacity: 0;
-        transform: translateY(6px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
+        transform: scale(0.98);
+        transition: opacity 0.35s ease, transform 0.35s ease;
       }
 
       .birth-calculator-result.is-visible {
         opacity: 1;
-        transform: translateY(0);
+        transform: scale(1);
       }
 
       .result-hero {
-        display: flex;
-        align-items: flex-start;
-        gap: 22px;
-        flex-wrap: wrap;
-      }
-
-      .result-highlight {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        position: relative;
-        padding-bottom: 16px;
-      }
-
-      .result-number {
-        font-size: clamp(72px, 12vw, 120px);
-        font-weight: 800;
-        line-height: 0.95;
-        background: linear-gradient(140deg, #7d5bff, #f4c96a);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        text-shadow: 0 0 18px rgba(244, 201, 106, 0.55), 0 0 32px rgba(125, 91, 255, 0.35);
-        opacity: 0;
-        transform: scale(0.94);
-        position: relative;
-      }
-
-      .result-number::before {
-        content: '';
-        position: absolute;
-        inset: -18% -14%;
-        background: radial-gradient(circle, rgba(244, 201, 106, 0.35), rgba(125, 91, 255, 0.05) 65%, transparent 75%);
-        filter: blur(6px);
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.8s ease;
-      }
-
-      .result-highlight::after {
-        content: '';
-        position: absolute;
-        left: 10%;
-        right: 10%;
-        bottom: 0;
-        height: 28px;
-        background: radial-gradient(circle, rgba(244, 201, 106, 0.28), transparent 70%);
-        filter: blur(10px);
-        opacity: 0;
-        transition: opacity 0.8s ease;
-      }
-
-      .result-words {
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 0;
-        margin: 0;
-      }
-
-      .result-words li {
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: rgba(125, 91, 255, 0.12);
-        color: #4a317f;
-        font-size: 13px;
-        font-weight: 600;
+        display: grid;
+        gap: 10px;
       }
 
       .result-meta h3 {
-        margin: 0 0 10px;
-        font-size: 20px;
+        margin: 0;
+        font-size: 22px;
         color: #3c2c6e;
         opacity: 0;
-        transform: translateY(8px);
+        transform: translateY(8px) scale(0.98);
       }
 
-      .result-chips {
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 0;
+      .result-intro {
         margin: 0;
-      }
-
-      .result-chips li {
-        padding: 7px 12px;
-        border-radius: 999px;
-        background: rgba(125, 91, 255, 0.12);
-        border: 1px solid rgba(125, 91, 255, 0.18);
-        color: #4a317f;
-        font-size: 13px;
-      }
-
-      .result-description {
-        margin: 12px 0 16px;
         line-height: 1.5;
         color: #4b3a7a;
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(10px) scale(0.99);
       }
 
       .result-breakdown {
-        margin: 16px 0;
+        margin: 18px 0 12px;
         display: grid;
-        gap: 12px;
+        gap: 14px;
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(10px) scale(0.99);
       }
 
       .result-breakdown-item {
@@ -543,92 +459,43 @@
       }
 
       .result-partial {
-        margin: 16px 0 10px;
-        padding: 12px 14px;
-        border-radius: 14px;
-        background: rgba(244, 201, 106, 0.15);
-        border: 1px dashed rgba(244, 201, 106, 0.45);
+        margin: 16px 0 4px;
+        border-radius: 16px;
+        border: 1px dashed rgba(244, 201, 106, 0.5);
+        background: rgba(244, 201, 106, 0.12);
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(10px) scale(0.99);
+      }
+
+      .result-partial-content {
+        padding: 14px;
+        display: grid;
+        gap: 12px;
+        max-height: 170px;
+        overflow: hidden;
+        filter: blur(0.2px);
+      }
+
+      .result-partial-overlay {
+        position: absolute;
+        inset: auto 0 0;
+        padding: 40px 16px 16px;
+        background: linear-gradient(180deg, rgba(244, 201, 106, 0) 0%, rgba(244, 201, 106, 0.25) 45%, rgba(244, 201, 106, 0.8) 100%);
+        display: grid;
+        gap: 10px;
+      }
+
+      .result-partial-note {
+        margin: 0;
         font-size: 13px;
         line-height: 1.45;
         color: #3f2c67;
-        opacity: 0;
-        transform: translateY(10px);
       }
 
-      .result-repetition {
-        margin: 0 0 14px;
-        font-size: 13px;
-        line-height: 1.45;
-        color: rgba(60, 44, 110, 0.75);
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-accordion {
-        margin: 12px 0 18px;
-        border-radius: 16px;
-        border: 1px solid rgba(125, 91, 255, 0.18);
-        background: rgba(255, 255, 255, 0.8);
-        overflow: hidden;
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-accordion summary {
-        cursor: pointer;
-        list-style: none;
-        padding: 12px 16px;
-        font-weight: 600;
-        color: #3b2c6d;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-      }
-
-      .result-accordion summary::-webkit-details-marker {
-        display: none;
-      }
-
-      .result-accordion summary::after {
-        content: '⌄';
-        font-size: 18px;
-        transition: transform 0.3s ease;
-      }
-
-      .result-accordion[open] summary::after {
-        transform: rotate(180deg);
-      }
-
-      .result-accordion-content {
-        padding: 0 16px 14px;
-      }
-
-      .result-accordion-content ul {
-        margin: 0;
-        padding-left: 18px;
-        color: #4b3a7a;
-        font-size: 13px;
-        line-height: 1.5;
-        display: grid;
-        gap: 6px;
-      }
-
-      .result-hook {
-        margin: 6px 0 10px;
-        max-width: 420px;
-        font-size: 13px;
-        line-height: 1.45;
-        color: rgba(60, 44, 110, 0.68);
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-actions {
-        display: flex;
-        justify-content: flex-start;
-        opacity: 0;
-        transform: translateY(10px);
+      .result-deeper-btn {
+        justify-self: start;
       }
 
       .chips {
@@ -926,17 +793,6 @@
         }
       }
 
-      @keyframes resultNumberIn {
-        0% {
-          opacity: 0;
-          transform: scale(0.88);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
       @keyframes resultTextIn {
         0% {
           opacity: 0;
@@ -1011,32 +867,16 @@
         animation: lightPulse 0.5s ease-out;
       }
 
-      .birth-calculator-result.is-visible .result-number {
-        animation: resultNumberIn 0.65s ease-out forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-number::before,
-      .birth-calculator-result.is-visible .result-highlight::after {
-        opacity: 1;
-      }
-
       .birth-calculator-result.is-visible .result-meta h3 {
         animation: resultMetaIn 0.5s ease-out 0.15s forwards;
       }
 
-      .birth-calculator-result.is-visible .result-description {
+      .birth-calculator-result.is-visible .result-intro {
         animation: resultTextIn 0.6s ease-out 0.3s forwards;
       }
 
-      .birth-calculator-result.is-visible .result-hook {
-        animation: resultTextIn 0.55s ease-out 0.22s forwards;
-      }
-
       .birth-calculator-result.is-visible .result-breakdown,
-      .birth-calculator-result.is-visible .result-partial,
-      .birth-calculator-result.is-visible .result-repetition,
-      .birth-calculator-result.is-visible .result-accordion,
-      .birth-calculator-result.is-visible .result-actions {
+      .birth-calculator-result.is-visible .result-partial {
         animation: resultTextIn 0.6s ease-out 0.35s forwards;
       }
 
@@ -1091,17 +931,19 @@
         }
 
         .birth-calculator-result,
-        .result-number,
         .result-meta h3,
-        .result-hook,
-        .result-description,
+        .result-intro,
         .result-breakdown,
-        .result-partial,
-        .result-repetition,
-        .result-accordion,
-        .result-actions {
+        .result-partial {
+          animation: none;
+          transition: none;
           opacity: 1;
           transform: none;
+        }
+
+        .birth-calculator .btn,
+        .birth-calculator-result {
+          transition: none;
         }
       }
 
@@ -1432,100 +1274,138 @@
     <script type="module">
       const TELEGRAM_URL = 'https://t.me/USERNAME'; // заменить на реальную
 
-      const fateDescriptions = {
-        1: 'Число 1 говорит о силе инициатора: вы включаете движение, когда берёте лидерство. В полном разборе покажу, где ваша энергия раскрывается быстрее.',
-        2: 'Число 2 про тонкость и чувствительность к людям. Расширенная расшифровка подскажет, как превратить это в устойчивую опору.',
-        3: 'Число 3 — про яркость, творчество и общение. В полном разборе покажу, как направить этот ресурс в стабильные результаты.',
-        4: 'Число 4 про структуру, надёжность и дисциплину. На консультации разберём, где ваши усилия дадут максимальный эффект.',
-        5: 'Число 5 — энергия свободы и перемен. Полный анализ поможет сохранить баланс между риском и стабильностью.',
-        6: 'Число 6 несёт заботу и гармонию в близких отношениях. На разборе увидим, как поддерживать других и не терять себя.',
-        7: 'Число 7 — глубина, аналитика и интуиция. Полная расшифровка покажет, где ваша мудрость уже ведёт к решениям.',
-        8: 'Число 8 раскрывает потенциал влияния и денег. На консультации увидим, как управлять этим экологично и стабильно.',
-        9: 'Число 9 про масштаб и смысл. В полном анализе соединяем призвание и личный ресурс.',
-        11: 'Мастер-число 11 усиливает интуицию и вдохновение. В полном разборе настроим этот дар на практический результат.',
-        22: 'Мастер-число 22 — потенциал крупных и устойчивых проектов. Покажу, как реализовать масштаб без перегрузки.'
-      };
-
-      const fateChips = {
-        1: ['Лидерство', 'Импульс', 'Старт'],
-        2: ['Дипломатия', 'Интуиция', 'Партнёрство'],
-        3: ['Творчество', 'Коммуникация', 'Сцена'],
-        4: ['Система', 'Надёжность', 'Дисциплина'],
-        5: ['Свобода', 'Перемены', 'Гибкость'],
-        6: ['Забота', 'Гармония', 'Семья'],
-        7: ['Глубина', 'Аналитика', 'Мудрость'],
-        8: ['Влияние', 'Деньги', 'Амбиции'],
-        9: ['Смысл', 'Масштаб', 'Вклад'],
-        11: ['Интуиция', 'Вдохновение', 'Проводник'],
-        22: ['Проекты', 'Структура', 'Масштаб']
-      };
-
       const fateInterpretations = {
         1: {
-          character: 'В характере это проявляется как смелость, внутренний импульс начинать и вести за собой.',
-          relations: 'В отношениях вы чаще берёте инициативу, цените уважение и честную обратную связь.',
-          money: 'В деньгах важна свобода решений: вы сильны в личных проектах и быстрых стартах.',
-          shadow: 'В минусе это превращается в давление и нетерпение к тем, кто медлит.'
+          intro:
+            'Ваше число — 1. Это про внутренний стержень и умение начинать с нуля. Часто вы чувствуете: “если не я — то кто?”. Важно, чтобы сила не превращалась в одиночество.',
+          character:
+            'Инициативность, прямота, самостоятельность. Легко берёте ответственность и ведёте других, когда есть ясная цель.',
+          relationships:
+            'Нужны уважение и пространство. В паре важно не “тащить”, а договариваться и слышать партнёра.',
+          money:
+            'Деньги приходят через лидерство, личный бренд, проекты “под вас”. Лучше работает, когда вы выбираете одно главное направление.',
+          shadow:
+            'В минусе — жёсткость, нетерпение, страх показаться слабым. Может включаться контроль и “я сам/сама всё решу”.'
         },
         2: {
-          character: 'В характере это мягкость, дипломатия и умение слышать нюансы.',
-          relations: 'В отношениях вы ищете гармонию, тонко чувствуете настроение партнёра.',
-          money: 'В реализации сильны в командных историях, где важны доверие и поддержка.',
-          shadow: 'В минусе — зависимость от чужой оценки и страх конфликтов.'
+          intro:
+            'Ваше число — 2. Это про тонкую чувствительность и умение считывать людей. Вы сильны не напором, а точностью, тактом и глубиной связи.',
+          character:
+            'Дипломатичность, эмпатия, внимательность к нюансам. Сильны там, где важно сотрудничество и доверие.',
+          relationships:
+            'В любви важны тепло и безопасность. Часто вы даёте много — важно учиться просить и обозначать границы.',
+          money:
+            'Реализация через партнёрства, помощь людям, психологию/сервис/красоту. Деньги растут, когда вы цените свой вклад.',
+          shadow:
+            'В минусе — тревожность, зависимость от оценки, обида молча. Может быть страх конфликтов и уход в “терплю”.'
         },
         3: {
-          character: 'В характере много творческого огня, лёгкости и желания делиться идеями.',
-          relations: 'В отношениях вы вдохновляете, создаёте атмосферу праздника и близости.',
-          money: 'В деньгах раскрываетесь через коммуникацию, публичность и контент.',
-          shadow: 'В минусе — разбрасывание и откладывание реальных шагов.'
+          intro:
+            'Ваше число — 3. Это про энергию жизни, слово и творчество. Вы умеете зажигать, вдохновлять и делать атмосферу легче — даже в трудные периоды.',
+          character:
+            'Коммуникабельность, юмор, творческое мышление. Сильны, когда можете выражаться и быть заметными.',
+          relationships:
+            'В паре важны эмоции и интерес. Вам нужно ощущение “мы живые”, а не только быт и обязанности.',
+          money:
+            'Лучше всего через творчество, контент, обучение, публичность. Деньги приходят, когда вы не прячете талант.',
+          shadow:
+            'В минусе — распыление, обещания без завершения, страх скуки. Может быть уход в поверхностность вместо глубины.'
         },
         4: {
-          character: 'В характере это надёжность, ответственность и умение держать рамку.',
-          relations: 'В отношениях вы строите опору, цените стабильность и договорённости.',
-          money: 'В реализации сильны через систему, повторяемые процессы и дисциплину.',
-          shadow: 'В минусе — жёсткость и ощущение, что «всё на мне».'
+          intro:
+            'Ваше число — 4. Это про опору, структуру и результат. Вы умеете делать “как надо” и создавать устойчивость там, где другие теряются.',
+          character:
+            'Собранность, практичность, надёжность. Сила — в дисциплине и умении доводить до конца.',
+          relationships:
+            'Важны верность и стабильность. Вам легче любить действиями — важно добавлять слова и тепло.',
+          money:
+            'Деньги через системность: профессия, процессы, управление, качество. Рост идёт, когда вы не боитесь расширяться.',
+          shadow:
+            'В минусе — жёсткость, страх перемен, перфекционизм. Может включаться “если не идеально — не делаю”.'
         },
         5: {
-          character: 'В характере это свобода, любопытство и тяга к переменам.',
-          relations: 'В отношениях вам нужен воздух, интерес и пространство для роста.',
-          money: 'В деньгах сильны через гибкость, новые форматы и быстрые адаптации.',
-          shadow: 'В минусе — тревожность, импульсивные решения и бегство от рутины.'
+          intro:
+            'Ваше число — 5. Это про свободу, движение и обновление. Вы быстро адаптируетесь и чувствуете, куда “дышит жизнь”.',
+          character:
+            'Гибкость, любопытство, смелость пробовать новое. Сильны, когда есть пространство для выбора.',
+          relationships:
+            'Нужна лёгкость и интерес. Важно договариваться о правилах, чтобы свобода не превращалась в хаос.',
+          money:
+            'Реализация через перемены: продажи, маркетинг, поездки, связи, проекты. Деньги приходят, когда вы в движении.',
+          shadow:
+            'В минусе — импульсивность, скачки, усталость от рутины. Может быть избегание глубины и ответственности.'
         },
         6: {
-          character: 'В характере много заботы, стремления к красоте и гармонии.',
-          relations: 'В отношениях вы создаёте тепло и поддержку, берёте роль хранителя.',
-          money: 'В реализации сильны в сферах сервиса, помощи, эстетики и уюта.',
-          shadow: 'В минусе — растворение в других и чувство вины за свои желания.'
+          intro:
+            'Ваше число — 6. Это про любовь, заботу и умение создавать “дом” — не только физический, но и эмоциональный. Люди рядом часто чувствуют себя спокойнее.',
+          character:
+            'Ответственность, вкус, чувство гармонии. Сильны там, где нужно поддержать и выстроить баланс.',
+          relationships:
+            'В паре важны верность и близость. Важно не спасать, а строить отношения на равных.',
+          money:
+            'Деньги через помощь, красоту, сервис, психологию, обучение. Рост, когда вы цените себя и не работаете “из долга”.',
+          shadow:
+            'В минусе — контроль через заботу, обиды, чувство вины. Может быть перегруз “я всем должна/должен”.'
         },
         7: {
-          character: 'В характере это глубина, наблюдательность и внутренняя мудрость.',
-          relations: 'В отношениях вам важно пространство и доверие без давления.',
-          money: 'В деньгах раскрываетесь через экспертизу, анализ и исследование.',
-          shadow: 'В минусе — закрытость, сомнения и уход в одиночество.'
+          intro:
+            'Ваше число — 7. Это про глубину, смысл и внутренний поиск. Вы не про поверхностные ответы — вам важно понимать, что стоит за событиями.',
+          character:
+            'Наблюдательность, аналитичность, интуиция. Сильны, когда есть тишина, время подумать и собрать картину.',
+          relationships:
+            'Нужны честность и уважение к личному пространству. Важно говорить о чувствах, а не уходить в молчание.',
+          money:
+            'Реализация через знания: аналитика, психология, исследование, обучение. Деньги растут, когда вы делитесь тем, что понимаете.',
+          shadow:
+            'В минусе — закрытость, недоверие, ощущение “меня не поймут”. Может быть уход в одиночество вместо близости.'
         },
         8: {
-          character: 'В характере это воля, амбиция и умение держать масштаб.',
-          relations: 'В отношениях важно уважение к вашим целям и силам.',
-          money: 'В деньгах сильны через управление, лидерство и стратегию.',
-          shadow: 'В минусе — контроль, жёсткость и давление на себя.'
+          intro:
+            'Ваше число — 8. Это про силу влияния, деньги и управление ресурсами. У вас есть потенциал вести, выстраивать и масштабировать.',
+          character:
+            'Воля, прагматичность, умение принимать решения. Сильны, когда цель ясна и есть ответственность.',
+          relationships:
+            'Важны уважение и взрослые договорённости. Важно добавлять мягкость, чтобы сила не выглядела холодом.',
+          money:
+            'Сильный денежный потенциал: управление, бизнес, финансы, лидерство. Деньги приходят, когда вы играете в долгую.',
+          shadow:
+            'В минусе — контроль, жёсткость, страх потерять власть. Может быть выгорание из-за постоянного напряжения.'
         },
         9: {
-          character: 'В характере это идеализм, сострадание и желание смысла.',
-          relations: 'В отношениях вы стремитесь к глубине и общим ценностям.',
-          money: 'В реализации сильны, когда проект служит людям и вдохновляет.',
-          shadow: 'В минусе — разочарование и ощущение, что вас не слышат.'
+          intro:
+            'Ваше число — 9. Это про мудрость, завершение циклов и гуманность. Вы чувствуете людей глубже и часто видите “больше”, чем говорят словами.',
+          character:
+            'Сострадание, широта взгляда, внутренний смысл. Сильны в ролях наставника, проводника, человека с миссией.',
+          relationships:
+            'Важно, чтобы любовь была про принятие. Важно не растворяться, сохраняя свои потребности.',
+          money:
+            'Реализация через пользу людям: творчество, помощь, обучение, проекты с идеей. Деньги приходят, когда вы не стесняетесь брать за ценность.',
+          shadow:
+            'В минусе — спасательство, разочарование, усталость от людей. Может быть “я всё знаю” и внутренний холод.'
         },
         11: {
-          character: 'В характере это интуиция, вдохновение и тонкая чувствительность.',
-          relations: 'В отношениях вы ищете духовную связь и поддержку мечты.',
-          money: 'В реализации сильны через идеи, наставничество и творчество.',
-          shadow: 'В минусе — нервное напряжение и ощущение перегруза.'
+          intro:
+            'Ваше число — 11 (мастер-число). Это про сильную интуицию и влияние словом/смыслом. Вы чувствуете тонко — и можете вести других через ясность.',
+          character:
+            'Вдохновение, чувствительность, высокий внутренний стандарт. Сильны, когда соединяете интуицию с реальностью.',
+          relationships:
+            'Нужна глубокая связь и честность. Важно беречь нервную систему и не жить в постоянном напряжении ожиданий.',
+          money:
+            'Деньги через идеи, наставничество, творчество, психологию/практики. Рост — когда вы не боитесь проявляться публично.',
+          shadow:
+            'В минусе — тревожность, качели, страх ошибки. Может быть ощущение “слишком много чувствую” и уход в перегруз.'
         },
         22: {
-          character: 'В характере это масштабность, видение и умение строить большое.',
-          relations: 'В отношениях вы цените зрелость и общие долгосрочные цели.',
-          money: 'В реализации сильны через системные проекты и устойчивый рост.',
-          shadow: 'В минусе — страх ответственности и прокрастинация.'
+          intro:
+            'Ваше число — 22 (мастер-строитель). Это про масштаб и способность воплощать большие идеи в реальность. Ваш ресурс — создавать системы, которые работают долго.',
+          character:
+            'Стратегия, ответственность, зрелость. Сильны, когда видите и картину целиком, и детали.',
+          relationships:
+            'Нужны партнёрство и общая цель. Важно, чтобы рядом был человек, который уважает ваш темп и масштаб.',
+          money:
+            'Сильная реализация в проектах, управлении, бизнесе, системах. Деньги приходят, когда вы строите не “рывком”, а этапами.',
+          shadow:
+            'В минусе — давление на себя, страх не соответствовать масштабу. Может быть жёсткость и выгорание из-за перегруза.'
         }
       };
 
@@ -1560,83 +1440,67 @@
         }
 
         const fateNumber = calculateFateNumber(birthDateInput.value);
-        const description = fateDescriptions[fateNumber];
-        const interpretation = fateInterpretations[fateNumber];
-        const repetitionText = `Скорее всего вы уже замечали, что в жизни повторяется один и тот же тип ситуаций — это связано с вашим числом ${fateNumber}.`;
-
-        const chips = (fateChips[fateNumber] ?? ['Ясность', 'Сила', 'Направление'])
-          .map((chip) => `<li>${chip}</li>`)
-          .join('');
-
-        const breakdown = `
-          <div class="result-breakdown-item">
-            <h4>Как проявляется в характере</h4>
-            <p>${interpretation.character}</p>
-          </div>
-          <div class="result-breakdown-item">
-            <h4>Как проявляется в отношениях</h4>
-            <p>${interpretation.relations}</p>
-          </div>
-          <div class="result-breakdown-item">
-            <h4>Как проявляется в деньгах и реализации</h4>
-            <p>${interpretation.money}</p>
-          </div>
-          <div class="result-breakdown-item">
-            <h4>Теневая сторона (в минусе)</h4>
-            <p>${interpretation.shadow}</p>
-          </div>
-        `;
+        const interpretation = fateInterpretations[fateNumber] ?? {
+          intro:
+            'Ваше число показывает важные темы характера, отношений и реализации. Это мягкая подсказка, а не приговор — многое раскрывается в личном разборе.',
+          character: 'Часто проявляется как стремление быть собой, искать баланс и опору внутри.',
+          relationships: 'В отношениях может проявляться потребность в честности, поддержке и ясности.',
+          money: 'В деньгах и реализации важна связь с ценностями и тем, что вдохновляет именно вас.',
+          shadow: 'В минусе может проявляться сомнение в себе и желание всё контролировать.'
+        };
 
         birthCalcResult.hidden = false;
         birthCalcResult.classList.remove('is-visible');
         birthCalcResult.innerHTML = `
           <div class="result-hero">
-            <div class="result-highlight">
-              <div class="result-number">${fateNumber}</div>
-              <ul class="result-words">${chips}</ul>
-            </div>
             <div class="result-meta">
-              <h3>Ваше число судьбы</h3>
+              <h3>Ваше число судьбы: ${fateNumber}</h3>
             </div>
+            <p class="result-intro">${interpretation.intro}</p>
           </div>
-          <p class="result-hook">
-            Число судьбы показывает ваш скрытый мотив, ключевые уроки и период силы — намёк на путь,
-            который стоит раскрыть глубже сегодня.
-          </p>
-          <p class="result-description">${description}</p>
           <div class="result-breakdown">
-            ${breakdown}
+            <div class="result-breakdown-item">
+              <h4>Как проявляется в характере</h4>
+              <p>${interpretation.character}</p>
+            </div>
+            <div class="result-breakdown-item">
+              <h4>Как проявляется в отношениях</h4>
+              <p>${interpretation.relationships}</p>
+            </div>
           </div>
           <div class="result-partial">
-            Это только базовый уровень вашей матрицы. Остальное проявляется через дату рождения, периоды и повторяющиеся
-            жизненные сценарии.
-          </div>
-          <p class="result-repetition">${repetitionText}</p>
-          <details class="result-accordion">
-            <summary>Что именно показывает полный разбор</summary>
-            <div class="result-accordion-content">
-              <ul>
-                <li>сильные стороны</li>
-                <li>внутренние конфликты</li>
-                <li>денежный сценарий</li>
-                <li>отношения</li>
-                <li>текущий жизненный период</li>
-                <li>куда двигаться дальше</li>
-              </ul>
+            <div class="result-partial-content" aria-hidden="true">
+              <div class="result-breakdown-item">
+                <h4>Как проявляется в деньгах и реализации</h4>
+                <p>${interpretation.money}</p>
+              </div>
+              <div class="result-breakdown-item">
+                <h4>Теневая сторона (в минусе)</h4>
+                <p>${interpretation.shadow}</p>
+              </div>
             </div>
-          </details>
-          <div class="result-actions">
-            <a
-              href="https://t.me/USERNAME"
-              class="btn telegram-btn"
-              data-telegram-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Получить полный разбор в Telegram
-            </a>
+            <div class="result-partial-overlay">
+              <p class="result-partial-note">
+                Это базовый уровень. В личном разборе покажу, как это проявляется именно у вас.
+              </p>
+              <button class="btn result-deeper-btn" type="button">Разобрать глубже</button>
+            </div>
           </div>
         `;
+
+        const deepenButton = birthCalcResult.querySelector('.result-deeper-btn');
+        const telegramTarget = document.querySelector('[data-telegram-link]');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        deepenButton?.addEventListener('click', () => {
+          if (!telegramTarget) {
+            window.open(TELEGRAM_URL, '_blank', 'noopener,noreferrer');
+            return;
+          }
+
+          telegramTarget.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+          telegramTarget.focus({ preventScroll: true });
+        });
 
         requestAnimationFrame(() => {
           birthCalcResult.classList.add('is-visible');
