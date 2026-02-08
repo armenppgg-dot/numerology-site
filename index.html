@@ -554,6 +554,40 @@
         transform: translateY(1px);
       }
 
+      .result-insights {
+        margin: 16px 0 0;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      .result-insight {
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.75);
+        border: 1px solid rgba(93, 82, 150, 0.14);
+        color: var(--text-dark);
+        box-shadow: 0 10px 24px rgba(34, 22, 80, 0.1);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .result-insight h4 {
+        margin: 0;
+        font-size: 15px;
+        color: #3c2c6e;
+      }
+
+      .result-insight p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.5;
+        color: rgba(60, 44, 110, 0.75);
+      }
+
       .result-hook {
         margin: 6px 0 10px;
         max-width: 420px;
@@ -569,66 +603,71 @@
         justify-content: flex-start;
       }
 
-      .result-telegram-invite {
-        margin-top: 16px;
+      .result-depth {
+        margin-top: 18px;
         padding: 14px 16px;
-        border-radius: 14px;
+        border-radius: 16px;
         background: rgba(90, 85, 140, 0.08);
-        border: 1px solid rgba(90, 85, 140, 0.15);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
+        border: 1px solid rgba(90, 85, 140, 0.14);
+        color: rgba(60, 44, 110, 0.78);
+        font-size: 13px;
+        line-height: 1.5;
         opacity: 0;
         transform: translateY(10px);
       }
 
-      .result-telegram-text {
-        margin: 0;
-        color: #4b3a7a;
-        font-size: 14px;
+      .result-echo {
+        margin: 14px 0 0;
+        font-size: 13px;
+        color: rgba(60, 44, 110, 0.78);
+        opacity: 0;
+        transform: translateY(10px);
       }
 
-      .result-telegram-button {
-        align-self: flex-start;
-        gap: 10px;
-        box-shadow: 0 10px 20px rgba(74, 138, 201, 0.22), 0 0 14px rgba(122, 176, 255, 0.25);
-      }
-
-      .result-deep-dive {
+      .result-accordion {
         margin-top: 16px;
-        padding: 14px 16px;
-        border-radius: 14px;
-        background: rgba(90, 85, 140, 0.06);
-        border: 1px solid rgba(90, 85, 140, 0.12);
+        padding: 12px 14px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(93, 82, 150, 0.14);
+        color: var(--text-dark);
+        box-shadow: 0 10px 22px rgba(34, 22, 80, 0.08);
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      .result-accordion summary {
+        cursor: pointer;
+        font-weight: 600;
+        color: #3c2c6e;
+        list-style: none;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 12px;
-        opacity: 0;
-        transform: translateY(10px);
+        gap: 8px;
       }
 
-      .result-deep-dive-text {
-        margin: 0;
-        color: rgba(60, 44, 110, 0.72);
+      .result-accordion summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .result-accordion summary::after {
+        content: '+';
+        margin-left: auto;
+        font-weight: 700;
+        color: #5b4aa4;
+        transition: transform 0.2s ease;
+      }
+
+      .result-accordion[open] summary::after {
+        content: '–';
+      }
+
+      .result-accordion ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+        color: rgba(60, 44, 110, 0.78);
         font-size: 13px;
-      }
-
-      .btn-soft {
-        background: linear-gradient(135deg, rgba(248, 221, 163, 0.85), rgba(231, 184, 90, 0.82));
-        box-shadow: 0 8px 18px rgba(244, 201, 106, 0.22);
-        animation: none;
-      }
-
-      .btn-soft:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 26px rgba(244, 201, 106, 0.35), 0 0 16px rgba(244, 201, 106, 0.25);
-      }
-
-      .btn-soft:active {
-        transform: translateY(1px) scale(0.98);
-        box-shadow: 0 8px 18px rgba(244, 201, 106, 0.24), 0 0 10px rgba(244, 201, 106, 0.2);
+        line-height: 1.5;
       }
 
       .chips {
@@ -1032,35 +1071,24 @@
         animation: resultTextIn 0.6s ease-out 0.4s forwards;
       }
 
+      .birth-calculator-result.is-visible .result-insights {
+        animation: resultTextIn 0.6s ease-out 0.5s forwards;
+      }
+
       .birth-calculator-result.is-visible .result-hook {
         animation: resultTextIn 0.55s ease-out 0.22s forwards;
       }
 
-      .birth-calculator-result.is-visible .result-telegram-invite {
+      .birth-calculator-result.is-visible .result-depth {
+        animation: resultTextIn 0.55s ease-out 0.6s forwards;
+      }
+
+      .birth-calculator-result.is-visible .result-echo {
+        animation: resultTextIn 0.55s ease-out 0.65s forwards;
+      }
+
+      .birth-calculator-result.is-visible .result-accordion {
         animation: resultTextIn 0.55s ease-out 0.7s forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-telegram-button {
-        animation: telegramBounce 0.7s ease-out 0.7s 1;
-      }
-
-      .birth-calculator-result.is-visible .result-deep-dive {
-        animation: resultTextIn 0.55s ease-out 0.78s forwards;
-      }
-
-      @keyframes telegramBounce {
-        0% {
-          transform: translateY(0);
-          box-shadow: 0 10px 20px rgba(74, 138, 201, 0.2), 0 0 12px rgba(122, 176, 255, 0.18);
-        }
-        40% {
-          transform: translateY(-6px);
-          box-shadow: 0 14px 24px rgba(74, 138, 201, 0.28), 0 0 16px rgba(122, 176, 255, 0.28);
-        }
-        100% {
-          transform: translateY(0);
-          box-shadow: 0 10px 20px rgba(74, 138, 201, 0.22), 0 0 14px rgba(122, 176, 255, 0.25);
-        }
       }
 
       @keyframes fadeUp {
@@ -1119,14 +1147,12 @@
         .result-hook,
         .result-description,
         .result-interpretation,
-        .result-telegram-invite,
-        .result-deep-dive {
+        .result-insights,
+        .result-depth,
+        .result-echo,
+        .result-accordion {
           opacity: 1;
           transform: none;
-        }
-
-        .result-telegram-button {
-          animation: none;
         }
       }
 
@@ -1186,10 +1212,27 @@
           font-size: 12.5px;
         }
 
-        .result-deep-dive {
-          flex-direction: column;
-          align-items: stretch;
+        .result-accordion ul {
+          padding-left: 16px;
         }
+
+        .result-actions {
+          width: 100%;
+        }
+
+        .result-depth,
+        .result-echo {
+          font-size: 12.5px;
+        }
+
+        .result-insight p {
+          font-size: 12.5px;
+        }
+
+        .result-insights {
+          grid-template-columns: 1fr;
+        }
+
       }
     </style>
   </head>
@@ -1606,6 +1649,52 @@
             </button>
             <p class="result-interpretation-full" hidden>${interpretation.full}</p>
           </div>
+          <div class="result-insights">
+            <article class="result-insight">
+              <h4>Как проявляется в характере</h4>
+              <p>
+                Ваше число задаёт привычный тон — как вы думаете, принимаете решения и реагируете на перемены.
+                Именно здесь рождается чувство «это про меня».
+              </p>
+            </article>
+            <article class="result-insight">
+              <h4>Как проявляется в отношениях</h4>
+              <p>
+                Видно, как вы строите близость, где включается забота и где нужны границы, чтобы сохранить тепло.
+              </p>
+            </article>
+            <article class="result-insight">
+              <h4>Как проявляется в деньгах и реализации</h4>
+              <p>
+                Число подсвечивает вашу стратегию успеха: что даётся легко, а где важно добавить структуры и фокуса.
+              </p>
+            </article>
+            <article class="result-insight">
+              <h4>Теневая сторона (в минусе)</h4>
+              <p>
+                В стрессовых периодах проявляется обратная сторона — и именно её понимание снимает чувство «я застрял».
+              </p>
+            </article>
+          </div>
+          <div class="result-depth">
+            Это только базовый уровень вашей матрицы. Остальное проявляется через дату рождения, периоды и
+            повторяющиеся жизненные сценарии.
+          </div>
+          <p class="result-echo">
+            Скорее всего вы уже замечали, что в жизни повторяется один и тот же тип ситуаций — это связано с вашим
+            числом.
+          </p>
+          <details class="result-accordion">
+            <summary>Что именно показывает полный разбор</summary>
+            <ul>
+              <li>сильные стороны</li>
+              <li>внутренние конфликты</li>
+              <li>денежный сценарий</li>
+              <li>отношения</li>
+              <li>текущий жизненный период</li>
+              <li>куда двигаться дальше</li>
+            </ul>
+          </details>
           <div class="result-actions">
             <a
               href="https://t.me/USERNAME"
@@ -1615,30 +1704,6 @@
               rel="noopener noreferrer"
             >
               Получить полный разбор в Telegram
-            </a>
-          </div>
-          <div class="result-telegram-invite">
-            <p class="result-telegram-text">Полная расшифровка и личный разбор — в Telegram</p>
-            <a
-              href="https://t.me/USERNAME"
-              class="btn telegram-btn result-telegram-button"
-              data-telegram-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Написать в Telegram
-            </a>
-          </div>
-          <div class="result-deep-dive">
-            <p class="result-deep-dive-text">Хотите глубже? Личный разбор — в Telegram.</p>
-            <a
-              href="https://t.me/USERNAME"
-              class="btn btn-soft result-deep-dive-button"
-              data-telegram-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Разобрать глубже
             </a>
           </div>
         `;
