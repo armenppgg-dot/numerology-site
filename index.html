@@ -569,68 +569,6 @@
         justify-content: flex-start;
       }
 
-      .result-telegram-invite {
-        margin-top: 16px;
-        padding: 14px 16px;
-        border-radius: 14px;
-        background: rgba(90, 85, 140, 0.08);
-        border: 1px solid rgba(90, 85, 140, 0.15);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-telegram-text {
-        margin: 0;
-        color: #4b3a7a;
-        font-size: 14px;
-      }
-
-      .result-telegram-button {
-        align-self: flex-start;
-        gap: 10px;
-        box-shadow: 0 10px 20px rgba(74, 138, 201, 0.22), 0 0 14px rgba(122, 176, 255, 0.25);
-      }
-
-      .result-deep-dive {
-        margin-top: 16px;
-        padding: 14px 16px;
-        border-radius: 14px;
-        background: rgba(90, 85, 140, 0.06);
-        border: 1px solid rgba(90, 85, 140, 0.12);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 12px;
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-deep-dive-text {
-        margin: 0;
-        color: rgba(60, 44, 110, 0.72);
-        font-size: 13px;
-      }
-
-      .btn-soft {
-        background: linear-gradient(135deg, rgba(248, 221, 163, 0.85), rgba(231, 184, 90, 0.82));
-        box-shadow: 0 8px 18px rgba(244, 201, 106, 0.22);
-        animation: none;
-      }
-
-      .btn-soft:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 26px rgba(244, 201, 106, 0.35), 0 0 16px rgba(244, 201, 106, 0.25);
-      }
-
-      .btn-soft:active {
-        transform: translateY(1px) scale(0.98);
-        box-shadow: 0 8px 18px rgba(244, 201, 106, 0.24), 0 0 10px rgba(244, 201, 106, 0.2);
-      }
-
       .chips {
         list-style: none;
         display: flex;
@@ -1036,33 +974,6 @@
         animation: resultTextIn 0.55s ease-out 0.22s forwards;
       }
 
-      .birth-calculator-result.is-visible .result-telegram-invite {
-        animation: resultTextIn 0.55s ease-out 0.7s forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-telegram-button {
-        animation: telegramBounce 0.7s ease-out 0.7s 1;
-      }
-
-      .birth-calculator-result.is-visible .result-deep-dive {
-        animation: resultTextIn 0.55s ease-out 0.78s forwards;
-      }
-
-      @keyframes telegramBounce {
-        0% {
-          transform: translateY(0);
-          box-shadow: 0 10px 20px rgba(74, 138, 201, 0.2), 0 0 12px rgba(122, 176, 255, 0.18);
-        }
-        40% {
-          transform: translateY(-6px);
-          box-shadow: 0 14px 24px rgba(74, 138, 201, 0.28), 0 0 16px rgba(122, 176, 255, 0.28);
-        }
-        100% {
-          transform: translateY(0);
-          box-shadow: 0 10px 20px rgba(74, 138, 201, 0.22), 0 0 14px rgba(122, 176, 255, 0.25);
-        }
-      }
-
       @keyframes fadeUp {
         from {
           opacity: 0;
@@ -1118,15 +1029,9 @@
         .result-meta h3,
         .result-hook,
         .result-description,
-        .result-interpretation,
-        .result-telegram-invite,
-        .result-deep-dive {
+        .result-interpretation {
           opacity: 1;
           transform: none;
-        }
-
-        .result-telegram-button {
-          animation: none;
         }
       }
 
@@ -1186,10 +1091,6 @@
           font-size: 12.5px;
         }
 
-        .result-deep-dive {
-          flex-direction: column;
-          align-items: stretch;
-        }
       }
     </style>
   </head>
@@ -1615,30 +1516,6 @@
               rel="noopener noreferrer"
             >
               Получить полный разбор в Telegram
-            </a>
-          </div>
-          <div class="result-telegram-invite">
-            <p class="result-telegram-text">Полная расшифровка и личный разбор — в Telegram</p>
-            <a
-              href="https://t.me/USERNAME"
-              class="btn telegram-btn result-telegram-button"
-              data-telegram-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Написать в Telegram
-            </a>
-          </div>
-          <div class="result-deep-dive">
-            <p class="result-deep-dive-text">Хотите глубже? Личный разбор — в Telegram.</p>
-            <a
-              href="https://t.me/USERNAME"
-              class="btn btn-soft result-deep-dive-button"
-              data-telegram-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Разобрать глубже
             </a>
           </div>
         `;
