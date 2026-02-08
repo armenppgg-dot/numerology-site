@@ -514,6 +514,106 @@
         transform: translateY(10px);
       }
 
+      .result-breakdown {
+        margin: 16px 0;
+        display: grid;
+        gap: 12px;
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      .result-breakdown-item {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(125, 91, 255, 0.08);
+        border: 1px solid rgba(125, 91, 255, 0.15);
+      }
+
+      .result-breakdown-item h4 {
+        margin: 0 0 6px;
+        font-size: 14px;
+        color: #3b2c6d;
+      }
+
+      .result-breakdown-item p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.45;
+        color: #4b3a7a;
+      }
+
+      .result-partial {
+        margin: 16px 0 10px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(244, 201, 106, 0.15);
+        border: 1px dashed rgba(244, 201, 106, 0.45);
+        font-size: 13px;
+        line-height: 1.45;
+        color: #3f2c67;
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      .result-repetition {
+        margin: 0 0 14px;
+        font-size: 13px;
+        line-height: 1.45;
+        color: rgba(60, 44, 110, 0.75);
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      .result-accordion {
+        margin: 12px 0 18px;
+        border-radius: 16px;
+        border: 1px solid rgba(125, 91, 255, 0.18);
+        background: rgba(255, 255, 255, 0.8);
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      .result-accordion summary {
+        cursor: pointer;
+        list-style: none;
+        padding: 12px 16px;
+        font-weight: 600;
+        color: #3b2c6d;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .result-accordion summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .result-accordion summary::after {
+        content: '⌄';
+        font-size: 18px;
+        transition: transform 0.3s ease;
+      }
+
+      .result-accordion[open] summary::after {
+        transform: rotate(180deg);
+      }
+
+      .result-accordion-content {
+        padding: 0 16px 14px;
+      }
+
+      .result-accordion-content ul {
+        margin: 0;
+        padding-left: 18px;
+        color: #4b3a7a;
+        font-size: 13px;
+        line-height: 1.5;
+        display: grid;
+        gap: 6px;
+      }
+
       .result-hook {
         margin: 6px 0 10px;
         max-width: 420px;
@@ -527,31 +627,8 @@
       .result-actions {
         display: flex;
         justify-content: flex-start;
-      }
-
-      .result-telegram-invite {
-        margin-top: 16px;
-        padding: 14px 16px;
-        border-radius: 14px;
-        background: rgba(90, 85, 140, 0.08);
-        border: 1px solid rgba(90, 85, 140, 0.15);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
         opacity: 0;
         transform: translateY(10px);
-      }
-
-      .result-telegram-text {
-        margin: 0;
-        color: #4b3a7a;
-        font-size: 14px;
-      }
-
-      .result-telegram-button {
-        align-self: flex-start;
-        gap: 10px;
-        box-shadow: 0 10px 20px rgba(74, 138, 201, 0.22), 0 0 14px rgba(122, 176, 255, 0.25);
       }
 
       .chips {
@@ -955,27 +1032,12 @@
         animation: resultTextIn 0.55s ease-out 0.22s forwards;
       }
 
-      .birth-calculator-result.is-visible .result-telegram-invite {
-        animation: resultTextIn 0.55s ease-out 0.7s forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-telegram-button {
-        animation: telegramBounce 0.7s ease-out 0.7s 1;
-      }
-
-      @keyframes telegramBounce {
-        0% {
-          transform: translateY(0);
-          box-shadow: 0 10px 20px rgba(74, 138, 201, 0.2), 0 0 12px rgba(122, 176, 255, 0.18);
-        }
-        40% {
-          transform: translateY(-6px);
-          box-shadow: 0 14px 24px rgba(74, 138, 201, 0.28), 0 0 16px rgba(122, 176, 255, 0.28);
-        }
-        100% {
-          transform: translateY(0);
-          box-shadow: 0 10px 20px rgba(74, 138, 201, 0.22), 0 0 14px rgba(122, 176, 255, 0.25);
-        }
+      .birth-calculator-result.is-visible .result-breakdown,
+      .birth-calculator-result.is-visible .result-partial,
+      .birth-calculator-result.is-visible .result-repetition,
+      .birth-calculator-result.is-visible .result-accordion,
+      .birth-calculator-result.is-visible .result-actions {
+        animation: resultTextIn 0.6s ease-out 0.35s forwards;
       }
 
       @keyframes fadeUp {
@@ -1033,13 +1095,13 @@
         .result-meta h3,
         .result-hook,
         .result-description,
-        .result-telegram-invite {
+        .result-breakdown,
+        .result-partial,
+        .result-repetition,
+        .result-accordion,
+        .result-actions {
           opacity: 1;
           transform: none;
-        }
-
-        .result-telegram-button {
-          animation: none;
         }
       }
 
@@ -1398,6 +1460,75 @@
         22: ['Проекты', 'Структура', 'Масштаб']
       };
 
+      const fateInterpretations = {
+        1: {
+          character: 'В характере это проявляется как смелость, внутренний импульс начинать и вести за собой.',
+          relations: 'В отношениях вы чаще берёте инициативу, цените уважение и честную обратную связь.',
+          money: 'В деньгах важна свобода решений: вы сильны в личных проектах и быстрых стартах.',
+          shadow: 'В минусе это превращается в давление и нетерпение к тем, кто медлит.'
+        },
+        2: {
+          character: 'В характере это мягкость, дипломатия и умение слышать нюансы.',
+          relations: 'В отношениях вы ищете гармонию, тонко чувствуете настроение партнёра.',
+          money: 'В реализации сильны в командных историях, где важны доверие и поддержка.',
+          shadow: 'В минусе — зависимость от чужой оценки и страх конфликтов.'
+        },
+        3: {
+          character: 'В характере много творческого огня, лёгкости и желания делиться идеями.',
+          relations: 'В отношениях вы вдохновляете, создаёте атмосферу праздника и близости.',
+          money: 'В деньгах раскрываетесь через коммуникацию, публичность и контент.',
+          shadow: 'В минусе — разбрасывание и откладывание реальных шагов.'
+        },
+        4: {
+          character: 'В характере это надёжность, ответственность и умение держать рамку.',
+          relations: 'В отношениях вы строите опору, цените стабильность и договорённости.',
+          money: 'В реализации сильны через систему, повторяемые процессы и дисциплину.',
+          shadow: 'В минусе — жёсткость и ощущение, что «всё на мне».'
+        },
+        5: {
+          character: 'В характере это свобода, любопытство и тяга к переменам.',
+          relations: 'В отношениях вам нужен воздух, интерес и пространство для роста.',
+          money: 'В деньгах сильны через гибкость, новые форматы и быстрые адаптации.',
+          shadow: 'В минусе — тревожность, импульсивные решения и бегство от рутины.'
+        },
+        6: {
+          character: 'В характере много заботы, стремления к красоте и гармонии.',
+          relations: 'В отношениях вы создаёте тепло и поддержку, берёте роль хранителя.',
+          money: 'В реализации сильны в сферах сервиса, помощи, эстетики и уюта.',
+          shadow: 'В минусе — растворение в других и чувство вины за свои желания.'
+        },
+        7: {
+          character: 'В характере это глубина, наблюдательность и внутренняя мудрость.',
+          relations: 'В отношениях вам важно пространство и доверие без давления.',
+          money: 'В деньгах раскрываетесь через экспертизу, анализ и исследование.',
+          shadow: 'В минусе — закрытость, сомнения и уход в одиночество.'
+        },
+        8: {
+          character: 'В характере это воля, амбиция и умение держать масштаб.',
+          relations: 'В отношениях важно уважение к вашим целям и силам.',
+          money: 'В деньгах сильны через управление, лидерство и стратегию.',
+          shadow: 'В минусе — контроль, жёсткость и давление на себя.'
+        },
+        9: {
+          character: 'В характере это идеализм, сострадание и желание смысла.',
+          relations: 'В отношениях вы стремитесь к глубине и общим ценностям.',
+          money: 'В реализации сильны, когда проект служит людям и вдохновляет.',
+          shadow: 'В минусе — разочарование и ощущение, что вас не слышат.'
+        },
+        11: {
+          character: 'В характере это интуиция, вдохновение и тонкая чувствительность.',
+          relations: 'В отношениях вы ищете духовную связь и поддержку мечты.',
+          money: 'В реализации сильны через идеи, наставничество и творчество.',
+          shadow: 'В минусе — нервное напряжение и ощущение перегруза.'
+        },
+        22: {
+          character: 'В характере это масштабность, видение и умение строить большое.',
+          relations: 'В отношениях вы цените зрелость и общие долгосрочные цели.',
+          money: 'В реализации сильны через системные проекты и устойчивый рост.',
+          shadow: 'В минусе — страх ответственности и прокрастинация.'
+        }
+      };
+
       const birthDateInput = document.getElementById('birth-date');
       const birthCalcButton = document.getElementById('birth-calc-button');
       const birthCalcResult = document.getElementById('birth-calc-result');
@@ -1430,10 +1561,31 @@
 
         const fateNumber = calculateFateNumber(birthDateInput.value);
         const description = fateDescriptions[fateNumber];
+        const interpretation = fateInterpretations[fateNumber];
+        const repetitionText = `Скорее всего вы уже замечали, что в жизни повторяется один и тот же тип ситуаций — это связано с вашим числом ${fateNumber}.`;
 
         const chips = (fateChips[fateNumber] ?? ['Ясность', 'Сила', 'Направление'])
           .map((chip) => `<li>${chip}</li>`)
           .join('');
+
+        const breakdown = `
+          <div class="result-breakdown-item">
+            <h4>Как проявляется в характере</h4>
+            <p>${interpretation.character}</p>
+          </div>
+          <div class="result-breakdown-item">
+            <h4>Как проявляется в отношениях</h4>
+            <p>${interpretation.relations}</p>
+          </div>
+          <div class="result-breakdown-item">
+            <h4>Как проявляется в деньгах и реализации</h4>
+            <p>${interpretation.money}</p>
+          </div>
+          <div class="result-breakdown-item">
+            <h4>Теневая сторона (в минусе)</h4>
+            <p>${interpretation.shadow}</p>
+          </div>
+        `;
 
         birthCalcResult.hidden = false;
         birthCalcResult.classList.remove('is-visible');
@@ -1452,6 +1604,27 @@
             который стоит раскрыть глубже сегодня.
           </p>
           <p class="result-description">${description}</p>
+          <div class="result-breakdown">
+            ${breakdown}
+          </div>
+          <div class="result-partial">
+            Это только базовый уровень вашей матрицы. Остальное проявляется через дату рождения, периоды и повторяющиеся
+            жизненные сценарии.
+          </div>
+          <p class="result-repetition">${repetitionText}</p>
+          <details class="result-accordion">
+            <summary>Что именно показывает полный разбор</summary>
+            <div class="result-accordion-content">
+              <ul>
+                <li>сильные стороны</li>
+                <li>внутренние конфликты</li>
+                <li>денежный сценарий</li>
+                <li>отношения</li>
+                <li>текущий жизненный период</li>
+                <li>куда двигаться дальше</li>
+              </ul>
+            </div>
+          </details>
           <div class="result-actions">
             <a
               href="https://t.me/USERNAME"
@@ -1461,18 +1634,6 @@
               rel="noopener noreferrer"
             >
               Получить полный разбор в Telegram
-            </a>
-          </div>
-          <div class="result-telegram-invite">
-            <p class="result-telegram-text">Полная расшифровка и личный разбор — в Telegram</p>
-            <a
-              href="https://t.me/USERNAME"
-              class="btn telegram-btn result-telegram-button"
-              data-telegram-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Написать в Telegram
             </a>
           </div>
         `;
