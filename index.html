@@ -367,29 +367,83 @@
         color: #4c3a80;
       }
 
-      .birth-calculator input[type='date'] {
-        width: 100%;
-        height: 50px;
-        padding: 12px 14px;
-        border-radius: 12px;
-        border: 1px solid #d8cbff;
-        background: #ffffff;
-        color: #2c165d;
-        font-size: 16px;
-        margin-bottom: 12px;
-        transition: box-shadow 0.4s ease, border-color 0.4s ease;
-        box-shadow: 0 8px 16px rgba(68, 44, 128, 0.08);
-        outline: none;
-      }
-
       .birth-calculator .card:focus-within {
         transform: scale(1.02);
         box-shadow: 0 18px 36px rgba(244, 201, 106, 0.22), 0 0 28px rgba(244, 201, 106, 0.2);
       }
 
-      .birth-calculator input[type='date']:focus {
+      .birth-date-selects {
+        display: grid;
+        gap: 14px;
+        margin-top: 8px;
+      }
+
+      .birth-date-field {
+        position: relative;
+      }
+
+      .birth-date-field::after {
+        content: '';
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        width: 18px;
+        height: 12px;
+        transform: translateY(-50%);
+        background: linear-gradient(135deg, #69b8ff, #3d8fd8);
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        opacity: 0.9;
+        pointer-events: none;
+      }
+
+      .birth-date-field select {
+        width: 100%;
+        height: 60px;
+        padding: 14px 48px 14px 22px;
+        border-radius: 28px;
+        border: 2px solid rgba(124, 187, 236, 0.7);
+        background: rgba(255, 255, 255, 0.86);
+        color: #4b3a7a;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        appearance: none;
+        box-shadow: 0 10px 20px rgba(66, 108, 168, 0.18);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      }
+
+      .birth-date-field select:focus {
+        outline: none;
         border-color: rgba(244, 201, 106, 0.85);
-        box-shadow: 0 0 0 3px rgba(244, 201, 106, 0.25), 0 14px 30px rgba(125, 91, 255, 0.22);
+        box-shadow: 0 0 0 3px rgba(244, 201, 106, 0.2), 0 12px 26px rgba(66, 108, 168, 0.18);
+      }
+
+      .birth-date-field select:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 24px rgba(66, 108, 168, 0.24);
+      }
+
+      .birth-date-field select:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .birth-date-field select option[disabled] {
+        color: rgba(75, 58, 122, 0.55);
+      }
+
+      #birth-calc-button {
+        opacity: 0;
+        transform: translateY(8px);
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+
+      #birth-calc-button.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
       }
 
       .birth-calculator-result {
@@ -1110,6 +1164,7 @@
           max-width: 100%;
         }
 
+
         .result-actions {
           justify-content: center;
         }
@@ -1182,9 +1237,25 @@
         <section class="birth-calculator" aria-label="Калькулятор даты рождения">
           <div class="card">
             <h2 class="birth-calculator-title">Введите дату рождения</h2>
-            <label for="birth-date">Введите дату рождения</label>
-            <input id="birth-date" type="date" />
-            <button id="birth-calc-button" class="btn" type="button">Получить расшифровку</button>
+            <label for="birth-month">Введите дату рождения</label>
+            <div class="birth-date-selects" role="group" aria-label="Дата рождения">
+              <div class="birth-date-field">
+                <select id="birth-month" aria-label="Месяц рождения">
+                  <option value="" disabled selected>Месяц</option>
+                </select>
+              </div>
+              <div class="birth-date-field">
+                <select id="birth-day" aria-label="День рождения" disabled>
+                  <option value="" disabled selected>День</option>
+                </select>
+              </div>
+              <div class="birth-date-field">
+                <select id="birth-year" aria-label="Год рождения">
+                  <option value="" disabled selected>Год</option>
+                </select>
+              </div>
+            </div>
+            <button id="birth-calc-button" class="btn" type="button" hidden>Получить расшифровку</button>
             <div id="birth-calc-result" class="birth-calculator-result" hidden aria-live="polite"></div>
             <p>Иногда достаточно одной встречи, чтобы всё стало на свои места.</p>
           </div>
@@ -1602,9 +1673,107 @@
         22: ['Проекты', 'Структура', 'Масштаб']
       };
 
-      const birthDateInput = document.getElementById('birth-date');
+      const birthMonthSelect = document.getElementById('birth-month');
+      const birthDaySelect = document.getElementById('birth-day');
+      const birthYearSelect = document.getElementById('birth-year');
       const birthCalcButton = document.getElementById('birth-calc-button');
       const birthCalcResult = document.getElementById('birth-calc-result');
+      const birthDateInput = { value: '' };
+
+      const monthLabels = [
+        'Январь',
+        'Февраль',
+        'Март',
+        'Апрель',
+        'Май',
+        'Июнь',
+        'Июль',
+        'Август',
+        'Сентябрь',
+        'Октябрь',
+        'Ноябрь',
+        'Декабрь'
+      ];
+
+      const today = new Date();
+      const currentYear = today.getFullYear();
+      const currentMonth = today.getMonth();
+      const currentDay = today.getDate();
+      const startYear = currentYear - 100;
+
+      const createOption = (value, label) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+        return option;
+      };
+
+      monthLabels.forEach((label, index) => {
+        birthMonthSelect?.appendChild(createOption(String(index + 1).padStart(2, '0'), label));
+      });
+
+      for (let year = currentYear; year >= startYear; year -= 1) {
+        birthYearSelect?.appendChild(createOption(String(year), String(year)));
+      }
+
+      const getDaysInMonth = (year, month) => new Date(year, month, 0).getDate();
+
+      const updateDayOptions = () => {
+        if (!birthDaySelect || !birthMonthSelect || !birthYearSelect) {
+          return;
+        }
+
+        const monthValue = Number(birthMonthSelect.value);
+        const yearValue = Number(birthYearSelect.value);
+
+        if (!monthValue || !yearValue) {
+          birthDaySelect.innerHTML = '<option value="" disabled selected>День</option>';
+          birthDaySelect.disabled = true;
+          return;
+        }
+
+        const daysInMonth = getDaysInMonth(yearValue, monthValue);
+        const limitToToday = yearValue === currentYear && monthValue - 1 === currentMonth;
+        const maxDay = limitToToday ? currentDay : daysInMonth;
+
+        birthDaySelect.innerHTML = '<option value="" disabled selected>День</option>';
+        for (let day = 1; day <= maxDay; day += 1) {
+          birthDaySelect.appendChild(createOption(String(day).padStart(2, '0'), String(day)));
+        }
+        birthDaySelect.disabled = false;
+      };
+
+      const updateBirthDateValue = () => {
+        if (!birthMonthSelect || !birthDaySelect || !birthYearSelect) {
+          return;
+        }
+
+        const monthValue = birthMonthSelect.value;
+        const dayValue = birthDaySelect.value;
+        const yearValue = birthYearSelect.value;
+
+        if (monthValue && dayValue && yearValue) {
+          birthDateInput.value = `${yearValue}-${monthValue}-${dayValue}`;
+          birthCalcButton.hidden = false;
+          birthCalcButton.classList.add('is-visible');
+        } else {
+          birthDateInput.value = '';
+          birthCalcButton.hidden = true;
+          birthCalcButton.classList.remove('is-visible');
+        }
+      };
+
+      birthMonthSelect?.addEventListener('change', () => {
+        updateDayOptions();
+        updateBirthDateValue();
+      });
+
+      birthYearSelect?.addEventListener('change', () => {
+        updateDayOptions();
+        updateBirthDateValue();
+      });
+
+      birthDaySelect?.addEventListener('change', updateBirthDateValue);
 
       const reduceToFateNumber = (sum) => {
         let current = sum;
