@@ -4,1915 +4,464 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Дарья Погосян — нумеролог и психолог</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <style>
       :root {
-        --bg-main: #2b195f;
-        --bg-deep: #140b2f;
-        --bg-card: rgba(255, 255, 255, 0.95);
-        --gold: #f4c96a;
-        --white: #ffffff;
-        --text-soft: #e9e3ff;
-        --text-dark: #2b2156;
-        --line: rgba(43, 33, 86, 0.08);
-        --telegram-blue: #4a8ac9;
-        --telegram-blue-dark: #2f6da5;
-        --glow: rgba(244, 201, 106, 0.3);
-        --glow-soft: rgba(120, 86, 255, 0.35);
+        --bg-start: #5f34be;
+        --bg-mid: #2f1768;
+        --bg-end: #140b32;
+        --glass: rgba(255, 255, 255, 0.14);
+        --glass-border: rgba(255, 255, 255, 0.22);
+        --text-main: #f8f4ff;
+        --text-soft: #d7cbff;
+        --ink: #2f2256;
+        --accent: #f4c96a;
+        --telegram-start: #4d8fd0;
+        --telegram-end: #2f6ea9;
       }
 
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: var(--white);
-        background: linear-gradient(165deg, #4a2d91 0%, #201240 42%, #0a0c1a 100%);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        color: var(--text-main);
+        background: linear-gradient(160deg, var(--bg-start), var(--bg-mid) 50%, var(--bg-end));
         min-height: 100vh;
-        position: relative;
-        overflow-x: hidden;
-      }
-
-      .floating-numbers {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-        overflow: hidden;
-      }
-
-      .floating-numbers span {
-        position: absolute;
-        font-family: 'Segoe UI', sans-serif;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.04);
-        opacity: 0.04;
-        filter: blur(0.7px);
-        animation: floatNumberUp linear infinite;
-      }
-
-      .floating-numbers span:nth-child(1) {
-        left: 6%;
-        top: 82%;
-        font-size: 28px;
-        opacity: 0.06;
-        animation-duration: 90s;
-        animation-delay: -10s;
-      }
-
-      .floating-numbers span:nth-child(2) {
-        right: 5%;
-        top: 68%;
-        font-size: 72px;
-        opacity: 0.035;
-        animation-duration: 120s;
-        animation-delay: -40s;
-      }
-
-      .floating-numbers span:nth-child(3) {
-        left: 10%;
-        top: 28%;
-        font-size: 56px;
-        opacity: 0.04;
-        animation-duration: 110s;
-        animation-delay: -30s;
-      }
-
-      .floating-numbers span:nth-child(4) {
-        right: 8%;
-        top: 16%;
-        font-size: 44px;
-        opacity: 0.045;
-        animation-duration: 100s;
-        animation-delay: -50s;
-      }
-
-      .floating-numbers span:nth-child(5) {
-        left: 4%;
-        top: 52%;
-        font-size: 90px;
-        opacity: 0.03;
-        animation-duration: 140s;
-        animation-delay: -70s;
-      }
-
-      .floating-numbers span:nth-child(6) {
-        right: 12%;
-        top: 42%;
-        font-size: 66px;
-        opacity: 0.038;
-        animation-duration: 130s;
-        animation-delay: -20s;
-      }
-
-      .floating-numbers span:nth-child(7) {
-        left: 14%;
-        top: 10%;
-        font-size: 22px;
-        opacity: 0.07;
-        animation-duration: 80s;
-        animation-delay: -15s;
-      }
-
-      .floating-numbers span:nth-child(8) {
-        right: 4%;
-        top: 86%;
-        font-size: 34px;
-        opacity: 0.055;
-        animation-duration: 95s;
-        animation-delay: -60s;
-      }
-
-      .floating-numbers span:nth-child(9) {
-        left: 2%;
-        top: 18%;
-        font-size: 48px;
-        opacity: 0.045;
-        animation-duration: 105s;
-        animation-delay: -35s;
-      }
-
-      .floating-numbers span:nth-child(10) {
-        right: 15%;
-        top: 30%;
-        font-size: 16px;
-        opacity: 0.07;
-        animation-duration: 75s;
-        animation-delay: -25s;
-      }
-
-      .floating-numbers span:nth-child(11) {
-        left: 12%;
-        top: 72%;
-        font-size: 62px;
-        opacity: 0.035;
-        animation-duration: 125s;
-        animation-delay: -55s;
-      }
-
-      .floating-numbers span:nth-child(12) {
-        right: 2%;
-        top: 54%;
-        font-size: 58px;
-        opacity: 0.04;
-        animation-duration: 115s;
-        animation-delay: -45s;
-      }
-
-      body::before {
-        content: '';
-        position: fixed;
-        inset: 0;
-        background-image: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px),
-          radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px),
-          radial-gradient(circle at 60% 70%, rgba(255, 255, 255, 0.12) 0 1.5px, transparent 1.5px),
-          radial-gradient(circle at 30% 80%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px);
-        background-size: 420px 420px, 520px 520px, 380px 380px, 460px 460px;
-        background-position: 0 0, 80px 120px, 180px 40px, -60px 200px;
-        opacity: 0.22;
-        pointer-events: none;
-        animation: particleFloat 36s linear infinite;
-        mix-blend-mode: screen;
-        z-index: 0;
-      }
-
-      body::after {
-        content: '';
-        position: fixed;
-        inset: -10%;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Crect width='800' height='800' fill='transparent'/%3E%3Ctext x='60' y='120' font-size='64' fill='white' opacity='0.06' font-family='Segoe UI, sans-serif'%3E1%3C/text%3E%3Ctext x='520' y='160' font-size='54' fill='white' opacity='0.05' font-family='Segoe UI, sans-serif'%3E9%3C/text%3E%3Ctext x='120' y='360' font-size='80' fill='white' opacity='0.05' font-family='Segoe UI, sans-serif'%3E22%3C/text%3E%3Ctext x='560' y='420' font-size='60' fill='white' opacity='0.05' font-family='Segoe UI, sans-serif'%3E7%3C/text%3E%3Ctext x='180' y='660' font-size='58' fill='white' opacity='0.04' font-family='Segoe UI, sans-serif'%3E11%3C/text%3E%3Ctext x='420' y='640' font-size='56' fill='white' opacity='0.04' font-family='Segoe UI, sans-serif'%3E3%3C/text%3E%3Ctext x='300' y='220' font-size='48' fill='white' opacity='0.04' font-family='Segoe UI, sans-serif'%3E5%3C/text%3E%3C/svg%3E");
-        opacity: 0.9;
-        pointer-events: none;
-        background-size: 800px 800px;
-        animation: cosmicDrift 28s linear infinite;
-        z-index: 0;
-      }
-
-      body > header,
-      body > main,
-      body > footer {
-        position: relative;
-        z-index: 1;
       }
 
       .container {
-        width: min(1040px, 92%);
+        width: min(960px, 92%);
         margin: 0 auto;
       }
 
-      .section {
-        padding: 34px 0;
+      .section { padding: 24px 0; }
+
+      .glass {
+        background: var(--glass);
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(12px);
+        border-radius: 20px;
+        box-shadow: 0 12px 30px rgba(18, 8, 44, 0.28);
       }
 
-      .section-title {
-        margin: 0 0 18px;
-        font-size: clamp(28px, 4vw, 40px);
-      }
-
+      .hero { padding: 34px 0 22px; }
       .badge {
         display: inline-block;
-        padding: 7px 14px;
-        border: 1px solid rgba(244, 201, 106, 0.65);
+        border: 1px solid rgba(244, 201, 106, 0.72);
+        color: var(--accent);
         border-radius: 999px;
-        color: var(--gold);
-        font-size: 14px;
-        margin-bottom: 16px;
-      }
-
-      .hero {
-        padding: 72px 0 48px;
-        text-align: center;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .hero::after {
-        content: '';
-        position: absolute;
-        width: 460px;
-        height: 460px;
-        right: -120px;
-        top: -80px;
-        background: radial-gradient(circle, rgba(244, 201, 106, 0.25), transparent 70%);
-        filter: blur(10px);
-        opacity: 0.7;
-        pointer-events: none;
-      }
-
-      .hero-content {
-        position: relative;
-        z-index: 2;
-      }
-
-      .hero-decor {
-        position: absolute;
-        right: -140px;
-        top: -40px;
-        width: min(520px, 70vw);
-        opacity: 0.24;
-        pointer-events: none;
-        z-index: 1;
+        padding: 7px 12px;
+        font-size: 13px;
+        margin-bottom: 14px;
       }
 
       h1 {
-        font-size: clamp(32px, 6.2vw, 56px);
-        line-height: 1.1;
-        margin: 0 0 14px;
+        margin: 0;
+        line-height: 1.12;
+        font-size: clamp(28px, 8vw, 46px);
       }
 
       .subtitle {
-        margin: 0 auto 24px;
-        max-width: 760px;
+        margin: 14px 0 18px;
         color: var(--text-soft);
-        font-size: clamp(17px, 2.5vw, 22px);
-        line-height: 1.45;
+        line-height: 1.5;
+        font-size: clamp(16px, 4vw, 20px);
       }
 
       .actions {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-
-      .actions .btn,
-      .result-cta .btn {
-        width: min(100%, 320px);
+        display: grid;
+        gap: 10px;
       }
 
       .btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        border: 0;
+        border-radius: 14px;
         text-decoration: none;
-        border: none;
-        border-radius: 16px;
-        padding: 16px 28px;
         font-weight: 700;
-        color: #2c165d;
-        background: linear-gradient(135deg, #f8dda3, #e7b85a);
-        box-shadow: 0 10px 24px rgba(244, 201, 106, 0.28);
-        transition: transform 0.2s ease, box-shadow 0.3s ease;
-        animation: btnBreath 7s ease-in-out infinite;
-        position: relative;
-        overflow: hidden;
+        font-size: 15px;
+        min-height: 52px;
+        padding: 10px 16px;
+        cursor: pointer;
+        transition: transform 0.2s ease, opacity 0.2s ease;
       }
 
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 14px 32px rgba(244, 201, 106, 0.5), 0 0 20px rgba(244, 201, 106, 0.35);
+      .btn:active { transform: scale(0.98); }
+
+      .btn-primary {
+        color: #2b1a5b;
+        background: linear-gradient(130deg, #f9dfaa, #e8b85c);
       }
 
-      .btn:active {
-        transform: translateY(1px) scale(0.97);
-      }
-
-      .telegram-btn {
-        gap: 10px;
+      .btn-telegram {
         color: #fff;
-        background: linear-gradient(150deg, rgba(90, 145, 203, 0.94), rgba(52, 113, 170, 0.94));
-        box-shadow: 0 10px 22px rgba(74, 138, 201, 0.25);
-      }
-
-      .telegram-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 16px 30px rgba(74, 138, 201, 0.35);
-      }
-
-      .telegram-btn:active {
-        transform: translateY(1px) scale(0.97);
-        box-shadow: 0 8px 18px rgba(42, 171, 238, 0.3);
-      }
-
-      .telegram-btn svg {
-        width: 22px;
-        height: 22px;
-        flex-shrink: 0;
+        gap: 10px;
+        background: linear-gradient(130deg, var(--telegram-start), var(--telegram-end));
       }
 
       .hero-meta {
-        margin: 12px 0 24px;
-        color: #d8cbff;
-        font-size: 14px;
-      }
-
-      .birth-calculator {
-        margin: 30px auto 0;
-        max-width: 520px;
-        text-align: left;
-      }
-
-      .birth-calculator .card {
-        padding: 26px;
-        position: relative;
-        z-index: 1;
-        backdrop-filter: blur(8px);
-        transition: transform 0.45s ease, box-shadow 0.45s ease;
-      }
-
-      .birth-calculator-title {
-        margin: 0 0 12px;
-        font-size: 20px;
-      }
-
-      .birth-calculator label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 14px;
-        color: #4c3a80;
-      }
-
-      .birth-calculator .birth-date-input {
-        width: 100%;
-        height: 52px;
-        padding: 12px 16px;
-        border-radius: 16px;
-        border: 1px solid rgba(216, 203, 255, 0.7);
-        background: rgba(255, 255, 255, 0.72);
-        color: #2c165d;
-        font-size: 16px;
-        margin-bottom: 12px;
-        transition: box-shadow 0.4s ease, border-color 0.4s ease, background 0.4s ease;
-        box-shadow: 0 10px 20px rgba(68, 44, 128, 0.12);
-        outline: none;
-      }
-
-      .birth-calculator .card:focus-within {
-        transform: scale(1.02);
-        box-shadow: 0 18px 36px rgba(244, 201, 106, 0.22), 0 0 28px rgba(244, 201, 106, 0.2);
-      }
-
-      .birth-calculator .birth-date-input:focus {
-        border-color: rgba(244, 201, 106, 0.85);
-        box-shadow: 0 0 0 3px rgba(244, 201, 106, 0.25), 0 14px 30px rgba(125, 91, 255, 0.22);
-        background: rgba(255, 255, 255, 0.85);
-      }
-
-      .birth-date-picker {
-        margin-top: 8px;
-        padding: 12px;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        box-shadow: 0 16px 34px rgba(18, 10, 40, 0.2);
-        backdrop-filter: blur(12px);
-        animation: fadeUp 0.6s ease both;
-      }
-
-      .flatpickr-calendar {
-        width: 100%;
-        max-width: 100%;
-        background: rgba(255, 255, 255, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.28);
-        border-radius: 20px;
-        box-shadow: 0 16px 36px rgba(30, 18, 72, 0.22);
-        color: #352563;
-        backdrop-filter: blur(16px);
-        animation: fadeUp 0.6s ease both;
-      }
-
-      .flatpickr-months .flatpickr-month {
-        border-radius: 16px 16px 0 0;
-        padding: 8px 6px;
-      }
-
-      .flatpickr-current-month {
-        font-weight: 700;
-        color: #2f1f5f;
-      }
-
-      .flatpickr-months .flatpickr-prev-month,
-      .flatpickr-months .flatpickr-next-month {
-        top: 8px;
-        padding: 6px;
-        border-radius: 999px;
-        color: #4b3a7a;
-        transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .flatpickr-months .flatpickr-prev-month:hover,
-      .flatpickr-months .flatpickr-next-month:hover {
-        background: rgba(244, 201, 106, 0.18);
-        box-shadow: 0 6px 12px rgba(244, 201, 106, 0.3);
-        transform: translateY(-1px);
-      }
-
-      .flatpickr-weekdays {
-        margin-top: 8px;
-      }
-
-      .flatpickr-weekday {
-        color: rgba(60, 44, 110, 0.7);
-        font-weight: 600;
-      }
-
-      .flatpickr-day {
-        border-radius: 14px;
-        height: 44px;
-        line-height: 44px;
-        max-width: 44px;
-        color: #3b2b68;
-        transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
-      }
-
-      .flatpickr-day:hover {
-        background: rgba(244, 201, 106, 0.18);
-        box-shadow: 0 0 12px rgba(244, 201, 106, 0.35);
-        color: #2f1f5f;
-      }
-
-      .flatpickr-day.selected,
-      .flatpickr-day.startRange,
-      .flatpickr-day.endRange {
-        background: var(--gold);
-        color: #2c165d;
-        box-shadow: 0 12px 22px rgba(244, 201, 106, 0.45), 0 0 18px rgba(244, 201, 106, 0.3);
-        transform: translateY(-1px);
-        animation: dayPulse 0.55s ease-out;
-      }
-
-      .flatpickr-day.today:not(.selected) {
-        border-color: rgba(125, 91, 255, 0.4);
-        box-shadow: inset 0 0 0 1px rgba(125, 91, 255, 0.3);
-      }
-
-      .flatpickr-day.disabled,
-      .flatpickr-day.disabled:hover {
-        color: rgba(120, 108, 170, 0.45);
-        background: transparent;
-        box-shadow: none;
-      }
-
-      #birth-calc-button {
-        opacity: 0;
-        transform: translateY(8px);
-        pointer-events: none;
-        transition: opacity 0.4s ease, transform 0.4s ease;
-      }
-
-      #birth-calc-button.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-        pointer-events: auto;
-      }
-
-      .birth-calculator-result {
-        margin-top: 14px;
-        padding: 20px;
-        border-radius: 18px;
-        border: 1px solid rgba(120, 108, 170, 0.18);
-        background: rgba(239, 236, 255, 0.7);
-        box-shadow: 0 12px 26px rgba(43, 26, 80, 0.12);
-        opacity: 0;
-        transform: translateY(6px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-      }
-
-      .birth-calculator-result.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .result-hero {
-        display: flex;
-        align-items: flex-start;
-        gap: 22px;
-        flex-wrap: wrap;
-      }
-
-      .result-highlight {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        position: relative;
-        padding-bottom: 16px;
-      }
-
-      .result-number {
-        font-size: clamp(72px, 12vw, 120px);
-        font-weight: 800;
-        line-height: 0.95;
-        background: linear-gradient(140deg, #7d5bff, #f4c96a);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        text-shadow: 0 0 18px rgba(244, 201, 106, 0.55), 0 0 32px rgba(125, 91, 255, 0.35);
-        opacity: 0;
-        transform: scale(0.94);
-        position: relative;
-      }
-
-      .result-number::before {
-        content: '';
-        position: absolute;
-        inset: -18% -14%;
-        background: radial-gradient(circle, rgba(244, 201, 106, 0.35), rgba(125, 91, 255, 0.05) 65%, transparent 75%);
-        filter: blur(6px);
-        opacity: 0;
-        z-index: -1;
-        transition: opacity 0.8s ease;
-      }
-
-      .result-highlight::after {
-        content: '';
-        position: absolute;
-        left: 10%;
-        right: 10%;
-        bottom: 0;
-        height: 28px;
-        background: radial-gradient(circle, rgba(244, 201, 106, 0.28), transparent 70%);
-        filter: blur(10px);
-        opacity: 0;
-        transition: opacity 0.8s ease;
-      }
-
-      .result-words {
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 0;
-        margin: 0;
-      }
-
-      .result-words li {
-        padding: 6px 12px;
-        border-radius: 999px;
-        background: rgba(125, 91, 255, 0.12);
-        color: #4a317f;
-        font-size: 13px;
-        font-weight: 600;
-      }
-
-      .result-meta h3 {
-        margin: 0 0 10px;
-        font-size: 20px;
-        color: #3c2c6e;
-        opacity: 0;
-        transform: translateY(8px);
-      }
-
-      .result-chips {
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        padding: 0;
-        margin: 0;
-      }
-
-      .result-chips li {
-        padding: 7px 12px;
-        border-radius: 999px;
-        background: rgba(125, 91, 255, 0.12);
-        border: 1px solid rgba(125, 91, 255, 0.18);
-        color: #4a317f;
-        font-size: 13px;
-      }
-
-      .result-description {
         margin: 12px 0 16px;
-        line-height: 1.5;
-        color: #4b3a7a;
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-interpretation {
-        margin: 10px 0 18px;
-        max-width: 520px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        line-height: 1.65;
-        color: #4b3a7a;
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-breakdown {
-        display: grid;
-        gap: 14px;
-        margin: 18px 0 10px;
-        max-width: 560px;
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-breakdown-card {
-        background: rgba(255, 255, 255, 0.72);
-        border-radius: 18px;
-        border: 1px solid rgba(74, 49, 127, 0.12);
-        padding: 14px 18px;
-        box-shadow: 0 12px 24px rgba(21, 10, 58, 0.08);
-      }
-
-      .result-breakdown-card h4 {
-        margin: 0 0 8px;
-        font-size: 14px;
-        letter-spacing: 0.02em;
-        text-transform: uppercase;
-        color: #6d56b3;
-      }
-
-      .result-breakdown-card p {
-        margin: 0;
-        line-height: 1.55;
-        color: #3f2f73;
-      }
-
-      .result-interpretation-preview,
-      .result-interpretation-full {
-        margin: 0;
-      }
-
-      .result-interpretation-toggle {
-        align-self: flex-start;
-        padding: 6px 16px;
-        border-radius: 999px;
-        border: 1px solid rgba(125, 91, 255, 0.25);
-        background: rgba(125, 91, 255, 0.12);
-        color: #3c2c6e;
-        font-size: 13px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-      }
-
-      .result-interpretation-toggle:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 6px 14px rgba(125, 91, 255, 0.2);
-        background: rgba(125, 91, 255, 0.18);
-      }
-
-      .result-interpretation-toggle:active {
-        transform: translateY(1px);
-      }
-
-      .result-hook {
-        margin: 6px 0 10px;
-        max-width: 420px;
-        font-size: 13px;
-        line-height: 1.45;
-        color: rgba(60, 44, 110, 0.68);
-        opacity: 0;
-        transform: translateY(10px);
-      }
-
-      .result-actions {
-        display: flex;
-        justify-content: flex-start;
-      }
-
-      .chips {
-        list-style: none;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        justify-content: center;
-        margin: 0;
-        padding: 0;
-      }
-
-      .chips li {
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 999px;
-        padding: 10px 14px;
         color: var(--text-soft);
         font-size: 14px;
       }
 
-      .grid {
+      .chips {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 8px;
+      }
+
+      .chips li {
+        border-radius: 12px;
+        padding: 10px 12px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .calculator { margin-top: 18px; padding: 18px; }
+      .calculator h2, .section-title { margin: 0 0 14px; font-size: clamp(24px, 6.6vw, 34px); }
+
+      .date-input {
+        width: 100%;
+        min-height: 52px;
+        border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.34);
+        color: #f7f2ff;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 12px 14px;
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+
+      .date-input:focus {
+        outline: 2px solid rgba(244, 201, 106, 0.7);
+        outline-offset: 2px;
+      }
+
+      .hint { margin: 10px 0 0; color: var(--text-soft); font-size: 14px; }
+      .error { margin: 10px 0 0; color: #ffd2d2; font-size: 14px; }
+
+      .result {
+        margin-top: 14px;
+        padding: 16px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.92);
+        color: var(--ink);
+      }
+
+      .result h3 { margin: 0 0 10px; font-size: clamp(25px, 7vw, 36px); }
+      .result-section { margin: 14px 0; }
+      .result-section h4 { margin: 0 0 6px; font-size: 15px; color: #5a43a2; text-transform: uppercase; letter-spacing: 0.03em; }
+      .result-section p { margin: 0; line-height: 1.55; }
+
+      .card { padding: 18px; }
+      .about {
         display: grid;
         gap: 14px;
       }
 
-      .grid-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .card {
-        background: rgba(255, 255, 255, 0.72);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 18px;
-        padding: 24px;
-        color: var(--text-dark);
-        box-shadow: 0 12px 30px rgba(34, 22, 80, 0.12);
-        backdrop-filter: blur(10px);
-        transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 18px 40px rgba(34, 22, 80, 0.16);
-        background: rgba(255, 255, 255, 0.8);
-      }
-
-      .about-me-card {
-        display: flex;
-        align-items: center;
-        gap: 28px;
-        padding: clamp(22px, 4vw, 32px);
-        border-radius: 22px;
-        background: rgba(255, 255, 255, 0.86);
-        border: 1px solid rgba(93, 82, 150, 0.14);
-        box-shadow: 0 16px 32px rgba(30, 20, 68, 0.16);
-        color: var(--text-dark);
-      }
-
-      .about-me-photo {
-        flex: 0 0 min(320px, 38%);
-      }
-
-      .about-me-photo img {
+      .about img {
         width: 100%;
-        height: auto;
+        border-radius: 16px;
         display: block;
-        border-radius: 22px;
-        object-fit: cover;
-        box-shadow: 0 12px 24px rgba(34, 22, 80, 0.18);
       }
 
-      .about-me-text {
-        flex: 1;
-      }
-
-      .about-me-text h2 {
-        margin-top: 0;
-      }
-
-      .about-me-text p {
-        margin: 0;
-        color: #4b3a7a;
-        line-height: 1.6;
-        font-size: 16px;
-      }
-
-      .about-card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 28px;
-        padding: clamp(22px, 4vw, 30px);
-        border-radius: 22px;
-        background: rgba(255, 255, 255, 0.86);
-        border: 1px solid rgba(93, 82, 150, 0.14);
-        box-shadow: 0 16px 34px rgba(30, 20, 68, 0.16);
-        color: var(--text-dark);
-      }
-
-      .about-text {
-        flex: 1;
-      }
-
-      .about-text h2 {
-        margin-top: 0;
-      }
-
-      .about-text p {
-        margin: 0;
-        color: #4b3a7a;
-        line-height: 1.6;
-        font-size: 16px;
-      }
-
-      .about-photo {
-        flex: 0 0 min(320px, 38%);
-      }
-
-      .about-photo img {
-        width: 100%;
-        height: auto;
-        border-radius: 20px;
-        display: block;
-        box-shadow: 0 12px 28px rgba(34, 22, 80, 0.18);
-        object-fit: cover;
-      }
-
-      .card h3 {
-        margin: 0 0 10px;
-        font-size: 20px;
-        color: var(--text-dark);
-      }
-
-      .card-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 10px;
-      }
-
-      .card-header h3 {
-        margin: 0;
-      }
-
-      .card-icon {
-        width: 32px;
-        height: 32px;
-        color: #7b5cff;
-        flex-shrink: 0;
-        opacity: 0.85;
-      }
-
-      .card p {
-        margin: 0;
-        color: #4b3a7a;
-        line-height: 1.5;
-      }
-
-      .steps .card {
-        position: relative;
-        padding-top: 52px;
-      }
-
-      .step-number {
-        position: absolute;
-        top: 16px;
-        left: 18px;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        color: #2c165d;
-        background: linear-gradient(140deg, #f8dda3, #e7b85a);
-      }
-
-      .note {
-        margin-top: 12px;
-        color: #d8cbff;
-        font-size: 14px;
-      }
-
-      .benefits {
-        margin: 0;
-        padding: 0;
-        list-style: none;
+      .grid {
         display: grid;
-        gap: 10px;
+        gap: 12px;
       }
 
-      .benefits li {
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid rgba(93, 82, 150, 0.1);
-        border-radius: 14px;
-        padding: 12px 14px;
-        color: #4b3a7a;
-      }
+      .card h3 { margin: 0 0 8px; color: #fff; font-size: 20px; }
+      .card p { margin: 0; color: var(--text-soft); line-height: 1.5; }
 
-      .benefits li::before {
-        content: '✦ ';
-        color: #7b5cff;
-      }
-
-      .benefits-grid .card {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      .benefits-grid .card p {
-        font-size: 15px;
-      }
-
-      .result-cta {
-        margin-top: 24px;
-        text-align: center;
-      }
-
-      .result-cta-note {
-        margin: 0 auto 12px;
-        color: #dcd3ff;
-        max-width: 580px;
-      }
-
-      .final-cta {
-        text-align: center;
-        margin: 20px 0 56px;
-      }
-
-      .final-cta .card {
-        padding: clamp(22px, 5vw, 34px);
-      }
+      .final-cta { text-align: center; }
+      .final-cta .hint { margin-top: 10px; }
 
       footer {
         text-align: center;
-        color: #d2c5ff;
-        padding: 0 0 24px;
-        font-size: 14px;
+        color: var(--text-soft);
+        font-size: 13px;
+        padding: 18px 0 24px;
       }
 
-      @media (max-width: 820px) {
-        .about-me-card {
-          flex-direction: column;
-          text-align: left;
-        }
-
-        .about-me-photo {
-          width: 100%;
-        }
-
-        .about-card {
-          flex-direction: column;
-          text-align: left;
-        }
-
-        .about-photo {
-          width: 100%;
-        }
-      }
-
-      @keyframes cosmicDrift {
-        0% {
-          transform: translate3d(0, 0, 0);
-        }
-        50% {
-          transform: translate3d(-20px, 30px, 0);
-        }
-        100% {
-          transform: translate3d(0, 0, 0);
-        }
-      }
-
-      @keyframes particleFloat {
-        0% {
-          transform: translate3d(0, 0, 0);
-        }
-        50% {
-          transform: translate3d(-20px, 25px, 0);
-        }
-        100% {
-          transform: translate3d(0, 0, 0);
-        }
-      }
-
-      @keyframes btnBreath {
-        0%,
-        100% {
-          box-shadow: 0 10px 24px rgba(244, 201, 106, 0.28);
-        }
-        50% {
-          box-shadow: 0 12px 28px rgba(244, 201, 106, 0.38);
-        }
-      }
-
-      @keyframes resultNumberIn {
-        0% {
-          opacity: 0;
-          transform: scale(0.88);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-
-      @keyframes resultTextIn {
-        0% {
-          opacity: 0;
-          transform: translateY(12px);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes resultMetaIn {
-        0% {
-          opacity: 0;
-          transform: translateY(10px);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes lightPulse {
-        0% {
-          opacity: 0;
-          transform: scale(0.95);
-        }
-        60% {
-          opacity: 0.65;
-          transform: scale(1);
-        }
-        100% {
-          opacity: 0;
-          transform: scale(1.05);
-        }
-      }
-
-      @keyframes calcButtonPulse {
-        0%,
-        100% {
-          box-shadow: 0 10px 22px rgba(244, 201, 106, 0.28), 0 0 0 rgba(244, 201, 106, 0);
-        }
-        50% {
-          box-shadow: 0 14px 30px rgba(244, 201, 106, 0.4), 0 0 18px rgba(244, 201, 106, 0.35);
-        }
-      }
-
-      @keyframes dayPulse {
-        0% {
-          transform: scale(0.95);
-          box-shadow: 0 0 0 rgba(244, 201, 106, 0.35);
-        }
-        60% {
-          transform: scale(1.03);
-          box-shadow: 0 0 18px rgba(244, 201, 106, 0.5);
-        }
-        100% {
-          transform: scale(1);
-          box-shadow: 0 12px 22px rgba(244, 201, 106, 0.35);
-        }
-      }
-
-      .birth-calculator .btn {
-        animation: calcButtonPulse 3s ease-in-out infinite;
-      }
-
-      .birth-calculator .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 16px 34px rgba(244, 201, 106, 0.55), 0 0 26px rgba(244, 201, 106, 0.45);
-      }
-
-      .birth-calculator .btn:active {
-        transform: translateY(1px) scale(0.98);
-        box-shadow: 0 12px 26px rgba(244, 201, 106, 0.45), 0 0 20px rgba(244, 201, 106, 0.35);
-      }
-
-      .birth-calculator .btn::after {
-        content: '';
-        position: absolute;
-        inset: -30%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent 60%);
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .birth-calculator .btn:active::after {
-        animation: lightPulse 0.5s ease-out;
-      }
-
-      .birth-calculator-result.is-visible .result-number {
-        animation: resultNumberIn 0.65s ease-out forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-number::before,
-      .birth-calculator-result.is-visible .result-highlight::after {
-        opacity: 1;
-      }
-
-      .birth-calculator-result.is-visible .result-meta h3 {
-        animation: resultMetaIn 0.5s ease-out 0.15s forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-description {
-        animation: resultTextIn 0.6s ease-out 0.3s forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-interpretation {
-        animation: resultTextIn 0.6s ease-out 0.4s forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-breakdown {
-        animation: resultTextIn 0.6s ease-out 0.35s forwards;
-      }
-
-      .birth-calculator-result.is-visible .result-hook {
-        animation: resultTextIn 0.55s ease-out 0.22s forwards;
-      }
-
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(18px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes floatNumberUp {
-        0% {
-          transform: translateY(40px);
-        }
-        100% {
-          transform: translateY(-160px);
-        }
-      }
-
-      @media (prefers-reduced-motion: no-preference) {
-        .hero {
-          animation: fadeUp 0.9s ease both;
-        }
-
-        main .section {
-          animation: fadeUp 0.8s ease both;
-        }
-
-        main .section:nth-of-type(2) {
-          animation-delay: 0.1s;
-        }
-
-        main .section:nth-of-type(3) {
-          animation-delay: 0.2s;
-        }
-
-        main .section:nth-of-type(4) {
-          animation-delay: 0.3s;
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .btn,
-        body::before,
-        body::after,
-        .floating-numbers span {
-          animation: none;
-        }
-
-        .birth-calculator-result,
-        .result-number,
-        .result-meta h3,
-        .result-hook,
-        .result-description,
-        .result-interpretation,
-        .result-breakdown {
-          opacity: 1;
-          transform: none;
-        }
-      }
-
-      @media (max-width: 900px) {
-        .grid-3 {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-
-      @media (max-width: 640px) {
-        .hero {
-          padding-top: 52px;
-        }
-
-        .hero::after {
-          width: 320px;
-          height: 320px;
-          right: -140px;
-        }
-
-        .grid-3 {
-          grid-template-columns: 1fr;
-        }
-
-        .btn {
-          width: 100%;
-          max-width: none;
-        }
-
-        .chips {
-          justify-content: flex-start;
-        }
-
-        .chips li {
-          width: 100%;
-          border-radius: 12px;
-        }
-
-        .birth-calculator {
-          max-width: 100%;
-        }
-
-        .flatpickr-day {
-          height: 48px;
-          line-height: 48px;
-          max-width: 48px;
-        }
-
-        .result-actions {
-          justify-content: center;
-        }
-
-        .hero-decor {
-          right: -160px;
-          top: -80px;
-        }
-
-        .result-hero {
-          align-items: flex-start;
-        }
-
-        .result-hook {
-          font-size: 12.5px;
-        }
-
+      @media (min-width: 760px) {
+        .actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .chips { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .about { grid-template-columns: minmax(0, 1fr) 280px; align-items: center; }
+        .grid.help { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid.process { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid.benefits { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid.reviews { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       }
     </style>
   </head>
   <body>
-    <div class="floating-numbers" aria-hidden="true">
-      <span>1</span>
-      <span>2</span>
-      <span>3</span>
-      <span>4</span>
-      <span>5</span>
-      <span>6</span>
-      <span>7</span>
-      <span>8</span>
-      <span>9</span>
-      <span>11</span>
-      <span>22</span>
-      <span>1</span>
-    </div>
-    <header class="hero container" id="top">
-      <div class="hero-content">
-        <span class="badge">Онлайн-консультации</span>
-        <h1>Дарья Погосян — нумеролог и психолог (онлайн)</h1>
-        <p class="subtitle">
-          Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясное направление.
-          Нумерология + психологический подход — бережно и по делу.
-        </p>
-        <div class="actions">
-          <a href="#final-cta" class="btn">Рассчитать судьбу</a>
-          <a
-            href="https://t.me/username"
-            class="btn telegram-btn"
-            data-telegram-link
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Открыть Telegram"
-          >
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path
-                fill="currentColor"
-                d="M20.665 3.717a1.47 1.47 0 0 0-1.497-.224L3.6 9.487a1.487 1.487 0 0 0 .091 2.804l3.394 1.124 1.335 4.215a1.488 1.488 0 0 0 2.39.667l2.03-1.653 3.63 2.68a1.488 1.488 0 0 0 2.37-.84l2.74-13.14a1.47 1.47 0 0 0-.915-1.627Zm-9.589 13.164-.49 1.494-.966-3.053 8.799-7.288-7.343 8.847Zm6.947 1.332-4.228-3.12a1.49 1.49 0 0 0-1.854.033l-1.045.851.833-2.543a1.49 1.49 0 0 0-.325-1.507L6.37 9.131l13.59-5.24-1.937 14.322Z"
-              />
-            </svg>
-            Написать в Telegram
-          </a>
-        </div>
-        <p class="hero-meta">30–60 минут • онлайн • конфиденциально</p>
-        <ul class="chips">
-          <li>Онлайн • конфиденциально</li>
-          <li>Нумерология + психология</li>
-          <li>Понятные шаги после встречи</li>
-        </ul>
-
-        <section class="birth-calculator" aria-label="Калькулятор даты рождения">
-          <div class="card">
-            <h2 class="birth-calculator-title">Введите дату рождения</h2>
-            <label for="birth-date">Введите дату рождения</label>
-            <input
-              id="birth-date"
-              class="birth-date-input"
-              type="text"
-              placeholder="Выберите дату рождения"
-              inputmode="none"
-              autocomplete="off"
-              readonly
-            />
-            <div id="birth-date-picker" class="birth-date-picker" aria-hidden="true"></div>
-            <button id="birth-calc-button" class="btn" type="button" hidden>Получить расшифровку</button>
-            <div id="birth-calc-result" class="birth-calculator-result" hidden aria-live="polite"></div>
-            <p>Иногда достаточно одной встречи, чтобы всё стало на свои места.</p>
-          </div>
-        </section>
+    <header class="hero container">
+      <span class="badge">Онлайн-консультации</span>
+      <h1>Дарья Погосян — нумеролог и психолог (онлайн)</h1>
+      <p class="subtitle">
+        Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясное направление. Нумерология +
+        психологический подход — бережно и по делу.
+      </p>
+      <div class="actions">
+        <a href="#calculator" class="btn btn-primary">Рассчитать судьбу</a>
+        <a href="https://t.me/username" class="btn btn-telegram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
+            <path fill="currentColor" d="M20.66 3.72a1.45 1.45 0 0 0-1.49-.23L3.6 9.49a1.48 1.48 0 0 0 .1 2.8l3.39 1.13 1.33 4.21a1.49 1.49 0 0 0 2.39.67l2.03-1.65 3.63 2.68a1.49 1.49 0 0 0 2.37-.84l2.74-13.14a1.47 1.47 0 0 0-.92-1.63Z"/>
+          </svg>
+          Написать в Telegram
+        </a>
       </div>
-      <img class="hero-decor" src="assets/hero-bg.svg" alt="" aria-hidden="true" />
+      <p class="hero-meta">30–60 минут • онлайн • конфиденциально</p>
+      <ul class="chips">
+        <li>Онлайн • конфиденциально</li>
+        <li>Нумерология + психология</li>
+        <li>Понятные шаги после встречи</li>
+      </ul>
+
+      <section id="calculator" class="calculator glass section" aria-label="Рассчитать число судьбы">
+        <h2>Введите дату рождения</h2>
+        <input id="birth-date" class="date-input" type="date" aria-label="Дата рождения" />
+        <button id="calculate-btn" class="btn btn-primary" type="button" disabled>Получить расшифровку</button>
+        <p class="hint">Иногда достаточно одной встречи, чтобы всё стало на свои места.</p>
+        <p id="date-error" class="error" hidden></p>
+        <div id="calc-result" class="result" hidden></div>
+      </section>
     </header>
 
     <main class="container">
-      <section class="section" id="about">
-        <div class="about-card">
-          <div class="about-text">
+      <section class="section">
+        <div class="about glass card">
+          <div>
             <h2 class="section-title">Обо мне</h2>
             <p>
               Я — Дарья Погосян, нумеролог и психолог. Помогаю мягко разобраться в ситуации, увидеть причины
               происходящего и выстроить понятные шаги без давления и оценок.
             </p>
           </div>
-          <div class="about-photo">
-            <img src="./assets/darya.jpg" alt="Дарья Погосян" loading="lazy" />
-          </div>
+          <img src="assets/darya.jpg" alt="Дарья Погосян" loading="lazy" />
         </div>
       </section>
 
-      <section class="section" id="help">
+      <section class="section">
         <h2 class="section-title">С чем я могу помочь</h2>
-        <div class="grid grid-3">
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-anxiety.svg" alt="" aria-hidden="true" />
-              <h3>Тревога и тяжесть на душе</h3>
-            </div>
-            <p>Когда хочется выдохнуть и вернуть спокойствие</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-relationships.svg" alt="" aria-hidden="true" />
-              <h3>Отношения и сценарии</h3>
-            </div>
-            <p>Понять, почему повторяется одно и то же, и как изменить</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-selfesteem.svg" alt="" aria-hidden="true" />
-              <h3>Самооценка и границы</h3>
-            </div>
-            <p>Перестать тащить всё на себе и начать выбирать себя</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-money.svg" alt="" aria-hidden="true" />
-              <h3>Деньги и реализация</h3>
-            </div>
-            <p>Ясность в целях, сильные стороны, направление</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-period.svg" alt="" aria-hidden="true" />
-              <h3>Сложный период</h3>
-            </div>
-            <p>Развод, переезд, выгорание: поддержка и опора</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-selfesteem.svg" alt="" aria-hidden="true" />
-              <h3>Внутренняя ясность</h3>
-            </div>
-            <p>Понять себя и собрать жизнь в понятный план</p>
-          </article>
+        <div class="grid help">
+          <article class="glass card"><h3>Тревога</h3><p>Когда сложно выдохнуть, постоянно «тянет вниз» и нет ощущения безопасности.</p></article>
+          <article class="glass card"><h3>Отношения</h3><p>Повторяющиеся сценарии, обиды, дистанция, непонимание и усталость от компромиссов.</p></article>
+          <article class="glass card"><h3>Самооценка</h3><p>Когда вы знаете, что можете больше, но внутри мешают сомнения и страх ошибки.</p></article>
+          <article class="glass card"><h3>Деньги</h3><p>Тупик в доходе, тревога за будущее, сложности с решением «куда идти дальше».</p></article>
+          <article class="glass card"><h3>Сложный период</h3><p>Развод, выгорание, смена работы или переезд — когда нужна опора и ясная стратегия.</p></article>
+          <article class="glass card"><h3>Внутренняя ясность</h3><p>Собрать мысли, услышать себя и перейти от хаоса к конкретному плану действий.</p></article>
         </div>
       </section>
 
-      <section class="section steps" id="process">
+      <section class="section">
         <h2 class="section-title">Как проходит онлайн-консультация</h2>
-        <p>Без давления и оценок. Только то, что действительно важно сейчас.</p>
-        <div class="grid grid-3">
-          <article class="card">
-            <span class="step-number">1</span>
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-relationships.svg" alt="" aria-hidden="true" />
-              <h3>Запрос</h3>
-            </div>
-            <p>Вы коротко описываете ситуацию и цель</p>
-          </article>
-          <article class="card">
-            <span class="step-number">2</span>
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-selfesteem.svg" alt="" aria-hidden="true" />
-              <h3>Разбор</h3>
-            </div>
-            <p>Понимание причин, а не просто советы.</p>
-            <p>Нумерология (цифры/циклы/сильные стороны) + психологический анализ</p>
-          </article>
-          <article class="card">
-            <span class="step-number">3</span>
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-money.svg" alt="" aria-hidden="true" />
-              <h3>План</h3>
-            </div>
-            <p>Конкретные шаги, которые можно начать сразу.</p>
-            <p>Понятные шаги на 7–14 дней и рекомендации по состоянию</p>
-          </article>
+        <div class="grid process">
+          <article class="glass card"><h3>1. Запрос</h3><p>Вы кратко описываете ситуацию и то, что хотите изменить в ближайшее время.</p></article>
+          <article class="glass card"><h3>2. Разбор</h3><p>Смотрим по дате рождения ваши сильные стороны, уязвимости и текущий период.</p></article>
+          <article class="glass card"><h3>3. План</h3><p>Формируем понятные шаги на 7–14 дней, чтобы вы вышли с чувством опоры.</p></article>
         </div>
-        <p class="note">Формат: онлайн (видео/аудио). Конфиденциально.</p>
       </section>
 
-      <section class="section" id="result">
+      <section class="section">
         <h2 class="section-title">Что вы получите после встречи</h2>
-        <p>Станет понятно, куда двигаться дальше и на что опереться.</p>
-        <div class="grid grid-3 benefits-grid">
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-period.svg" alt="" aria-hidden="true" />
-              <h3>Ясность в ситуации</h3>
-            </div>
-            <p>Понимание причин, динамики и личных триггеров</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-selfesteem.svg" alt="" aria-hidden="true" />
-              <h3>Где ваша опора</h3>
-            </div>
-            <p>Ресурсы, которые уже есть, но пока не используются.</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-money.svg" alt="" aria-hidden="true" />
-              <h3>План действий</h3>
-            </div>
-            <p>Понятные шаги на ближайшие 1–2 недели</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-anxiety.svg" alt="" aria-hidden="true" />
-              <h3>Ресурс и состояние</h3>
-            </div>
-            <p>Поддержка, чтобы стало легче и спокойнее</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-relationships.svg" alt="" aria-hidden="true" />
-              <h3>Отношения и границы</h3>
-            </div>
-            <p>Как не растворяться в других и возвращать себе фокус</p>
-          </article>
-          <article class="card">
-            <div class="card-header">
-              <img class="card-icon" src="assets/icon-period.svg" alt="" aria-hidden="true" />
-              <h3>Текущий период</h3>
-            </div>
-            <p>Как проживать цикл без перегрузки и тревоги</p>
-          </article>
-        </div>
-        <div class="result-cta">
-          <p class="result-cta-note">Это базовая расшифровка… Полный разбор в Telegram.</p>
-          <a
-            href="https://t.me/USERNAME"
-            class="btn telegram-btn"
-            data-telegram-link
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Открыть Telegram"
-          >
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-              <path
-                fill="currentColor"
-                d="M20.665 3.717a1.47 1.47 0 0 0-1.497-.224L3.6 9.487a1.487 1.487 0 0 0 .091 2.804l3.394 1.124 1.335 4.215a1.488 1.488 0 0 0 2.39.667l2.03-1.653 3.63 2.68a1.488 1.488 0 0 0 2.37-.84l2.74-13.14a1.47 1.47 0 0 0-.915-1.627Zm-9.589 13.164-.49 1.494-.966-3.053 8.799-7.288-7.343 8.847Zm6.947 1.332-4.228-3.12a1.49 1.49 0 0 0-1.854.033l-1.045.851.833-2.543a1.49 1.49 0 0 0-.325-1.507L6.37 9.131l13.59-5.24-1.937 14.322Z"
-              />
-            </svg>
-            Получить расшифровку в Telegram
-          </a>
+        <div class="grid benefits">
+          <article class="glass card"><h3>Ясность</h3><p>Что с вами происходит и почему именно сейчас.</p></article>
+          <article class="glass card"><h3>Опора</h3><p>Сильные внутренние точки, на которые можно опираться каждый день.</p></article>
+          <article class="glass card"><h3>План</h3><p>Последовательность действий без перегруза и «надо всё сразу».</p></article>
+          <article class="glass card"><h3>Ресурс</h3><p>Как восстановить энергию и не срываться в знакомую усталость.</p></article>
+          <article class="glass card"><h3>Границы</h3><p>Как общаться так, чтобы слышать себя и не терять контакт с близкими.</p></article>
+          <article class="glass card"><h3>Текущий период</h3><p>На что лучше направить внимание в ближайшие месяцы.</p></article>
         </div>
       </section>
 
-      <section class="section" id="reviews">
+      <section class="section">
         <h2 class="section-title">Отзывы</h2>
-        <div class="grid grid-3">
-          <article class="card">
-            <p>
-              «После консультации стало спокойнее. Появилась ясность и конкретные шаги, что делать дальше.»
-            </p>
-          </article>
-          <article class="card">
-            <p>
-              «Очень бережная подача. Я увидела свои сильные стороны и перестала сомневаться в решении.»
-            </p>
-          </article>
-          <article class="card">
-            <p>
-              «Разобрали отношения и мои сценарии. На душе стало легче, появилось чувство опоры.»
-            </p>
-          </article>
+        <div class="grid reviews">
+          <article class="glass card"><p>«После консультации ушла тревога: стало понятно, что делать с работой и как спокойно обсудить это дома.»</p></article>
+          <article class="glass card"><p>«Мне понравилось, что без мистики и давления. Всё чётко: где мой ресурс и какие шаги сделать сразу.»</p></article>
+          <article class="glass card"><p>«За один созвон собрали мысли в систему. Через неделю я уже выполнила план и почувствовала уверенность.»</p></article>
         </div>
       </section>
 
-      <section class="final-cta" id="final-cta">
-        <div class="card">
+      <section class="section final-cta" id="final-cta">
+        <div class="glass card">
           <h2 class="section-title">Готовы начать?</h2>
-          <p class="subtitle">
-            Напишите мне короткое сообщение — я отвечу и предложу ближайшее время для онлайн-консультации.
-          </p>
-          <a class="btn" href="https://t.me/username" target="_blank" rel="noopener noreferrer">
-            Записаться на онлайн-консультацию
-          </a>
-          <p class="hero-meta">Ответ обычно в течение дня</p>
+          <a href="https://t.me/username" class="btn btn-telegram" target="_blank" rel="noopener noreferrer">Записаться на онлайн-консультацию</a>
+          <p class="hint">Ответ обычно в течение дня</p>
         </div>
       </section>
     </main>
 
-    <footer class="container">© 2026 Дарья Погосян — нумерология и психологическая поддержка</footer>
+    <footer>© 2026 Дарья Погосян — нумерология и психологическая поддержка</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ru.js"></script>
-    <script type="module">
-      const TELEGRAM_URL = 'https://t.me/USERNAME'; // заменить на реальную
-
-      const fateDescriptions = {
-        1: 'Число 1 говорит о силе инициатора: вы включаете движение, когда берёте лидерство. В полном разборе покажу, где ваша энергия раскрывается быстрее.',
-        2: 'Число 2 про тонкость и чувствительность к людям. Расширенная расшифровка подскажет, как превратить это в устойчивую опору.',
-        3: 'Число 3 — про яркость, творчество и общение. В полном разборе покажу, как направить этот ресурс в стабильные результаты.',
-        4: 'Число 4 про структуру, надёжность и дисциплину. На консультации разберём, где ваши усилия дадут максимальный эффект.',
-        5: 'Число 5 — энергия свободы и перемен. Полный анализ поможет сохранить баланс между риском и стабильностью.',
-        6: 'Число 6 несёт заботу и гармонию в близких отношениях. На разборе увидим, как поддерживать других и не терять себя.',
-        7: 'Число 7 — глубина, аналитика и интуиция. Полная расшифровка покажет, где ваша мудрость уже ведёт к решениям.',
-        8: 'Число 8 раскрывает потенциал влияния и денег. На консультации увидим, как управлять этим экологично и стабильно.',
-        9: 'Число 9 про масштаб и смысл. В полном анализе соединяем призвание и личный ресурс.',
-        11: 'Мастер-число 11 усиливает интуицию и вдохновение. В полном разборе настроим этот дар на практический результат.',
-        22: 'Мастер-число 22 — потенциал крупных и устойчивых проектов. Покажу, как реализовать масштаб без перегрузки.'
-      };
-
-      const INTERPRETATION_INVITE =
-        'Хотите глубже? В личном разборе я покажу, как это проявляется именно у вас — в отношениях, деньгах и текущем периоде.';
-
-      const fateInterpretations = {
-        1: {
-          preview: 'Ваш путь — про самостоятельность и лидерский старт. Жизнь проверяет вас там, где вы откладываете выбор.',
-          full: `Ваше число про умение выбирать направление и начинать первым. Повторяющиеся ситуации возникают, когда вы ждёте подтверждения извне или пытаетесь “быть удобным”, чтобы не ошибиться. В плюсе это даёт ясность, смелость и способность вести за собой — в минусе может давать напряжение и необходимость постоянно доказывать. Ваш ключ — действовать из внутренней уверенности, а не из борьбы. ${INTERPRETATION_INVITE}`
-        },
-        2: {
-          preview: 'Вы тонко чувствуете людей и атмосферу. Важно не терять границы, чтобы мягкость не превращалась в усталость.',
-          full: `Это число про партнёрство, эмпатию и умение видеть нюансы. Ваш ресурс — поддерживать и соединять людей, создавать гармонию и доверие. Повторы начинаются, когда вы слишком долго сомневаетесь, подстраиваетесь или берёте на себя чужие эмоции. Ваш ключ — сохранять чувствительность, но опираться на собственные решения и границы. ${INTERPRETATION_INVITE}`
-        },
-        3: {
-          preview: 'Ваша сила раскрывается через выражение: слова, идеи, творчество. Когда вы молчите о главном — энергия падает.',
-          full: `Тройка — про самовыражение, лёгкость и контакт с жизнью. В плюсе это харизма, вдохновение, умение вовлекать — в минусе распыление и страх показаться “не таким”. Повторяющиеся ситуации появляются, когда вы подавляете эмоции или откладываете проявленность. Ваш ключ — говорить честно, выбирать одну главную линию и доводить её до результата. ${INTERPRETATION_INVITE}`
-        },
-        4: {
-          preview: 'Вам важны опора, порядок и ясные шаги. Хаос — главный триггер, который сбивает ваш внутренний баланс.',
-          full: `Четвёрка — про структуру, дисциплину и надёжность. Вы сильны там, где нужно выстроить систему: привычки, работу, отношения, планы. Повторы возникают, когда вы пытаетесь контролировать всё или тащите слишком много в одиночку. Ваш ключ — создавать устойчивую базу, но оставлять место гибкости, чтобы жизнь не ощущалась тяжёлой. ${INTERPRETATION_INVITE}`
-        },
-        5: {
-          preview: 'Ваш ресурс — свобода, движение и перемены. Когда становится тесно, выгорание приходит быстрее всего.',
-          full: `Пятёрка — про динамику, интерес, новые впечатления и рост через опыт. В плюсе это гибкость и смелость менять — в минусе импульсивность и усталость от рутины. Повторяющиеся ситуации появляются, когда вы слишком долго терпите ограничения, а потом резко “обрываете” и начинаете заново. Ваш ключ — сохранять свободу, но держать курс и ритм. ${INTERPRETATION_INVITE}`
-        },
-        6: {
-          preview: 'Вы умеете заботиться и быть опорой. Важно не брать на себя чужую ответственность, чтобы не выгорать.',
-          full: `Шестёрка — про ценности, отношения, дом и ответственность. Ваш дар — создавать тепло и поддержку, но повторяющиеся сценарии появляются, когда вы спасаете, терпите или забываете о себе. В плюсе это зрелая любовь и надёжность — в минусе чувство вины и перегруз. Ваш ключ — баланс: забота без самопожертвования. ${INTERPRETATION_INVITE}`
-        },
-        7: {
-          preview: 'Вам нужна глубина и тишина для восстановления. Без неё мысли перегреваются, и появляется тревожный фон.',
-          full: `Семёрка — про смысл, анализ и внутреннюю честность. Вы сильны в поиске причин и точных ответов, но повторы приходят, когда вы живёте в постоянной суете и игнорируете потребность в уединении. В плюсе это мудрость и интуитивная точность — в минусе закрытость и сомнения. Ваш ключ — время на себя и честный диалог с собственными желаниями. ${INTERPRETATION_INVITE}`
-        },
-        8: {
-          preview: 'Ваша тема — влияние и результат. Энергия падает, когда вы чувствуете, что не управляете ситуацией.',
-          full: `Восьмёрка — про силу, управление, деньги и способность доводить до конкретного результата. Повторы появляются, когда контроль становится слишком жёстким или когда вы боитесь масштаба ответственности. В плюсе это сильная карьера и финансовая устойчивость — в минусе напряжение и “надо всё держать”. Ваш ключ — лидерство без перегиба и ясные правила игры. ${INTERPRETATION_INVITE}`
-        },
-        9: {
-          preview: 'Вы чувствуете завершения и смысл. Повторы появляются, когда вы слишком долго держитесь за то, что уже пора отпустить.',
-          full: `Девятка — про мудрость, завершение циклов и широкую эмпатию. В плюсе это способность вдохновлять и помогать — в минусе уход в прошлое и внутреннюю усталость от “незакрытых дверей”. Сценарии повторяются, когда вы остаётесь из долга или жалости. Ваш ключ — завершать вовремя и выбирать то, что действительно наполняет. ${INTERPRETATION_INVITE}`
-        },
-        11: {
-          preview: 'Мастер-число интуиции: вы чувствуете раньше, чем понимаете. Важно научиться заземляться, чтобы не перегружаться.',
-          full: `11 усиливает тонкость восприятия, вдохновение и внутренний “радар”. В плюсе это озарения и способность вести людей через смысл — в минусе тревожность, перепады энергии и ощущение, что внутри слишком много сигналов. Ваш ключ — заземление: режим, тело, простые решения и границы. Тогда интуиция становится ресурсом, а не шумом. (11 также несёт тему 2 — партнёрства и границ.) ${INTERPRETATION_INVITE}`
-        },
-        22: {
-          preview:
-            'Мастер-число строителя: потенциал создавать большие проекты. Тормозит чаще всего страх ошибки и “слишком большой ответственности”.',
-          full: `22 — про масштаб, систему и реализацию идеи в материальном мире. В плюсе это способность строить устойчивые структуры — в минусе перфекционизм и откладывание, потому что “нужно сразу идеально”. Ваш ключ — идти поэтапно: маленькие опоры, понятные сроки, реальный план. Тогда масштаб раскрывается спокойно и уверенно. (22 также несёт тему 4 — структуры и дисциплины.) ${INTERPRETATION_INVITE}`
-        }
-      };
-
-      const fateBreakdowns = {
-        1: {
-          character:
-            'Вы мыслите через цель и действие: если видите смысл — ускоряетесь, если нет — быстро теряете интерес. Решения принимаете сами, и внешние советы воспринимаете как ориентир, а не указание.',
-          behavior:
-            'В делах вы инициативны и любите начинать первым. Вам проще создать движение, чем поддерживать чужой темп, поэтому часто берёте роль запуска.',
-          relationships:
-            'В общении цените прямоту и уважение границ. Для вас важно, чтобы рядом был человек, который не конкурирует за лидерство, но и не растворяется.',
-          shadow:
-            'Внутренний конфликт возникает, когда кажется, что вас не слышат: появляется жёсткость или желание доказать. Это повторяется в ситуациях, где вы долго ждёте признания.',
-          depth: 'Это только базовый уровень: дальше — про ваш личный стиль лидерства и то, как он меняется в разные периоды.'
-        },
-        2: {
-          character:
-            'Вы думаете через ощущение и детали: замечаете настроение, оттенки слов, реакцию людей. Важнее гармония процесса, чем скорость результата.',
-          behavior:
-            'В жизни проявляетесь мягко, но последовательно. Часто именно вы соединяете людей и помогаете им договориться, даже когда это не видно внешне.',
-          relationships:
-            'В отношениях ждёте честности и эмоциональной безопасности. Вам важно чувствовать, что вас слышат, а не просто слушают.',
-          shadow:
-            'Внутренний страх — оказаться «слишком чувствительной». Из-за него вы можете подстраиваться, а потом накапливать усталость и обиду.',
-          depth: 'Это базовый слой: глубже раскрывается ваша интуиция и умение видеть истинные мотивы людей.'
-        },
-        3: {
-          character:
-            'Вы мыслите образами и ассоциациями: идеи рождаются через разговор, вдохновение и контакт. Вам важна свобода выражения.',
-          behavior:
-            'В делах вы живые и заметные, быстро вдохновляете других. Когда есть интерес, вы способны вести за собой лёгкостью.',
-          relationships:
-            'В общении цените лёгкость и чувство юмора. Для вас важно, чтобы вас принимали настоящими, без необходимости «быть серьёзным» всё время.',
-          shadow:
-            'Повторяющаяся проблема — распыление и страх быть непонятым. Тогда вы уходите в поверхностность, чтобы избежать критики.',
-          depth: 'Это лишь основа: дальше — ваш творческий путь и то, как он влияет на уверенность и деньги.'
-        },
-        4: {
-          character:
-            'Вы думаете через порядок и последовательность: любите понимать, как всё устроено, и держитесь логики. Стабильность важнее быстрых эффектов.',
-          behavior:
-            'В делах вы надёжны и терпеливы. Умеете доводить до результата и создавать систему там, где остальные видят хаос.',
-          relationships:
-            'В отношениях ожидаете предсказуемости и честности. Для вас важны договорённости и ощущение, что на человека можно опереться.',
-          shadow:
-            'Внутренний конфликт возникает, когда вы пытаетесь контролировать всё. Тогда появляется усталость и ощущение, что всё держится только на вас.',
-          depth: 'Это базовая линия: глубже — тема личной устойчивости и того, как вы строите опору для себя, а не только для других.'
-        },
-        5: {
-          character:
-            'Вы мыслите через опыт и движение: проще понять, попробовав, чем долго планировать. Вас заряжает ощущение свободы.',
-          behavior:
-            'В делах вы гибкие и быстро адаптируетесь. Умеете менять курс без драм, если чувствуете, что пора по-другому.',
-          relationships:
-            'В общении цените лёгкость, уважение границ и пространство. Слишком жёсткие правила быстро гасят ваш интерес.',
-          shadow:
-            'Внутренний страх — застрять. Тогда вы можете резко менять решения или уходить, не разобравшись до конца.',
-          depth: 'Это только верхний уровень: глубже — как сочетать свободу и устойчивость так, чтобы не терять фокус.'
-        },
-        6: {
-          character:
-            'Вы думаете через заботу и ответственность: часто заранее чувствуете, что нужно другим. Ваш ум склонен брать на себя больше, чем нужно.',
-          behavior:
-            'В делах вы надёжны и поддерживаете людей, даже если это незаметно. Вам важно создавать тепло и комфорт.',
-          relationships:
-            'В отношениях ожидаете взаимности и взрослого подхода. Вам важно, чтобы рядом ценили вашу заботу, а не воспринимали её как должное.',
-          shadow:
-            'Повторяющаяся проблема — чувство вины, если вы выбираете себя. Тогда вы можете перегружаться и выгорать.',
-          depth: 'Это базовая часть: глубже — как вы выстраиваете баланс между отдачей и личными потребностями.'
-        },
-        7: {
-          character:
-            'Вы мыслите глубоко и аналитично: любите искать причины, а не поверхностные ответы. Внутренний диалог у вас сильнее внешнего.',
-          behavior:
-            'В делах вы вдумчивы и точны. Лучше сделаете меньше, но качественно, чем разбрасываться.',
-          relationships:
-            'В общении цените честность и интеллектуальную близость. Вам важно, чтобы вас понимали на уровне смысла, а не только эмоций.',
-          shadow:
-            'Внутренний конфликт — страх быть уязвимым. Тогда вы можете закрываться и уходить в одиночество, даже если нуждаетесь в поддержке.',
-          depth: 'Это базовый слой: глубже — ваши источники силы и то, как интуиция влияет на выборы.'
-        },
-        8: {
-          character:
-            'Вы мыслите через результат и масштаб: оцениваете, насколько идея жизнеспособна. Вам важно ощущать контроль и влияние.',
-          behavior:
-            'В делах вы собраны, умеете держать планку и принимать решения. Часто становитесь тем, кто берёт ответственность.',
-          relationships:
-            'В общении цените уважение и чёткие правила. Вам комфортно рядом с людьми, которые держат слово.',
-          shadow:
-            'Повторяющаяся проблема — жёсткость и страх потерять контроль. Это проявляется, когда ставки слишком высоки.',
-          depth: 'Это только базовый уровень: глубже раскрывается тема власти, денег и личной устойчивости.'
-        },
-        9: {
-          character:
-            'Вы думаете через смысл и завершение: чувствуете, когда пора менять этап. Вам важно видеть картину целиком.',
-          behavior:
-            'В делах вы умеете вдохновлять и поддерживать, особенно в переломные моменты. Часто завершаете то, что другие не дотягивают.',
-          relationships:
-            'В отношениях ждёте глубины и честности. Вам важно, чтобы общение не было поверхностным и имело смысл.',
-          shadow:
-            'Внутренний конфликт — привязанность к прошлому или роль «спасателя». Это повторяется, когда вы долго держитесь за устаревшие связи.',
-          depth: 'Это базовый слой: глубже — ваша миссия и то, как вы используете свой опыт для других.'
-        },
-        11: {
-          character:
-            'Вы мыслите через интуицию и предчувствия: часто знаете раньше, чем можете объяснить. Внутренний радар тонкий, но может перегружаться.',
-          behavior:
-            'В делах вы ведёте через вдохновение и смысл. Вам важно чувствовать, что вы делаете что-то значимое, а не просто «по плану».',
-          relationships:
-            'В общении ищете честность и эмоциональную глубину. Вам важно, чтобы рядом был человек, который уважает вашу чувствительность.',
-          shadow:
-            'Повторяющаяся проблема — тревожность от избытка сигналов. Тогда вы можете сомневаться в себе и уходить в колебания.',
-          depth: 'Это база: глубже — как превратить вашу интуицию в практичные решения и внутреннюю опору.'
-        },
-        22: {
-          character:
-            'Вы мыслите масштабно и системно: видите не только идею, но и как её реализовать. Важно чувствовать, что вы создаёте что-то устойчивое.',
-          behavior:
-            'В делах вы стратег и строитель. Вам проще работать с большими задачами, чем с мелкими хаотичными деталями.',
-          relationships:
-            'В общении цените зрелость и надёжность. Вам важно, чтобы рядом были люди, которые разделяют ваш темп и серьёзность намерений.',
-          shadow:
-            'Внутренний конфликт — страх не справиться с масштабом. Тогда появляется перфекционизм и откладывание.',
-          depth: 'Это базовый уровень: глубже — ваша способность создавать проекты, которые переживут время.'
-        }
-      };
-
-      const fateChips = {
-        1: ['Лидерство', 'Импульс', 'Старт'],
-        2: ['Дипломатия', 'Интуиция', 'Партнёрство'],
-        3: ['Творчество', 'Коммуникация', 'Сцена'],
-        4: ['Система', 'Надёжность', 'Дисциплина'],
-        5: ['Свобода', 'Перемены', 'Гибкость'],
-        6: ['Забота', 'Гармония', 'Семья'],
-        7: ['Глубина', 'Аналитика', 'Мудрость'],
-        8: ['Влияние', 'Деньги', 'Амбиции'],
-        9: ['Смысл', 'Масштаб', 'Вклад'],
-        11: ['Интуиция', 'Вдохновение', 'Проводник'],
-        22: ['Проекты', 'Структура', 'Масштаб']
-      };
-
+    <script>
+      const TELEGRAM_URL = 'https://t.me/username';
       const birthDateInput = document.getElementById('birth-date');
-      const birthCalcButton = document.getElementById('birth-calc-button');
-      const birthCalcResult = document.getElementById('birth-calc-result');
-      const birthDatePickerHost = document.getElementById('birth-date-picker');
+      const calculateBtn = document.getElementById('calculate-btn');
+      const resultEl = document.getElementById('calc-result');
+      const errorEl = document.getElementById('date-error');
 
-      if (typeof flatpickr !== 'undefined') {
-        flatpickr.localize(flatpickr.l10ns.ru);
+      const todayIso = new Date().toISOString().split('T')[0];
+      birthDateInput.max = todayIso;
 
-        const pickerInstance = flatpickr(birthDateInput, {
-          inline: true,
-          dateFormat: 'Y-m-d',
-          maxDate: 'today',
-          disableMobile: true,
-          onReady: (_selectedDates, _dateStr, instance) => {
-            if (birthDatePickerHost && instance.calendarContainer) {
-              birthDatePickerHost.appendChild(instance.calendarContainer);
-              birthDatePickerHost.setAttribute('aria-hidden', 'false');
-            }
-          },
-          onChange: (selectedDates) => {
-            if (selectedDates.length && birthCalcButton) {
-              birthCalcButton.hidden = false;
-              birthCalcButton.classList.add('is-visible');
-            }
-          }
-        });
-
-        if (pickerInstance?.calendarContainer) {
-          let touchStartX = 0;
-
-          pickerInstance.calendarContainer.addEventListener('touchstart', (event) => {
-            touchStartX = event.touches[0]?.clientX ?? 0;
-          });
-
-          pickerInstance.calendarContainer.addEventListener('touchend', (event) => {
-            const touchEndX = event.changedTouches[0]?.clientX ?? 0;
-            const deltaX = touchEndX - touchStartX;
-
-            if (Math.abs(deltaX) > 45) {
-              pickerInstance.changeMonth(deltaX > 0 ? -1 : 1);
-            }
-          });
+      const descriptions = {
+        1: {
+          qualities: 'Вы про самостоятельность, внутренний стержень и способность начинать, когда другие ещё сомневаются. Ваша энергия проявляется в действиях, а не в долгих обсуждениях: вы лучше чувствуете себя в роли человека, который запускает процесс и берёт ответственность за вектор.',
+          strengths: 'Сильная сторона числа 1 — умение принимать решения в условиях неопределённости. Вы умеете удерживать фокус на главном, быстро собираться в сложный момент и доводить идею до первых результатов. Это качество особенно заметно в кризисные периоды, когда нужна ясная позиция.',
+          risks: 'Теневая сторона проявляется как излишняя жёсткость к себе и близким. Когда включается режим «я сам(а) справлюсь», вы можете игнорировать усталость и не просить поддержку даже тогда, когда она нужна. Это создаёт внутреннее напряжение и ощущение одиночества.',
+          relationships: 'В отношениях вам важны уважение, честность и свобода. Лучше всего строится контакт, где есть диалог равных, а не скрытая борьба за контроль. Когда вы говорите о своих ожиданиях прямо, конфликты становятся короче и безопаснее.',
+          career: 'В деньгах и реализации вы раскрываетесь через личные проекты, лидерские роли, самостоятельные решения и прозрачные цели. Подход «меньше хаоса — больше структуры» помогает вам стабилизировать доход и не выгорать в погоне за результатом.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) сформулируйте одну приоритетную цель на месяц; 2) уберите из расписания минимум две задачи, которые не приближают к ней; 3) запланируйте один разговор, где вы озвучите границы без оправданий.'
+        },
+        2: {
+          qualities: 'Число 2 связано с тонким восприятием людей и высокой эмоциональной чувствительностью. Вы хорошо считываете настроение, чувствуете нюансы и умеете создавать пространство, где становится спокойнее и безопаснее. Ваш стиль — не давление, а настройка и точность.',
+          strengths: 'Сильная сторона — дипломатичность и способность объединять. Вы умеете услышать обе стороны конфликта, найти рабочий компромисс и сохранить человеческий контакт. Там, где другие спорят, вы выстраиваете сотрудничество.',
+          risks: 'Теневая зона — привычка подстраиваться, чтобы избежать напряжения. Если долго откладывать свои потребности, накапливаются обида, усталость и ощущение, что вас недооценивают. Важно замечать этот момент раньше, чем он превращается в выгорание.',
+          relationships: 'В отношениях ключевую роль играют эмоциональная безопасность и честный диалог. Вам важно не просто быть рядом, а чувствовать, что вас действительно слышат. Прямой разговор о чувствах укрепляет связь сильнее, чем молчаливое терпение.',
+          career: 'В реализации вы особенно эффективны в задачах, где нужны коммуникация, сопровождение людей, аналитика контекста и командная работа. Доход растёт, когда вы цените свою мягкую силу как профессиональный навык, а не как «что-то само собой».',
+          nextSteps: 'В ближайшие 7–14 дней: 1) определите три личных приоритета и держите их видимыми; 2) в одном важном диалоге используйте формулу «мне важно…» вместо намёков; 3) выделите два вечера без чужих задач и уведомлений.'
+        },
+        3: {
+          qualities: 'Число 3 даёт энергию самовыражения, идей и живого контакта с миром. Вы мыслите образами, быстро видите нестандартные связи и умеете вдохновлять словами. Там, где нужна креативность и лёгкость, вы часто становитесь человеком, который запускает движение.',
+          strengths: 'Ваш ресурс — коммуникация и творческая адаптивность. Вы умеете говорить о сложном понятным языком, собирать людей вокруг смысла и создавать атмосферу, где появляется мотивация действовать. Это полезно и в работе, и в личной жизни.',
+          risks: 'Теневая сторона проявляется как распыление внимания. Когда идей становится слишком много, вы можете терять фокус, откладывать завершение и критиковать себя за «недостаточную серьёзность». Важно не путать свободу с хаосом.',
+          relationships: 'В отношениях для вас важны интерес, чувство юмора, признание и эмоциональная живость. Если контакт становится формальным и «по инструкции», появляется дистанция. Открытый разговор о своих потребностях возвращает теплоту.',
+          career: 'В деньгах и реализации сильнее всего работают сферы, где ценятся презентация, контент, обучение, публичность, маркетинг или проекты с людьми. Финансовая устойчивость приходит, когда вы переводите талант в повторяемую систему действий.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) выберите один проект и установите три измеримых этапа; 2) ежедневно выделяйте 45 минут на главное без отвлечений; 3) опубликуйте или покажите миру один результат вместо бесконечной доработки.'
+        },
+        4: {
+          qualities: 'Число 4 про структуру, надёжность и практичное мышление. Вы умеете видеть, как устроен процесс, где у него слабое место и что нужно укрепить, чтобы всё работало долго. Ваш подход — последовательность, а не резкие рывки.',
+          strengths: 'Сильные стороны — дисциплина, устойчивость и ответственность. Вы умеете держать слово, завершать начатое и выстраивать систему там, где раньше был хаос. Люди доверяют вам важные задачи, потому что видят результат.',
+          risks: 'Теневая зона — избыточный контроль и перфекционизм. Если пытаться просчитать всё заранее, можно застревать в тревоге и откладывать движение. Иногда достаточно «достаточно хорошо», чтобы процесс не тормозился.',
+          relationships: 'В отношениях вам нужны предсказуемость, уважение договорённостей и конкретика. Вы спокойнее чувствуете себя рядом с человеком, который не играет в угадайку, а говорит прямо и по делу.',
+          career: 'В реализации ваш рост связан с операционными задачами, управлением, аналитикой, проектной и технической работой, где ценятся порядок и качество. Финансы стабилизируются, когда вы считаете ресурсы и не тащите на себе всё сразу.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) пересоберите расписание в формате «обязательное / важное / можно позже»; 2) делегируйте хотя бы одну повторяющуюся задачу; 3) добавьте в календарь фиксированное окно восстановления, как рабочую встречу.'
+        },
+        5: {
+          qualities: 'Число 5 даёт энергию движения, перемен и жажды опыта. Вы оживаете, когда есть развитие, новые задачи и ощущение свободы выбора. Ваше мышление гибкое: вы быстро подстраиваетесь под контекст и видите возможности там, где другие видят тупик.',
+          strengths: 'Сильная сторона — скорость адаптации и смелость пробовать новое. Вы не боитесь пересобирать планы, если меняются условия, и способны находить рабочие решения в нестабильной среде. Это редкий и ценный навык для современного ритма.',
+          risks: 'Теневая зона — импульсивность и усталость от рутины. Когда нет чётких ориентиров, вы можете бросать начатое и терять накопленный результат. Важно создавать опоры, которые удерживают направление без ощущения клетки.',
+          relationships: 'В отношениях важны свобода, уважение границ и живой интерес друг к другу. Контроль и эмоциональное давление быстро истощают вас. Договорённости работают лучше, когда они гибкие и обсуждаются регулярно.',
+          career: 'В деньгах и реализации вы хорошо проявляетесь в динамичных сферах: продажи, запуск проектов, переговоры, продюсирование, путешествия, digital. Доход растёт, когда вы соединяете свободу действий с конкретной системой учёта и приоритетов.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) определите один главный финансовый фокус; 2) ограничьте количество параллельных задач до трёх; 3) введите еженедельный обзор результатов, чтобы замечать прогресс, а не только новые идеи.'
+        },
+        6: {
+          qualities: 'Число 6 связано с заботой, ответственностью и способностью создавать устойчивое пространство для себя и других. Вы чувствительны к качеству отношений и часто становитесь тем человеком, рядом с которым становится легче дышать и принимать решения.',
+          strengths: 'Ваш ресурс — умение поддерживать, организовывать и удерживать долгий процесс. Вы видите, где не хватает тепла, структуры или внимания, и умеете это восполнять. В сложных ситуациях именно ваша спокойная включённость становится опорой для команды или семьи.',
+          risks: 'Теневая зона — перегруз из-за роли «я должен(а) всё удержать». Если постоянно ставить себя последним(ей), появляется хроническая усталость, раздражение и чувство вины за любую паузу. Важно помнить: забота о себе — часть зрелой ответственности.',
+          relationships: 'В личной сфере вам важны надёжность, уважение, совместные ценности и ощущение дома в широком смысле. Когда вы открыто просите о помощи и делите ответственность, близость становится глубже и честнее.',
+          career: 'В реализации сильны направления, где ценятся сопровождение людей, сервис, образование, управление качеством, работа с сообществами и помогающие профессии. Финансовая стабильность приходит через чёткие границы и адекватную оценку своего вклада.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) составьте список «что делает только меня уставшим(ей)» и уберите минимум два пункта; 2) договоритесь о перераспределении обязанностей в семье или работе; 3) запланируйте регулярное время на восстановление без чувства вины.'
+        },
+        7: {
+          qualities: 'Число 7 про глубину, анализ и внутренний поиск смысла. Вы наблюдательны, умеете замечать скрытые причины и не удовлетворяетесь поверхностными ответами. Ваше мышление стратегическое: вы предпочитаете понять систему, а уже потом действовать.',
+          strengths: 'Сильная сторона — способность к исследованию, концентрации и качественным выводам. Вы умеете собирать разрозненные факты в целостную картину и находить точные решения там, где другие теряются в эмоциях или шуме.',
+          risks: 'Теневая зона — изоляция и чрезмерная критичность. Если долго держать всё в себе, появляется ощущение отчуждения и внутренней перегруженности мыслями. Важно не только анализировать, но и возвращаться в живой диалог с людьми.',
+          relationships: 'В отношениях для вас важны уважение к личному пространству, интеллектуальная совместимость и искренность. Вы раскрываетесь постепенно: когда есть доверие, контакт становится очень глубоким и устойчивым.',
+          career: 'В деньгах и реализации вам подходят аналитика, исследования, IT, психология, образование, консалтинг, экспертные роли. Доход растёт, когда вы регулярно показываете результаты миру, а не держите знания только внутри своей «лаборатории».',
+          nextSteps: 'В ближайшие 7–14 дней: 1) завершите один зависший аналитический или личный вопрос; 2) обсудите выводы с человеком, которому доверяете; 3) переведите размышления в конкретный план из трёх шагов с датами.'
+        },
+        8: {
+          qualities: 'Число 8 связано с силой управления, материальной ответственностью и ориентацией на результат. Вы видите, где можно усилить систему, как выстроить влияние и на чём держится реальная устойчивость — финансовая, профессиональная, личная.',
+          strengths: 'Ваши сильные стороны — стратегическое мышление, выносливость и умение принимать непопулярные, но необходимые решения. Вы хорошо работаете с большими задачами и не теряетесь, когда ставки высокие и нужно действовать точно.',
+          risks: 'Теневая зона — жёсткость, перегруз и страх потерять контроль. Если долго жить в режиме «только результат», страдают эмоции, тело и отношения. Настоящая сила восьмёрки раскрывается, когда есть баланс между амбициями и человеческим фактором.',
+          relationships: 'В личной жизни вам важны уважение, честность, взрослые договорённости и общая цель. Вы цените партнёрство, где оба умеют не только поддерживать, но и брать ответственность за свои решения.',
+          career: 'В реализации вы часто выходите на руководящие позиции, предпринимательство, финансы, управление проектами, юридические и административные направления. Доход растёт, когда вы делегируете рутину и концентрируетесь на стратегических рычагах.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) пересмотрите финансовый план и выделите одну точку роста; 2) определите, какие задачи нужно делегировать уже сейчас; 3) добавьте в неделю два слота для восстановления, чтобы не платить здоровьем за эффективность.'
+        },
+        9: {
+          qualities: 'Число 9 про масштаб мышления, эмпатию и завершение важных жизненных циклов. Вы чувствуете общую картину, понимаете, что пора отпускать, и способны трансформировать личный опыт в пользу для других людей.',
+          strengths: 'Сильная сторона — гуманность и умение видеть смысл за пределами текущей сложности. Вы вдохновляете, поддерживаете и можете быть проводником в периоды перемен, когда особенно нужны зрелость и широкий взгляд.',
+          risks: 'Теневая зона — роль спасателя и эмоциональное истощение от чужих проблем. Если не ставить границы, вы теряете контакт со своими целями и накапливаете усталость. Важно отличать помощь от самопожертвования.',
+          relationships: 'В отношениях вам важны глубина, ценности и честность. Вы не любите поверхностный контакт; вам нужен диалог о важном. Когда вы говорите о своих потребностях так же ясно, как поддерживаете других, связь становится устойчивее.',
+          career: 'В реализации вам близки социальные проекты, образование, творчество, коммуникации, наставничество и направления, где есть смысл и вклад. Финансы укрепляются, когда вы соединяете идею пользы с чёткой системой действий и оплаты.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) завершите один «долгий хвост» из прошлого; 2) обозначьте границы в ситуации, где вас регулярно перегружают; 3) выберите один проект, который одновременно полезен людям и поддерживает ваш доход.'
+        },
+        11: {
+          qualities: 'Мастер-число 11 даёт усиленную интуицию, тонкое восприятие и внутренний запрос на смысл. Вы часто улавливаете тенденции раньше других и чувствуете, куда «ведёт» ситуация, даже если пока нет точных фактов. Это про вдохновение, которое требует зрелого заземления.',
+          strengths: 'Сильная сторона — способность быть проводником идей, эмоциональной ясности и глубокой мотивации. Вы умеете «включать свет» в хаотичных моментах: показывать суть, объединять людей вокруг ценностей и вдохновлять на движение.',
+          risks: 'Теневая зона — нервная перегрузка и внутренние качели между высоким потенциалом и самокритикой. Когда слишком много стимулов, 11 уходит в тревогу или прокрастинацию. Вам особенно важны ритм, режим и бережное отношение к психике.',
+          relationships: 'В отношениях нужна искренность, духовная и эмоциональная совместимость, уважение к чувствительности. Формальный контакт быстро истощает. Открытые договорённости и честный темп сближения помогают сохранить доверие.',
+          career: 'В деньгах и реализации хорошо работают экспертные и творческие роли, психология, образование, медиа, проекты с миссией и влиянием на людей. Доход стабилизируется, когда интуитивные идеи переводятся в систему: продукт, формат, процесс, регулярность.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) сократите информационный шум и оставьте два ключевых источника; 2) зафиксируйте одну идею и оформите её в конкретный мини-продукт/услугу; 3) ежедневно выделяйте время на восстановление нервной системы.'
+        },
+        22: {
+          qualities: 'Мастер-число 22 называют энергией «архитектора»: это сочетание масштабного видения и способности воплощать его в реальности. Вы умеете мыслить крупно и одновременно видеть, какие шаги, люди и ресурсы нужны для большого результата.',
+          strengths: 'Сильные стороны — системность, управленческая зрелость и умение строить устойчивые конструкции: бизнесы, команды, продукты, проекты. Вы можете переводить абстрактные идеи в работающие модели и доводить сложные задачи до измеримого эффекта.',
+          risks: 'Теневая зона — чрезмерное давление на себя и страх «не соответствовать масштабу». Из-за этого 22 может застревать в переответственности, гиперконтроле или откладывании старта до «идеальных условий». Важно помнить, что большая цель собирается через ритм, а не через рывок.',
+          relationships: 'В отношениях вам нужны надёжность, зрелость и партнёрство по ценностям. Вы раскрываетесь рядом с человеком, который уважает ваши амбиции и при этом помогает сохранять человеческий баланс, а не только результат.',
+          career: 'В деньгах и реализации потенциал 22 особенно заметен в предпринимательстве, управлении, девелопменте, инфраструктурных и образовательных проектах, где требуется долгий горизонт. Финансовая устойчивость растёт, когда вы строите систему, способную работать без вашего постоянного «ручного режима».',
+          nextSteps: 'В ближайшие 7–14 дней: 1) сформулируйте один проект на год и разбейте на этапы до конца месяца; 2) создайте таблицу ключевых показателей и отслеживайте её раз в неделю; 3) назначьте встречу для обсуждения делегирования критически важных задач.'
+        },
+        33: {
+          qualities: 'Мастер-число 33 связано с глубокой эмпатией, зрелой поддержкой и силой трансформирующего слова. Это энергия служения, но не через жертву, а через профессиональное присутствие, когда вы помогаете людям проходить сложные этапы осознанно и с достоинством.',
+          strengths: 'Сильная сторона — способность исцелять контакт: вы умеете видеть боль, не пугаясь её, и создавать пространство, где человек возвращается к себе. 33 часто проявляется в наставничестве, терапии, образовании, медиа и проектах, где важны человечность и смысл.',
+          risks: 'Теневая зона — размытые границы и спасательство. Когда вы берёте слишком много чужой боли, быстро накапливается эмоциональная перегрузка. Главный урок 33 — помогать из ресурса, а не из чувства долга и страха подвести.',
+          relationships: 'В личной сфере вам важны тепло, взаимная ответственность и зрелая честность. Вы глубоко чувствуете партнёра, но важно оставлять место и для собственных потребностей, чтобы близость не превращалась в одностороннюю отдачу.',
+          career: 'В реализации число 33 раскрывается в помогающих профессиях, образовательных форматах, сообществах, социальных и творческих инициативах. Финансы становятся стабильнее, когда вы соединяете миссию с чёткой ценой, графиком и бережной нагрузкой.',
+          nextSteps: 'В ближайшие 7–14 дней: 1) пропишите личные границы в работе и отношениях; 2) обновите формат своей помощи так, чтобы он был устойчив для вас; 3) выделите один день в неделю только на восстановление и личные задачи.'
         }
+      };
+
+      const sumDigits = (value) => value.split('').reduce((acc, d) => acc + Number(d), 0);
+
+      function calculateLifePath(dateString) {
+        const digits = dateString.replace(/\D/g, '');
+        let sum = sumDigits(digits);
+        while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
+          sum = sumDigits(String(sum));
+        }
+        return sum;
       }
 
-      const reduceToFateNumber = (sum) => {
-        let current = sum;
-
-        while (current > 9 && current !== 11 && current !== 22) {
-          current = String(current)
-            .split('')
-            .reduce((acc, digit) => acc + Number(digit), 0);
+      function validateDate() {
+        const value = birthDateInput.value;
+        if (!value) {
+          calculateBtn.disabled = true;
+          errorEl.hidden = true;
+          return false;
         }
 
-        return current;
-      };
-
-      const calculateFateNumber = (dateValue) => {
-        const digits = dateValue.replace(/\D/g, '').split('');
-        const sum = digits.reduce((acc, digit) => acc + Number(digit), 0);
-        return reduceToFateNumber(sum);
-      };
-
-      birthCalcButton?.addEventListener('click', () => {
-        if (!birthDateInput?.value) {
-          birthCalcResult.hidden = false;
-          birthCalcResult.classList.remove('is-visible');
-          birthCalcResult.innerHTML = '<p>Введите дату рождения</p>';
-          return;
+        if (value > todayIso) {
+          calculateBtn.disabled = true;
+          errorEl.hidden = false;
+          errorEl.textContent = 'Дата рождения не может быть в будущем.';
+          return false;
         }
 
-        const fateNumber = calculateFateNumber(birthDateInput.value);
-        const description = fateDescriptions[fateNumber];
-        const interpretation = fateInterpretations[fateNumber] ?? {
-          preview: description,
-          full: `${description} ${INTERPRETATION_INVITE}`
-        };
+        errorEl.hidden = true;
+        calculateBtn.disabled = false;
+        return true;
+      }
 
-        const breakdown = fateBreakdowns[fateNumber];
-        const breakdownMarkup = breakdown
-          ? `
-            <div class="result-breakdown">
-              <article class="result-breakdown-card">
-                <h4>Характер</h4>
-                <p>${breakdown.character}</p>
-              </article>
-              <article class="result-breakdown-card">
-                <h4>Поведение</h4>
-                <p>${breakdown.behavior}</p>
-              </article>
-              <article class="result-breakdown-card">
-                <h4>Отношения</h4>
-                <p>${breakdown.relationships}</p>
-              </article>
-              <article class="result-breakdown-card">
-                <h4>Теневая сторона</h4>
-                <p>${breakdown.shadow}</p>
-              </article>
-              <article class="result-breakdown-card">
-                <h4>Намёк на глубину</h4>
-                <p>${breakdown.depth}</p>
-              </article>
-            </div>
-          `
-          : '';
+      birthDateInput.addEventListener('input', validateDate);
+      birthDateInput.addEventListener('change', validateDate);
 
-        const chips = (fateChips[fateNumber] ?? ['Ясность', 'Сила', 'Направление'])
-          .map((chip) => `<li>${chip}</li>`)
-          .join('');
+      calculateBtn.addEventListener('click', () => {
+        if (!validateDate()) return;
 
-        birthCalcResult.hidden = false;
-        birthCalcResult.classList.remove('is-visible');
-        birthCalcResult.innerHTML = `
-          <div class="result-hero">
-            <div class="result-highlight">
-              <div class="result-number">${fateNumber}</div>
-              <ul class="result-words">${chips}</ul>
-            </div>
-            <div class="result-meta">
-              <h3>Ваше число судьбы</h3>
-            </div>
-          </div>
-          <p class="result-hook">
-            Число судьбы показывает ваш скрытый мотив, ключевые уроки и период силы — намёк на путь,
-            который стоит раскрыть глубже сегодня.
-          </p>
-          <p class="result-description">${description}</p>
-          ${breakdownMarkup}
-          <div class="result-interpretation">
-            <p class="result-interpretation-preview">${interpretation.preview}</p>
-            <button class="result-interpretation-toggle" type="button" aria-expanded="false">
-              Подробнее
-            </button>
-            <p class="result-interpretation-full" hidden>${interpretation.full}</p>
-          </div>
-          <div class="result-actions">
-            <a
-              href="https://t.me/USERNAME"
-              class="btn telegram-btn"
-              data-telegram-link
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Получить полный разбор в Telegram
-            </a>
-          </div>
+        const number = calculateLifePath(birthDateInput.value);
+        const data = descriptions[number];
+        if (!data) return;
+
+        resultEl.hidden = false;
+        resultEl.innerHTML = `
+          <h3>Ваше число судьбы — ${number}</h3>
+          <section class="result-section"><h4>Ключевые качества</h4><p>${data.qualities}</p></section>
+          <section class="result-section"><h4>Сильные стороны</h4><p>${data.strengths}</p></section>
+          <section class="result-section"><h4>Тени/риски</h4><p>${data.risks}</p></section>
+          <section class="result-section"><h4>Отношения</h4><p>${data.relationships}</p></section>
+          <section class="result-section"><h4>Деньги и реализация</h4><p>${data.career}</p></section>
+          <section class="result-section"><h4>Что сделать в ближайшие 7–14 дней</h4><p>${data.nextSteps}</p></section>
+          <a href="${TELEGRAM_URL}" class="btn btn-telegram" target="_blank" rel="noopener noreferrer">Получить полный разбор в Telegram</a>
         `;
-
-        requestAnimationFrame(() => {
-          birthCalcResult.classList.add('is-visible');
-        });
-
-        const toggleButton = birthCalcResult.querySelector('.result-interpretation-toggle');
-        const fullText = birthCalcResult.querySelector('.result-interpretation-full');
-
-        toggleButton?.addEventListener('click', () => {
-          if (!fullText) {
-            return;
-          }
-
-          const isExpanded = toggleButton.getAttribute('aria-expanded') === 'true';
-          fullText.hidden = isExpanded;
-          toggleButton.setAttribute('aria-expanded', String(!isExpanded));
-          toggleButton.textContent = isExpanded ? 'Подробнее' : 'Скрыть';
-        });
-      });
-
-      document.querySelectorAll('[data-telegram-link]').forEach((button) => {
-        button.setAttribute('href', TELEGRAM_URL);
+        resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     </script>
   </body>
