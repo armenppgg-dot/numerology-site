@@ -1,0 +1,220 @@
+:root {
+  --bg-1: #120822;
+  --bg-2: #2f1358;
+  --bg-3: #4e1f86;
+  --surface: rgba(255, 255, 255, 0.09);
+  --surface-strong: rgba(255, 255, 255, 0.14);
+  --border: rgba(255, 220, 140, 0.35);
+  --text: #f7f2ff;
+  --muted: #ddd1f4;
+  --gold-1: #f7df9c;
+  --gold-2: #ddb04a;
+  --shadow-soft: 0 16px 42px rgba(8, 2, 22, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at 20% 10%, #5f2aa6 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, #3c1d72 0%, transparent 45%),
+    linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
+}
+
+.page {
+  width: min(920px, 92%);
+  margin: 0 auto;
+  padding: 28px 0 46px;
+  display: grid;
+  gap: 22px;
+}
+
+.card {
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: var(--surface);
+  backdrop-filter: blur(11px);
+  box-shadow: var(--shadow-soft);
+}
+
+.hero {
+  padding: 26px;
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+}
+
+.hero-photo {
+  width: min(230px, 52vw);
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid rgba(247, 223, 156, 0.7);
+  box-shadow: 0 14px 28px rgba(7, 4, 20, 0.45), 0 0 22px rgba(247, 223, 156, 0.3);
+}
+
+.card-inner {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: var(--surface-strong);
+  padding: 20px;
+}
+
+h1,
+h2,
+h3 {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 12px;
+  font-size: clamp(1.6rem, 3.8vw, 2.2rem);
+}
+
+h2 {
+  margin-bottom: 10px;
+  font-size: clamp(1.45rem, 3.4vw, 2rem);
+}
+
+.about p,
+.subtitle,
+.result-text p,
+.mini-card p {
+  line-height: 1.7;
+  margin: 0 0 10px;
+}
+
+.subtitle {
+  color: var(--muted);
+}
+
+.calculator {
+  padding: 26px;
+}
+
+.select-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin-bottom: 14px;
+}
+
+label span {
+  display: block;
+  margin-bottom: 6px;
+  color: #f5e4b6;
+}
+
+select {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 12px;
+  padding: 0 12px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+  border-radius: 14px;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, filter 0.28s ease;
+}
+
+.btn-gold {
+  color: #2f174f;
+  background: linear-gradient(120deg, var(--gold-1), var(--gold-2));
+  box-shadow: 0 8px 20px rgba(247, 223, 156, 0.25);
+}
+
+.btn-gold:hover {
+  transform: translateY(-2px) scale(1.01);
+  filter: brightness(1.03);
+  box-shadow: 0 12px 28px rgba(247, 223, 156, 0.35);
+}
+
+.error {
+  margin: 10px 0 0;
+  color: #ffd7d7;
+}
+
+.result {
+  margin-top: 18px;
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.result.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.result-number {
+  margin: 0 0 12px;
+  font-size: clamp(1.2rem, 2.8vw, 1.7rem);
+  font-weight: 700;
+  color: #f6e2ac;
+}
+
+.result-text {
+  font-size: clamp(1rem, 2.3vw, 1.08rem);
+}
+
+.mini-grid {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.mini-card {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  padding: 14px;
+}
+
+.telegram-btn {
+  margin-top: 14px;
+  width: 100%;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 10px 24px rgba(247, 223, 156, 0.25);
+  }
+  50% {
+    box-shadow: 0 15px 30px rgba(247, 223, 156, 0.42);
+  }
+}
+
+.fade-in {
+  animation: fadeScale 0.7s ease both;
+}
+
+@keyframes fadeScale {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
