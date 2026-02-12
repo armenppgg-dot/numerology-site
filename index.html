@@ -6,526 +6,589 @@
     <title>Дарья Погосян — нумеролог и психолог</title>
     <style>
       :root {
-        --bg-start: #5f34be;
-        --bg-mid: #2f1768;
-        --bg-end: #140b32;
-        --glass: rgba(255, 255, 255, 0.14);
-        --glass-border: rgba(255, 255, 255, 0.22);
-        --text-main: #f8f4ff;
-        --text-soft: #d7cbff;
-        --ink: #2f2256;
-        --accent: #f4c96a;
-        --telegram-start: #4d8fd0;
-        --telegram-end: #2f6ea9;
-        --form-border: #98ccff;
-        --form-bg: #f4fbff;
+        --bg-1: #120822;
+        --bg-2: #2f1358;
+        --bg-3: #4e1f86;
+        --surface: rgba(255, 255, 255, 0.08);
+        --surface-strong: rgba(255, 255, 255, 0.14);
+        --border: rgba(255, 220, 140, 0.35);
+        --text: #f7f2ff;
+        --muted: #d9cdf3;
+        --gold-1: #f7df9c;
+        --gold-2: #e1b44f;
+        --gold-glow: rgba(247, 223, 156, 0.45);
+        --shadow: 0 16px 40px rgba(8, 2, 22, 0.42);
       }
 
-      * { box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        color: var(--text-main);
-        background: linear-gradient(160deg, var(--bg-start), var(--bg-mid) 50%, var(--bg-end));
-        min-height: 100vh;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at 10% 10%, #5c259f 0%, transparent 40%),
+          radial-gradient(circle at 80% 30%, #3d1f77 0%, transparent 42%),
+          linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
+        overflow-x: hidden;
+      }
+
+      .floating-numbers {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+
+      .floating-numbers span {
+        position: absolute;
+        bottom: -20vh;
+        color: rgba(255, 239, 208, 0.06);
+        font-weight: 700;
+        animation: drift linear infinite;
+      }
+
+      @keyframes drift {
+        from {
+          transform: translateY(0) translateX(0);
+        }
+        to {
+          transform: translateY(-130vh) translateX(20px);
+        }
       }
 
       .container {
-        width: min(960px, 92%);
+        width: min(1120px, 92%);
         margin: 0 auto;
+        position: relative;
+        z-index: 1;
       }
 
-      .section { padding: 24px 0; }
-
-      .glass {
-        background: var(--glass);
-        border: 1px solid var(--glass-border);
-        backdrop-filter: blur(12px);
-        border-radius: 20px;
-        box-shadow: 0 12px 30px rgba(18, 8, 44, 0.28);
+      section {
+        margin: 24px 0;
+        animation: reveal 0.9s ease both;
       }
 
-      .hero { padding: 34px 0 22px; }
-      .badge {
-        display: inline-block;
-        border: 1px solid rgba(244, 201, 106, 0.72);
-        color: var(--accent);
-        border-radius: 999px;
-        padding: 7px 12px;
-        font-size: 13px;
-        margin-bottom: 14px;
+      @keyframes reveal {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
-      h1 {
-        margin: 0;
-        line-height: 1.12;
-        font-size: clamp(28px, 8vw, 46px);
+      .panel {
+        background: var(--surface);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(10px);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
       }
 
-      .subtitle {
-        margin: 14px 0 18px;
-        color: var(--text-soft);
-        line-height: 1.5;
-        font-size: clamp(16px, 4vw, 20px);
-      }
-
-      .actions {
+      .hero {
         display: grid;
-        gap: 10px;
+        gap: 24px;
+        align-items: center;
+        padding: 28px;
+      }
+
+      .hero h1 {
+        margin: 0;
+        font-size: clamp(2rem, 6vw, 3.2rem);
+        line-height: 1.13;
+      }
+
+      .hero p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .hero-cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 14px;
       }
 
       .btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border: 0;
-        border-radius: 14px;
         text-decoration: none;
-        font-weight: 700;
-        font-size: 15px;
+        border-radius: 14px;
         min-height: 52px;
-        padding: 10px 16px;
-        cursor: pointer;
-        transition: transform 0.2s ease, opacity 0.2s ease;
+        padding: 0 20px;
+        border: 1px solid transparent;
+        font-weight: 700;
+        transition: 0.25s ease;
       }
 
-      .btn:active { transform: scale(0.98); }
-
-      .btn-primary {
-        color: #2b1a5b;
-        background: linear-gradient(130deg, #f9dfaa, #e8b85c);
+      .btn:focus-visible,
+      .field:focus-visible {
+        outline: 2px solid var(--gold-1);
+        outline-offset: 2px;
       }
 
-      .btn-telegram {
-        color: #fff;
-        gap: 10px;
-        background: linear-gradient(130deg, var(--telegram-start), var(--telegram-end));
+      .btn-gold {
+        color: #2f174f;
+        background: linear-gradient(120deg, var(--gold-1), var(--gold-2));
+        box-shadow: 0 0 0 rgba(247, 223, 156, 0.35);
       }
 
-      .hero-meta {
-        margin: 12px 0 16px;
-        color: var(--text-soft);
-        font-size: 14px;
+      .btn-gold:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0 22px var(--gold-glow);
       }
 
-      .chips {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 8px;
+      .pulse {
+        animation: pulse 2.8s infinite;
       }
 
-      .chips li {
-        border-radius: 12px;
-        padding: 10px 12px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.18);
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(247, 223, 156, 0.1);
+        }
+        50% {
+          box-shadow: 0 0 0 14px rgba(247, 223, 156, 0);
+        }
       }
 
-      .calculator { margin-top: 18px; padding: 18px; }
-      .calculator h2, .section-title { margin: 0 0 14px; font-size: clamp(24px, 6.6vw, 34px); }
+      .btn-ghost {
+        color: var(--text);
+        border-color: var(--border);
+        background: rgba(255, 255, 255, 0.06);
+      }
 
-      .life-path-form {
+      .btn-ghost:hover {
+        box-shadow: 0 0 18px rgba(247, 223, 156, 0.25);
+      }
+
+      .meta {
+        font-size: 0.95rem;
+        margin-top: 10px;
+        color: #f2e6bd;
+      }
+
+      .hero-photo {
+        justify-self: center;
+        width: min(100%, 360px);
+        border-radius: 22px;
+        border: 2px solid rgba(247, 223, 156, 0.68);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35), 0 0 26px rgba(247, 223, 156, 0.22);
+      }
+
+      .section-title {
+        margin: 0 0 14px;
+        font-size: clamp(1.7rem, 4vw, 2.2rem);
+      }
+
+      .section-subtitle {
+        margin: 0 0 18px;
+        color: var(--muted);
+      }
+
+      .calculator {
+        padding: 28px;
+      }
+
+      .form-row {
         display: grid;
         gap: 12px;
       }
 
-      .date-selectors {
-        display: grid;
-        gap: 10px;
+      .field-wrap label {
+        font-size: 0.9rem;
+        color: #f2e2bd;
+        margin-bottom: 6px;
+        display: block;
       }
 
-      .date-select {
+      .field {
         width: 100%;
-        min-height: 52px;
-        border-radius: 16px;
-        border: 2px solid var(--form-border);
-        color: #34507b;
-        background: var(--form-bg);
-        padding: 12px 14px;
-        font-size: 16px;
-        font-weight: 500;
-        appearance: none;
+        min-height: 50px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.93);
+        color: #331a52;
+        padding: 0 14px;
+        font-size: 1rem;
       }
 
-      .date-select:focus {
-        outline: 2px solid rgba(244, 201, 106, 0.8);
-        outline-offset: 2px;
+      .hint,
+      .error {
+        margin-top: 10px;
       }
 
-      .hint { margin: 10px 0 0; color: var(--text-soft); font-size: 14px; }
-      .error { margin: 10px 0 0; color: #ffd2d2; font-size: 14px; }
+      .hint {
+        color: var(--muted);
+      }
+
+      .error {
+        color: #ffd6db;
+      }
 
       .result {
-        margin-top: 14px;
-        padding: 20px;
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.93);
-        color: var(--ink);
+        margin-top: 18px;
+        border: 1px solid rgba(247, 223, 156, 0.45);
+        background: rgba(10, 4, 24, 0.55);
+        border-radius: 18px;
+        padding: 22px;
       }
 
-      .result h3 { margin: 0 0 14px; font-size: clamp(25px, 7vw, 36px); }
+      .result h3 {
+        margin-top: 0;
+        color: #ffe7ac;
+      }
+
+      .result h4 {
+        margin-bottom: 8px;
+        color: #f7df9c;
+      }
+
       .result p {
-        margin: 0 0 12px;
-        line-height: 1.65;
-        color: #3a2c69;
+        margin-top: 0;
+        line-height: 1.6;
+        color: #f6f1ff;
       }
-      .result p:last-child { margin-bottom: 0; }
 
-      .card { padding: 18px; }
-      .about {
+      .cards {
         display: grid;
         gap: 14px;
       }
 
+      .card {
+        padding: 18px;
+        border-radius: 16px;
+        background: var(--surface-strong);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+
+      .icon {
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+        color: #f4d889;
+      }
+
+      .about {
+        padding: 24px;
+        display: grid;
+        gap: 16px;
+        align-items: center;
+      }
+
       .about img {
         width: 100%;
-        border-radius: 16px;
-        display: block;
+        border-radius: 18px;
+        border: 1px solid var(--border);
       }
 
-      .grid {
+      .review-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f7df9c, #c58f2e);
+        color: #3d2258;
+        font-weight: 700;
         display: grid;
-        gap: 12px;
+        place-items: center;
       }
 
-      .card h3 { margin: 0 0 8px; color: #fff; font-size: 20px; }
-      .card p { margin: 0; color: var(--text-soft); line-height: 1.5; }
-
-      .final-cta { text-align: center; }
-      .final-cta .hint { margin-top: 10px; }
+      .final {
+        text-align: center;
+        padding: 30px;
+      }
 
       footer {
+        padding: 24px 0 32px;
         text-align: center;
-        color: var(--text-soft);
-        font-size: 13px;
-        padding: 18px 0 24px;
+        color: #d8c7ef;
       }
 
-      @media (min-width: 760px) {
-        .actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        .chips { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .about { grid-template-columns: minmax(0, 1fr) 280px; align-items: center; }
-        .grid.help { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .grid.process { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .grid.benefits { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .grid.reviews { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .date-selectors { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      @media (min-width: 860px) {
+        .hero {
+          grid-template-columns: 1.2fr 0.8fr;
+        }
+
+        .form-row {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .cards.cols-3 {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .about {
+          grid-template-columns: 0.85fr 1.15fr;
+        }
       }
     </style>
   </head>
   <body>
-    <header class="hero container">
-      <span class="badge">Онлайн-консультации</span>
-      <h1>Дарья Погосян — нумеролог и психолог (онлайн)</h1>
-      <p class="subtitle">
-        Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясное направление. Нумерология +
-        психологический подход — бережно и по делу.
-      </p>
-      <div class="actions">
-        <a href="#calculator" class="btn btn-primary">Рассчитать судьбу</a>
-        <a href="https://t.me/username" class="btn btn-telegram" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" aria-hidden="true">
-            <path fill="currentColor" d="M20.66 3.72a1.45 1.45 0 0 0-1.49-.23L3.6 9.49a1.48 1.48 0 0 0 .1 2.8l3.39 1.13 1.33 4.21a1.49 1.49 0 0 0 2.39.67l2.03-1.65 3.63 2.68a1.49 1.49 0 0 0 2.37-.84l2.74-13.14a1.47 1.47 0 0 0-.92-1.63Z"/>
-          </svg>
-          Написать в Telegram
-        </a>
-      </div>
-      <p class="hero-meta">30–60 минут • онлайн • конфиденциально</p>
-      <ul class="chips">
-        <li>Онлайн • конфиденциально</li>
-        <li>Нумерология + психология</li>
-        <li>Понятные шаги после встречи</li>
-      </ul>
-
-      <section id="calculator" class="calculator glass section" aria-label="Рассчитать число судьбы">
-        <h2>Рассчитать судьбу</h2>
-        <div class="life-path-form">
-          <div class="date-selectors">
-            <select id="birth-month" class="date-select" aria-label="Месяц рождения">
-              <option value="">Месяц</option>
-            </select>
-            <select id="birth-day" class="date-select" aria-label="День рождения">
-              <option value="">День</option>
-            </select>
-            <select id="birth-year" class="date-select" aria-label="Год рождения">
-              <option value="">Год</option>
-            </select>
-          </div>
-          <button id="calculate-btn" class="btn btn-primary" type="button">УЗНАТЬ МОЮ СУДЬБУ</button>
-        </div>
-        <p class="hint">Иногда достаточно одной встречи, чтобы всё стало на свои места.</p>
-        <p id="date-error" class="error" hidden></p>
-        <div id="calc-result" class="result" hidden></div>
-      </section>
-    </header>
+    <div class="floating-numbers" aria-hidden="true" id="floatingNumbers"></div>
 
     <main class="container">
-      <section class="section">
-        <div class="about glass card">
-          <div>
-            <h2 class="section-title">Обо мне</h2>
-            <p>
-              Я — Дарья Погосян, нумеролог и психолог. Помогаю мягко разобраться в ситуации, увидеть причины
-              происходящего и выстроить понятные шаги без давления и оценок.
-            </p>
+      <section class="hero panel">
+        <div>
+          <h1>Дарья Погосян — нумеролог и психолог (онлайн)</h1>
+          <p>
+            Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясность.
+            На консультации мы соединяем нумерологию и психологический подход, чтобы увидеть не только
+            события, но и глубинные причины того, что сейчас происходит в вашей жизни.
+          </p>
+          <div class="hero-cta">
+            <a class="btn btn-gold" href="#calculator">Узнать свою судьбу</a>
+            <a class="btn btn-ghost" href="https://t.me/" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
           </div>
-          <img src="assets/darya.jpg" alt="Дарья Погосян" loading="lazy" />
+          <div class="meta">30–60 минут • онлайн • конфиденциально</div>
+        </div>
+        <img class="hero-photo" src="assets/darya.jpg" alt="Дарья Погосян" />
+      </section>
+
+      <section class="calculator panel" id="calculator">
+        <h2 class="section-title">Узнай свою судьбу</h2>
+        <p class="section-subtitle">Введите дату рождения, чтобы получить персональную расшифровку числа судьбы и рекомендации на ближайшие дни.</p>
+        <div class="form-row">
+          <div class="field-wrap">
+            <label for="month">Месяц</label>
+            <select id="month" class="field" aria-describedby="formHint">
+              <option value="">Выберите месяц</option>
+            </select>
+          </div>
+          <div class="field-wrap">
+            <label for="day">День</label>
+            <select id="day" class="field" aria-describedby="formHint">
+              <option value="">Выберите день</option>
+            </select>
+          </div>
+          <div class="field-wrap">
+            <label for="year">Год</label>
+            <select id="year" class="field" aria-describedby="formHint">
+              <option value="">Выберите год</option>
+            </select>
+          </div>
+        </div>
+        <p id="formHint" class="hint">Подсказка: сначала выберите месяц, затем день и год рождения.</p>
+        <button id="calculate" class="btn btn-gold pulse" type="button">Получить расшифровку</button>
+        <p id="error" class="error" hidden></p>
+        <article id="result" class="result" hidden></article>
+      </section>
+
+      <section class="about panel">
+        <img src="assets/darya.jpg" alt="Портрет Дарьи Погосян" />
+        <div>
+          <h2 class="section-title">Обо мне</h2>
+          <p>
+            Я Дарья Погосян, практикующий нумеролог и психолог. Более 8 лет сопровождаю людей в периоды
+            изменений: от личных кризисов до вопросов отношений, самоценности и профессионального выбора.
+          </p>
+          <p>
+            В работе опираюсь на бережный диалог, структурный анализ даты рождения и психологические инструменты,
+            которые помогают не только понять «почему так», но и выбрать конкретные шаги «что делать дальше».
+          </p>
         </div>
       </section>
 
-      <section class="section">
+      <section>
         <h2 class="section-title">С чем я могу помочь</h2>
-        <div class="grid help">
-          <article class="glass card"><h3>Тревога</h3><p>Когда сложно выдохнуть, постоянно «тянет вниз» и нет ощущения безопасности.</p></article>
-          <article class="glass card"><h3>Отношения</h3><p>Повторяющиеся сценарии, обиды, дистанция, непонимание и усталость от компромиссов.</p></article>
-          <article class="glass card"><h3>Самооценка</h3><p>Когда вы знаете, что можете больше, но внутри мешают сомнения и страх ошибки.</p></article>
-          <article class="glass card"><h3>Деньги</h3><p>Тупик в доходе, тревога за будущее, сложности с решением «куда идти дальше».</p></article>
-          <article class="glass card"><h3>Сложный период</h3><p>Развод, выгорание, смена работы или переезд — когда нужна опора и ясная стратегия.</p></article>
-          <article class="glass card"><h3>Внутренняя ясность</h3><p>Собрать мысли, услышать себя и перейти от хаоса к конкретному плану действий.</p></article>
+        <div class="cards cols-3">
+          <article class="card"><div class="icon">✦</div><h3>Тревожность и перегруз</h3><p>Снижаем внутренний шум, выстраиваем эмоциональные опоры и устойчивый ритм жизни.</p></article>
+          <article class="card"><div class="icon">✦</div><h3>Кризис в отношениях</h3><p>Разбираем повторяющиеся сценарии, границы и потребности, возвращаем диалог и уважение.</p></article>
+          <article class="card"><div class="icon">✦</div><h3>Потеря смысла</h3><p>Находим точку опоры, где ваши ценности соединяются с реальными действиями каждый день.</p></article>
+          <article class="card"><div class="icon">✦</div><h3>Низкая самооценка</h3><p>Формируем внутреннего взрослого и практики, которые укрепляют уверенность без давления.</p></article>
+          <article class="card"><div class="icon">✦</div><h3>Финансовые блоки</h3><p>Исследуем установки о деньгах, страх успеха и стратегии, которые дают мягкий рост дохода.</p></article>
+          <article class="card"><div class="icon">✦</div><h3>Сложный жизненный период</h3><p>Поддерживаю в моменте перемен, чтобы пройти его бережно и без потери контакта с собой.</p></article>
         </div>
       </section>
 
-      <section class="section">
-        <h2 class="section-title">Как проходит консультация</h2>
-        <div class="grid process">
-          <article class="glass card"><h3>1. Запрос</h3><p>Вы кратко описываете ситуацию и то, что хотите изменить в ближайшее время.</p></article>
-          <article class="glass card"><h3>2. Разбор</h3><p>Смотрим по дате рождения ваши сильные стороны, уязвимости и текущий период.</p></article>
-          <article class="glass card"><h3>3. План</h3><p>Формируем понятные шаги на 7–14 дней, чтобы вы вышли с чувством опоры.</p></article>
+      <section>
+        <h2 class="section-title">Как проходит онлайн-консультация</h2>
+        <div class="cards cols-3">
+          <article class="card"><div class="icon">1</div><h3>Короткое знакомство</h3><p>Уточняем запрос, ожидания и то, какую поддержку вы хотите получить именно сейчас.</p></article>
+          <article class="card"><div class="icon">2</div><h3>Анализ даты + диалог</h3><p>Разбираем число судьбы и ключевые темы периода, связываем это с вашей реальной ситуацией.</p></article>
+          <article class="card"><div class="icon">3</div><h3>План после встречи</h3><p>Формулируем понятные шаги на 7–14 дней, чтобы изменения начались уже после консультации.</p></article>
         </div>
       </section>
 
-      <section class="section">
-        <h2 class="section-title">Что вы получите</h2>
-        <div class="grid benefits">
-          <article class="glass card"><h3>Ясность</h3><p>Что с вами происходит и почему именно сейчас.</p></article>
-          <article class="glass card"><h3>Опора</h3><p>Сильные внутренние точки, на которые можно опираться каждый день.</p></article>
-          <article class="glass card"><h3>План</h3><p>Последовательность действий без перегруза и «надо всё сразу».</p></article>
-          <article class="glass card"><h3>Ресурс</h3><p>Как восстановить энергию и не срываться в знакомую усталость.</p></article>
-          <article class="glass card"><h3>Границы</h3><p>Как общаться так, чтобы слышать себя и не терять контакт с близкими.</p></article>
-          <article class="glass card"><h3>Текущий период</h3><p>На что лучше направить внимание в ближайшие месяцы.</p></article>
+      <section>
+        <h2 class="section-title">Что вы получите после встречи</h2>
+        <div class="cards cols-3">
+          <article class="card"><h3>Ясность в приоритетах</h3><p>Понимание, куда направить энергию в первую очередь.</p></article>
+          <article class="card"><h3>Личный вектор решений</h3><p>Осознанный выбор без метаний между «надо» и «хочу».</p></article>
+          <article class="card"><h3>Карту внутренних триггеров</h3><p>Что запускает стресс и как быстро возвращаться в баланс.</p></article>
+          <article class="card"><h3>Практики самоподдержки</h3><p>Простые шаги для устойчивости и восстановления ресурса.</p></article>
+          <article class="card"><h3>Понимание сильных сторон</h3><p>Как использовать врождённые качества в отношениях и работе.</p></article>
+          <article class="card"><h3>Письменные рекомендации</h3><p>Краткий итог встречи, который остаётся у вас как опора.</p></article>
         </div>
       </section>
 
-      <section class="section">
+      <section>
         <h2 class="section-title">Отзывы</h2>
-        <div class="grid reviews">
-          <article class="glass card"><p>«После консультации ушла тревога: стало понятно, что делать с работой и как спокойно обсудить это дома.»</p></article>
-          <article class="glass card"><p>«Мне понравилось, что без мистики и давления. Всё чётко: где мой ресурс и какие шаги сделать сразу.»</p></article>
-          <article class="glass card"><p>«За один созвон собрали мысли в систему. Через неделю я уже выполнила план и почувствовала уверенность.»</p></article>
+        <div class="cards cols-3">
+          <article class="card"><div class="review-head"><div class="avatar">МА</div><strong>Мария, 34</strong></div><p>«После встречи я перестала метаться и наконец увидела, какой шаг нужен сейчас. Стало спокойнее уже в тот же вечер.»</p></article>
+          <article class="card"><div class="review-head"><div class="avatar">ЕК</div><strong>Екатерина, 29</strong></div><p>«Дарья очень бережно провела через сложную тему отношений. Без давления, но с точными выводами и планом.»</p></article>
+          <article class="card"><div class="review-head"><div class="avatar">АС</div><strong>Анна, 41</strong></div><p>«Понравилось сочетание психологии и нумерологии: не абстрактно, а применимо к моей жизни и работе.»</p></article>
         </div>
       </section>
 
-      <section class="section final-cta" id="final-cta">
-        <div class="glass card">
-          <h2 class="section-title">Готовы начать?</h2>
-          <a href="https://t.me/username" class="btn btn-telegram" target="_blank" rel="noopener noreferrer">Записаться на онлайн-консультацию</a>
-          <p class="hint">Ответ обычно в течение дня</p>
-        </div>
+      <section class="panel final">
+        <h2 class="section-title">Записаться на онлайн-консультацию</h2>
+        <a class="btn btn-gold" href="https://t.me/" target="_blank" rel="noopener noreferrer">Перейти в Telegram</a>
+        <p class="hint">Ответ обычно в течение дня.</p>
       </section>
     </main>
 
-    <footer>© 2026 Дарья Погосян — нумерология и психологическая поддержка</footer>
+    <footer>© Дарья Погосян — онлайн-консультации по нумерологии и психологии</footer>
 
     <script>
-      const monthSelect = document.getElementById('birth-month');
-      const daySelect = document.getElementById('birth-day');
-      const yearSelect = document.getElementById('birth-year');
-      const calculateBtn = document.getElementById('calculate-btn');
-      const resultEl = document.getElementById('calc-result');
-      const errorEl = document.getElementById('date-error');
+      const months = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+      const monthSelect = document.getElementById("month");
+      const daySelect = document.getElementById("day");
+      const yearSelect = document.getElementById("year");
+      const button = document.getElementById("calculate");
+      const errorEl = document.getElementById("error");
+      const resultEl = document.getElementById("result");
 
-      const lifePathDescriptions = {
-        1: [
-          'Число судьбы 1 говорит о природе первопроходца. Вы приходите в этот мир с сильным внутренним импульсом начинать, пробовать, зажигать новые идеи и двигать процессы там, где другие ждут более понятных условий. Ваше предназначение связано с лидерством через личный пример: не громкими лозунгами, а смелостью действовать.',
-          'В характере единицы часто чувствуется независимость, прямота и высокая требовательность к качеству. Вы тонко улавливаете, где время распыляется впустую, и интуитивно тянетесь к решениям, а не к бесконечным разговорам. Ваш ресурс — способность собираться в моменте и находить опору внутри, даже когда внешне мало определённости.',
-          'Главный вызов числа 1 — не путать силу с жёсткостью. Иногда вы можете закрываться от помощи, потому что привыкли полагаться только на себя. В такие периоды накапливается усталость, а внутренний критик становится слишком громким. Важно учиться мягкости к себе: признание чувств не ослабляет, а делает вас устойчивее.',
-          'В отношениях вы раскрываетесь рядом с теми, кто уважает вашу свободу и ваш темп. Вам нужна честность, ясные границы и пространство для личных целей. Когда рядом партнёр, который не конкурирует, а поддерживает, вы становитесь особенно тёплым, щедрым и вдохновляющим человеком.',
-          'Рекомендация для единицы: развивайте лидерство нового типа — осознанное, бережное, без надрыва. Чётко формулируйте цель, делегируйте то, что отнимает ресурс, и оставляйте время на восстановление. Тогда ваш путь будет не про постоянную борьбу, а про созидание и зрелое влияние на мир.'
-        ],
-        2: [
-          'Число судьбы 2 связано с энергией партнёрства, тонкости и душевного контакта. Ваше предназначение — соединять людей, сглаживать напряжение и создавать пространство, где слышно главное. Вы как мост между логикой и чувствами, между разными точками зрения, между страхом и доверием.',
-          'В характере двойки много эмпатии, дипломатии и способности замечать нюансы, которые ускользают от других. Вы умеете читать атмосферу, чувствуете подтекст и тонко понимаете эмоции окружающих. Ваш ресурс — внутренняя мягкость, которая при правильных границах превращается в большую жизненную силу.',
-          'Вызов этого числа — склонность откладывать собственные желания ради мира и согласия. Порой вы слишком долго адаптируетесь, боясь обидеть или разочаровать. Из-за этого может появляться усталость и ощущение, что вас не видят по-настоящему. Важно учиться говорить о себе без чувства вины.',
-          'В личной жизни вам нужна эмоциональная безопасность: уважение, стабильность, спокойный диалог. Вы расцветаете там, где есть доверие и взаимное внимание к мелочам. Когда отношения зрелые, ваша забота и чуткость становятся источником глубокой близости и исцеления для обоих.',
-          'Рекомендация для двойки: тренируйте внутренний баланс между «быть рядом» и «быть собой». Практикуйте ясные просьбы, укрепляйте самоценность и выбирайте окружение, где ваша чувствительность — достоинство, а не слабость. Тогда предназначение гармонизатора проявится в полной красоте.'
-        ],
-        3: [
-          'Число судьбы 3 несёт энергию творчества, живого слова и радости выражения. Ваше предназначение — вдохновлять людей, возвращать им надежду и показывать, что даже сложный путь может быть пройден с лёгкостью сердца. Вы приносите в мир движение, юмор, образность и новые смыслы.',
-          'Тройка в характере часто проявляется как общительность, артистичность и быстрая мысль. Вы умеете находить нужные слова, создавать контакт и зажигать идеями. Ваш ресурс — сильная креативная волна: когда вы в потоке, вокруг вас начинают оживать проекты, люди и возможности.',
-          'Основной вызов — расфокус и эмоциональные качели. Иногда желание попробовать всё сразу мешает доводить начатое до результата. Бывает и так, что за внешней лёгкостью скрываются невысказанные переживания. Для вас особенно важно не обесценивать свои чувства и не убегать от глубины.',
-          'В отношениях тройка нуждается в искреннем интересе и эмоциональной живости. Вам важно, чтобы вас слышали, поддерживали ваши идеи и разделяли вкус к жизни. Когда рядом есть принятие, вы становитесь невероятно щедрым партнёром, наполняющим отношения теплом и свежестью.',
-          'Рекомендация: соединяйте творчество со структурой. Выбирайте 1–2 приоритетные цели, фиксируйте шаги и завершайте циклы. Регулярная дисциплина не убивает ваш талант, а наоборот даёт ему форму. Тогда ваш дар слова и образа превращается в реальное влияние и устойчивую реализацию.'
-        ],
-        4: [
-          'Число судьбы 4 связано с прочностью, ответственностью и умением создавать основу. Ваше предназначение — строить системы, на которые можно опереться: в семье, работе, деле, сообществе. Вы человек структуры и порядка, который превращает идеи в рабочие механизмы.',
-          'В характере четвёрки много надёжности, практичности и уважения к процессу. Вы умеете работать на длинной дистанции, не теряя качества. Ваш ресурс — дисциплина и внутренняя собранность: там, где другие устают от рутины, вы постепенно укрепляете фундамент и достигаете стабильного результата.',
-          'Вызов числа 4 — чрезмерный контроль и страх ошибок. Порой вы можете застревать в перфекционизме или откладывать шаг, пока всё не станет идеальным. Это забирает радость и усиливает напряжение. Важно разрешить себе гибкость: жизнь не рушится от небольших отклонений от плана.',
-          'В отношениях вам нужна надёжность и последовательность. Вы проявляете любовь через действия: заботу, ответственность, верность договорённостям. Вам полезно помнить, что близость строится не только на долге, но и на эмоциональной открытости, тепле и уязвимости.',
-          'Рекомендация для четвёрки: оставляйте в графике место для восстановления и творчества. Делегируйте второстепенные задачи, отмечайте прогресс и поддерживайте тело — именно через телесный ресурс у вас растёт психологическая устойчивость. Так ваш путь станет не только прочным, но и живым.'
-        ],
-        5: [
-          'Число судьбы 5 — это энергия свободы, перемен и расширения горизонтов. Ваше предназначение связано с движением: вы учитесь через опыт, путешествия, новые знакомства, смену перспектив. Вы приносите в мир смелость жить шире и не застревать в страхе перед неизвестным.',
-          'В характере пятёрки много любопытства, гибкости и внутренней смелости. Вы быстро адаптируетесь, замечаете возможности и умеете вдохновлять других на шаг в новое. Ваш ресурс — живая нервная система: вы чувствуете ритм времени и умеете перестраиваться, когда старые формы больше не работают.',
-          'Главный вызов — хаос и импульсивность. Иногда желание свободы приводит к незавершённости или резким решениям, о которых потом приходится жалеть. Для пятёрки важно научиться отличать настоящую внутреннюю потребность от бегства от ответственности и скуки.',
-          'В отношениях вам нужно пространство и доверие. Вы не переносите жёсткого контроля, зато очень цените честный разговор и уважение к личным границам. Когда есть зрелый баланс свободы и близости, вы становитесь ярким, внимательным и очень поддерживающим партнёром.',
-          'Рекомендация: выстраивайте «гибкую опору» — ритуалы, которые не ограничивают, а стабилизируют. Финансовый план, режим сна, 2–3 приоритетные цели на квартал помогут вам удерживать курс. Тогда ваша природная динамика превращается в мощный путь личной и профессиональной реализации.'
-        ],
-        6: [
-          'Число судьбы 6 связано с любовью, заботой и исцеляющей ответственностью. Ваше предназначение — создавать гармонию в пространстве людей: в семье, команде, сообществе. Вы несёте энергию поддержки и красоты, помогая другим возвращаться к внутреннему равновесию.',
-          'В характере шестёрки много сердечности, верности и глубокой эмпатии. Вы умеете замечать, кому сейчас нужна опора, и естественно включаться в помощь. Ваш ресурс — умение создавать атмосферу, где есть тепло, принятие и доверие. С вами людям легче выдыхать и быть собой.',
-          'Вызов этого числа — склонность к спасательству и гиперответственности. Порой вы берёте на себя слишком много чужих задач и эмоционального груза, забывая о собственных границах. Тогда появляется усталость, раздражение и чувство несправедливости. Важно учиться заботиться о себе так же бережно, как о других.',
-          'В отношениях вы ищете зрелую близость, надёжность и уважение. Для вас значимы совместные ценности, дом, традиции и чувство «мы». Когда партнёр умеет отвечать взаимностью, раскрываются ваши лучшие качества: щедрость, мягкость, мудрая поддержка.',
-          'Рекомендация для шестёрки: развивайте баланс между любовью и самосохранением. Прямо проговаривайте свои потребности, распределяйте ответственность и сохраняйте личное пространство для отдыха и творчества. Тогда ваш дар заботы будет не истощать, а усиливать вашу жизнь.'
-        ],
-        7: [
-          'Число судьбы 7 несёт энергию глубины, анализа и духовного поиска. Ваше предназначение — видеть суть за внешними формами, задавать важные вопросы и приносить в мир ясность мышления. Вы человек внутреннего пути, которому особенно важно жить осознанно и в контакте с собственными ценностями.',
-          'В характере семёрки часто проявляются наблюдательность, интеллектуальная честность и самостоятельность. Вы умеете собирать информацию, проверять факты и делать точные выводы. Ваш ресурс — способность к концентрации и исследованию: вы видите закономерности там, где другим кажется хаос.',
-          'Вызов числа 7 — склонность к закрытости и изоляции. Когда накапливается стресс, вы можете уходить в отстранённость, сомнения и чрезмерный анализ. Это мешает действовать и делиться собой с миром. Важно помнить: уязвимость и живой контакт не противоречат вашей глубине.',
-          'В отношениях семёрке нужен партнёр, который уважает личное пространство и интеллектуальную автономию. Вам важны искренность, смысловые разговоры и эмоциональная деликатность. Рядом с зрелым человеком вы раскрываетесь как очень тонкий, верный и внимательный партнёр.',
-          'Рекомендация: сочетайте исследование с практикой. Не только думайте, но и регулярно делайте маленькие шаги в реальности. Телесные практики, прогулки, режим и простые бытовые ритуалы помогают семёрке заземляться. Тогда ваша мудрость становится не абстрактной, а преобразующей.'
-        ],
-        8: [
-          'Число судьбы 8 связано с силой реализации, управлением ресурсами и зрелой ответственностью за результат. Ваше предназначение — создавать большие, устойчивые системы и влиять на реальность через действия. Это число лидерства, деловой интуиции и материальной эффективности.',
-          'В характере восьмёрки много воли, стратегичности и внутренней собранности. Вы умеете видеть долгую перспективу, принимать непростые решения и держать курс, когда вокруг давление. Ваш ресурс — способность превращать потенциал в конкретный результат: цифры, процессы, договорённости, рост.',
-          'Вызов этого числа — риск жить только задачами и контролем. Иногда в погоне за эффективностью вы можете терять контакт с чувствами, телом и потребностями близких. Тогда успех перестаёт радовать, а нагрузка растёт. Для вас важен баланс силы и человечности.',
-          'В отношениях восьмёрке нужен союз равных, где есть уважение, честность и взаимная ответственность. Вы цените зрелость и надёжность, плохо переносите манипуляции и неопределённость. Когда есть доверие, вы проявляете глубокую преданность и настоящую щедрость.',
-          'Рекомендация: развивайте лидерство через экологичность. Делегируйте, выстраивайте прозрачные правила, оставляйте место отдыху и эмоциональному контакту. Чем больше у вас внутренней устойчивости, тем сильнее растут и ваши проекты, и финансовая стабильность.'
-        ],
-        9: [
-          'Число судьбы 9 несёт энергию мудрости, сострадания и завершения больших жизненных циклов. Ваше предназначение — служить людям через опыт сердца: помогать, вдохновлять, расширять сознание, напоминать о человечности. Девятка видит картину шире личной выгоды.',
-          'В характере девятки много щедрости, интуиции и внутренней зрелости. Вы чувствуете глубинные мотивы людей, умеете поддержать словом и действием, тонко считываете эпоху и настроение общества. Ваш ресурс — способность превращать личные испытания в источник силы и смысла для других.',
-          'Главный вызов — эмоциональное истощение и идеализм. Порой вы слишком много отдаёте, забывая о своих границах, или разочаровываетесь, когда мир не соответствует вашим высоким ожиданиям. Важно учиться бережному служению: помогать, не теряя себя.',
-          'В отношениях девятке важны духовная близость, честность и общие ценности. Вы ищете не поверхностный формат, а глубокий союз, где есть уважение к личному пути каждого. Когда связь зрелая, вы становитесь источником тепла, прощения и большой поддержки.',
-          'Рекомендация: отпускайте то, что завершилось, и направляйте энергию в проекты с ценностным смыслом. Регулярно восстанавливайтесь, наполняйтесь искусством, природой и тишиной. Тогда ваша миссия проявится не как жертва, а как красивое, сильное и устойчивое служение миру.'
-        ],
-        11: [
-          'Мастер-число 11 говорит о высокой чувствительности, интуитивном знании и способности быть проводником света для других. Ваше предназначение — вдохновлять, пробуждать и помогать людям видеть глубже привычного. Вы тонко ощущаете энергии, тренды и внутренние состояния окружающих.',
-          'В характере 11 много харизмы, творческой искры и глубокой эмпатии. Вы умеете зажечь идеей, словом, образом, примером, и часто становитесь для других точкой поворота. Ваш ресурс — связь с внутренним источником: когда вы в контакте с собой, ваша энергия буквально меняет пространство.',
-          'Вызов мастер-числа — нервная перегрузка и эмоциональная нестабильность. Из-за тонкой восприимчивости вы можете быстро уставать от шума, конфликтов и чужих ожиданий. Иногда это рождает сомнения в себе и качели между подъёмом и спадом. Важно создать для себя устойчивые ритуалы заземления.',
-          'В отношениях вам нужна не просто симпатия, а глубокое резонансное понимание. Вы чувствительны к неискренности и очень цените душевную чистоту контакта. Рядом с честным и зрелым партнёром вы раскрываетесь как вдохновляющий, нежный и очень преданный человек.',
-          'Рекомендация для 11: соединяйте интуицию со структурой. Записывайте идеи, оформляйте их в проекты, бережно относитесь к телу и режиму. Ваш дар усиливается, когда есть ясные границы и дисциплина. Тогда вы не теряетесь в чувствительности, а превращаете её в созидательную силу.'
-        ],
-        22: [
-          'Мастер-число 22 называют энергией архитектора реальности. Ваше предназначение — воплощать масштабные идеи в практичные и долгосрочные проекты, которые служат людям. Вы способны соединять мечту и систему, видение и конкретный результат.',
-          'В характере 22 сочетаются стратегическое мышление, организаторский талант и сильная работоспособность. Вы умеете видеть большую картину и одновременно замечать детали, от которых зависит успех. Ваш ресурс — умение строить на века: процессы, команды, платформы, устойчивые структуры.',
-          'Вызов этого числа — тяжесть ответственности и страх не оправдать высокий потенциал. Иногда вы можете откладывать старт, потому что проект кажется слишком большим. Бывает и обратное: чрезмерная нагрузка без отдыха. Для 22 крайне важно идти этапами и не требовать от себя невозможного сразу.',
-          'В отношениях вам нужен партнёр, который уважает ваш масштаб и поддерживает ваши цели. Вы цените зрелость, надёжность и ясные договорённости. Когда рядом человек, с которым можно строить общее будущее, вы раскрываетесь как мощный создатель и опора.',
-          'Рекомендация: переводите большие замыслы в конкретные циклы — квартал, месяц, неделя. Развивайте командное мышление, делегируйте и оставляйте место для восстановления. Чем устойчивее ваш внутренний ритм, тем масштабнее и красивее результаты, которые вы приносите в мир.'
-        ],
-        33: [
-          'Мастер-число 33 связано с безусловной любовью, зрелым служением и даром глубокого исцеления. Ваше предназначение — помогать людям проходить сложные этапы мягко, сохраняя достоинство и контакт с собой. Вы несёте в мир энергию сострадания, мудрости и духовной зрелости.',
-          'В характере 33 много сердечности, внутренней силы и способности быть рядом в непростые моменты. Вы интуитивно чувствуете, где болит, и умеете поддержать так, что человеку становится легче дышать. Ваш ресурс — тёплое присутствие и слово, которое возвращает надежду.',
-          'Главный вызов — растворение в чужих проблемах и потеря личных границ. Порой вы так сильно включены в помощь, что забываете о собственных потребностях. Это приводит к эмоциональному выгоранию и внутренней пустоте. Урок 33 — любить не через самоотвержение, а через зрелый баланс.',
-          'В отношениях вы стремитесь к глубокой душевной близости, честности и взаимной заботе. Вам важно чувствовать, что любовь двусторонняя, а не односторонняя отдача. Рядом с партнёром, который уважает ваш внутренний мир, вы становитесь невероятно светлым и поддерживающим человеком.',
-          'Рекомендация для 33: выстраивайте систему заботы о себе так же осознанно, как заботитесь о других. Чёткие границы, регулярный отдых, творческое самовыражение и профессиональная опора делают ваш дар устойчивым. Тогда ваша миссия служения раскрывается красиво, глубоко и надолго.'
-        ]
+      const lifePathTexts = {
+        1: { title: "Путь 1 — Инициатор", sections: { "Ключевые качества": "Вы приходите в мир с мощным импульсом начинать и вести. Ваша энергия — это смелость двигаться первой, даже когда нет гарантий и понятной карты.", "Сильные стороны": "Вы быстро собираетесь в сложных обстоятельствах, умеете брать ответственность и вдохновлять других личным примером. Важная особенность: вы умеете превращать идею в действие.", "Тени и риски": "Когда напряжение растёт, вы можете становиться излишне жёсткой к себе и близким, будто любое замедление — это провал. Риск числа 1 — одиночество лидера и постоянная жизнь в режиме борьбы.", "Отношения": "В близости вам важно не терять индивидуальность. Вы раскрываетесь рядом с партнёром, который уважает ваш ритм, а не конкурирует за контроль.", "Деньги и реализация": "Финансы растут, когда вы решаетесь на собственные инициативы: авторские проекты, самостоятельные решения, личный бренд. Застой появляется там, где вы долго ждёте одобрения.", "Советы на 7–14 дней": "Выберите один приоритет и доведите его до измеримого результата. Добавьте ежедневный короткий ритуал восстановления, чтобы лидерство опиралось не на напряжение, а на устойчивость." } },
+        2: { title: "Путь 2 — Гармонизатор", sections: { "Ключевые качества": "Ваша природа — тонкость восприятия и глубокая эмпатия. Вы замечаете нюансы, которые другие пропускают, и создаёте пространство, где людям спокойно.", "Сильные стороны": "Вы умеете договариваться, слышать и смягчать конфликты без потери сути. Ваша мягкая сила в том, что вы объединяете людей вокруг общей цели.", "Тени и риски": "Главный риск — растворяться в ожиданиях окружающих и откладывать собственные решения. Иногда страх ошибки заставляет вас слишком долго ждать идеального момента.", "Отношения": "Для вас важны доверие, эмоциональная безопасность и уважительный диалог. В зрелой паре вы приносите глубину и поддержку, которые удерживают связь в кризисах.", "Деньги и реализация": "Ваш путь в профессиях, где ценятся коммуникации, сопровождение и чувствительность к людям. Доход растёт, когда вы обозначаете границы и не обесцениваете свой вклад.", "Советы на 7–14 дней": "Тренируйте навык «маленького решительного шага» каждый день. Заведите список своих потребностей и сверяйтесь с ним перед любым важным согласием." } },
+        3: { title: "Путь 3 — Творческий коммуникатор", sections: { "Ключевые качества": "У вас живой ум, образность и дар слова. Через речь, тексты, голос или визуальные формы вы умеете передавать смысл так, что человек чувствует вдохновение.", "Сильные стороны": "Вы быстро генерируете идеи, легко создаёте контакт и умеете поддерживать энергию команды. Ваше присутствие часто приносит людям надежду и лёгкость.", "Тени и риски": "Иногда вы распыляетесь между многими интересами и теряете фокус. Есть риск прятать уязвимость за юмором и активностью, не признавая усталость.", "Отношения": "В любви вам нужна эмоциональная живость, уважение к свободе и искренний обмен чувствами. Без диалога и совместного творчества связь быстро становится «плоской».", "Деньги и реализация": "Финансовый рост приходит через публичность, обучение, контент и проекты, где важны идеи и коммуникация. Важно доводить начатое до результата, а не только зажигаться стартом.", "Советы на 7–14 дней": "Выберите один проект и разбейте его на короткие этапы. Каждый день фиксируйте маленький итог — это укрепит внутреннюю дисциплину без давления." } },
+        4: { title: "Путь 4 — Строитель системы", sections: { "Ключевые качества": "Вы несёте энергию порядка, надёжности и последовательности. Ваш талант — создавать устойчивые конструкции: в быту, работе, финансах и отношениях.", "Сильные стороны": "Вы умеете планировать, выдерживать темп и держать слово даже под нагрузкой. Люди доверяют вам серьёзные задачи, потому что рядом с вами есть опора.", "Тени и риски": "Риск 4 — застрять в жёстких правилах и потерять гибкость. Когда контроль становится способом справиться со страхом, уходит живость и удовольствие.", "Отношения": "Вы проявляете любовь через действия, заботу и ответственность. Важно учиться проговаривать чувства, чтобы партнёр видел не только вашу силу, но и сердечность.", "Деньги и реализация": "Ваши сильные сферы — управление, аналитика, операционные процессы, всё, где ценится структура. Доход увеличивается, когда вы позволяете себе обновлять привычные методы.", "Советы на 7–14 дней": "Пересмотрите три рутины: что поддерживает вас, а что только отнимает энергию. Добавьте один элемент гибкости в график и наблюдайте, как это влияет на состояние." } },
+        5: { title: "Путь 5 — Проводник перемен", sections: { "Ключевые качества": "Вы рождены для движения, обновления и расширения горизонтов. Ваша энергия оживает там, где есть свобода выбора и возможность исследовать новое.", "Сильные стороны": "Вы легко адаптируетесь, быстро схватываете контекст и умеете находить решения в нестандартных обстоятельствах. Ваш ресурс — смелость жить без шаблонов.", "Тени и риски": "Слабое место — импульсивность и усталость от собственной скорости. Есть риск менять направление раньше, чем результат успеет сформироваться.", "Отношения": "Вам важны честность, пространство и уважение к личной свободе. Зрелая близость для вас — это не контроль, а осознанный выбор быть рядом.", "Деньги и реализация": "Ваш успех приходит через проекты с динамикой: коммуникации, продажи, запуск новых форматов, путешествия, цифровые продукты. Финансовую стабильность создаёт система, а не только вдохновение.", "Советы на 7–14 дней": "Сформируйте один «якорь стабильности»: время сна, бюджет или рабочий слот. Свобода становится глубже, когда у неё есть надёжная основа." } },
+        6: { title: "Путь 6 — Сердце и ответственность", sections: { "Ключевые качества": "Вы несёте энергию заботы, красоты и внутренней зрелости. Люди тянутся к вам за теплом, честностью и ощущением дома даже в непростые периоды.", "Сильные стороны": "Вы умеете видеть, что нужно человеку, и поддерживать без лишних слов. Ваша сила — объединять людей, исцелять отношения и возвращать порядок в хаосе чувств.", "Тени и риски": "Риск 6 — жить в режиме «я должна», забывая о себе. Перфекционизм и гиперответственность могут превращать заботу в эмоциональное выгорание.", "Отношения": "Вы ориентированы на глубину, верность и совместное развитие. Важно помнить, что зрелая любовь включает равный обмен, а не одностороннюю отдачу.", "Деньги и реализация": "Вы раскрываетесь в сферах помощи, образования, сервиса, эстетики и психологии. Доход растёт, когда вы оцениваете свою заботу как профессиональную ценность.", "Советы на 7–14 дней": "Составьте список из трёх дел, которые поддерживают именно вас, и выполните их в первую очередь. Это снизит тревогу и вернёт ощущение внутреннего ресурса." } },
+        7: { title: "Путь 7 — Исследователь глубины", sections: { "Ключевые качества": "Ваш путь связан с анализом, интуицией и стремлением понимать суть явлений. Вам важно не просто получать ответы, а видеть скрытые причины и закономерности.", "Сильные стороны": "Вы умеете концентрироваться, учиться в глубину и находить точные формулировки для сложных процессов. Ваше мышление приносит ясность там, где другие видят только хаос.", "Тени и риски": "Риск 7 — изоляция и чрезмерная самокритика. Когда вы долго остаетесь в голове, усиливаются тревожные сценарии и уходит контакт с телом и чувствами.", "Отношения": "В близости вам нужны доверие, интеллектуальная совместимость и деликатность. Вы раскрываетесь постепенно, но создаёте очень глубокую и честную связь.", "Деньги и реализация": "Ваши сильные направления — исследование, аналитика, психология, обучение, консультационная работа. Финансовый рост поддерживают долгие проекты с высоким качеством, а не гонка за скоростью.", "Советы на 7–14 дней": "Ежедневно выделяйте 20 минут на «заземление»: прогулка, дыхание, телесные практики. Это снизит перегруз ума и усилит качество ваших решений." } },
+        8: { title: "Путь 8 — Стратег и создатель результатов", sections: { "Ключевые качества": "Вы несёте энергию влияния, управления и материальной реализации. Вам важно видеть измеримый результат и понимать, как устроена система успеха.", "Сильные стороны": "Вы умеете мыслить масштабно, принимать сложные решения и удерживать ответственность. Ваша сила — соединять амбицию с практичностью и вести проекты к прибыли.", "Тени и риски": "Риск 8 — жёсткость и перегруз контролем, когда ценность себя связывается только с достижениями. В таком режиме легко потерять эмоциональную близость и радость процесса.", "Отношения": "Вам подходит партнёрство равных, где есть уважение, зрелость и прозрачные договорённости. Когда в отношениях есть доверие, вы становитесь особенно щедрой и поддерживающей.", "Деньги и реализация": "Финансы — ваша естественная тема, но важно строить не только доход, а устойчивую стратегию. Лучшие результаты приходят, когда вы сочетаете дисциплину и дальний горизонт.", "Советы на 7–14 дней": "Проведите ревизию ресурсов: время, деньги, энергия. Уберите одно лишнее обязательство и перенаправьте высвободившийся ресурс в ключевую цель." } },
+        9: { title: "Путь 9 — Гуманист и наставник", sections: { "Ключевые качества": "Вы обладаете большим сердцем, широким взглядом и чувством смысла. Ваш путь связан с завершением старых циклов, мудростью и передачей опыта другим.", "Сильные стороны": "Вы умеете видеть человека глубже его ролей, вдохновлять и помогать пережить трудный этап с достоинством. В вас много духовной зрелости и внутренней деликатности.", "Тени и риски": "Риск 9 — жить прошлым, слишком долго удерживая незавершённые эмоциональные истории. Также бывает склонность спасать всех, кроме себя.", "Отношения": "В любви вы ищете сердечность, глубину и ценностное совпадение. Вам важно отпускать то, что исчерпало себя, чтобы не терять жизненную энергию.", "Деньги и реализация": "Вы хорошо реализуетесь в помогающих и просветительских сферах, социальных и творческих проектах. Доход растёт, когда служение людям соединяется с чёткими границами и профессиональной опорой.", "Советы на 7–14 дней": "Завершите один старый незакрытый вопрос: разговор, задачу или внутреннее решение. Освобождённая энергия быстро вернётся в новые возможности." } },
+        11: { title: "Мастер-путь 11 — Интуитивный проводник", sections: { "Ключевые качества": "11 — число повышенной чувствительности и вдохновляющего влияния. Вы тонко считываете состояния людей и способны переводить хаос переживаний в ясный смысл.", "Сильные стороны": "Ваш дар — соединять интуицию, эмпатию и видение будущего. Вы можете быть мощным источником поддержки, особенно когда человек находится в неустойчивости.", "Тени и риски": "Сложность 11 — эмоциональные перегрузки, тревожные качели и внутреннее давление «должна соответствовать». Без опоры на тело и режим чувствительность превращается в истощение.", "Отношения": "Вам необходима честная, бережная связь, где есть пространство для чувств и уважение к уязвимости. Вы особенно расцветаете рядом с психологически зрелым партнёром.", "Деньги и реализация": "Ваш путь раскрывается в наставничестве, терапии, обучении, творчестве и публичных форматах с глубиной. Финансовая стабильность приходит через структуру и регулярность, а не только через вдохновение.", "Советы на 7–14 дней": "Укрепляйте нервную систему: сон, тишина, дозированная нагрузка, цифровая гигиена. Ежедневно записывайте инсайты и переводите один из них в практическое действие." } },
+        22: { title: "Мастер-путь 22 — Архитектор больших замыслов", sections: { "Ключевые качества": "22 объединяет стратегическое мышление и способность материализовать сложные идеи. Вы видите, как превратить масштабную мечту в работающую систему.", "Сильные стороны": "Вы умеете держать долгий горизонт, управлять ресурсами и выстраивать процессы, которые служат многим людям. Ваш потенциал — создавать проекты с реальным социальным эффектом.", "Тени и риски": "Главный риск — перегруз ответственностью и страх не оправдать высокий внутренний стандарт. Тогда появляется прокрастинация, а вместе с ней — чувство вины и усталость.", "Отношения": "В близости вам важно партнёрство, где есть зрелость, надёжность и уважение к вашим целям. Тепло и эмоциональная близость помогают не превращать жизнь только в задачи.", "Деньги и реализация": "22 часто связан с управлением, предпринимательством, крупными системными проектами. Доход стабилен, когда вы делегируете и строите команду, а не тащите всё в одиночку.", "Советы на 7–14 дней": "Опишите один большой замысел в формате плана из трёх этапов. Начните с первого конкретного действия, которое можно завершить уже на этой неделе." } },
+        33: { title: "Мастер-путь 33 — Энергия исцеления и служения", sections: { "Ключевые качества": "33 несёт зрелую любовь, сострадание и способность быть опорой в трудные периоды. Вы чувствуете боль другого человека и умеете возвращать ему надежду.", "Сильные стороны": "Ваше присутствие само по себе лечит: через слова, внимание, тишину и принятие. Вы можете быть наставницей, которая помогает людям вырасти без давления.", "Тени и риски": "Риск 33 — самоотверженность до истощения и размытые личные границы. Когда вы забываете о себе, даже самый сильный дар начинает угасать.", "Отношения": "Вам нужна взаимная забота и эмоциональная зрелость, где любовь не измеряется жертвенностью. Здоровая близость для вас — это баланс отдачи и принятия.", "Деньги и реализация": "Ваш путь проявляется в помогающих профессиях, обучении, терапии, творческих проектах с социальной ценностью. Финансовая устойчивость приходит, когда вы цените свой труд и выстраиваете ясные условия работы.", "Советы на 7–14 дней": "Сформулируйте личные границы в трёх ключевых сферах: время, энергия, общение. Практикуйте мягкое «нет» и отмечайте, как растёт внутреннее спокойствие." } }
       };
 
-      const months = [
-        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
-        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
-      ];
-
-      function fillSelectOptions() {
+      function fillSelects() {
         months.forEach((month, index) => {
-          const option = document.createElement('option');
-          option.value = String(index + 1);
+          const option = document.createElement("option");
+          option.value = index + 1;
           option.textContent = month;
-          monthSelect.appendChild(option);
+          monthSelect.append(option);
         });
 
         for (let day = 1; day <= 31; day += 1) {
-          const option = document.createElement('option');
-          option.value = String(day);
-          option.textContent = String(day);
-          daySelect.appendChild(option);
+          const option = document.createElement("option");
+          option.value = day;
+          option.textContent = day;
+          daySelect.append(option);
         }
 
         const currentYear = new Date().getFullYear();
         for (let year = currentYear; year >= 1900; year -= 1) {
-          const option = document.createElement('option');
-          option.value = String(year);
-          option.textContent = String(year);
-          yearSelect.appendChild(option);
+          const option = document.createElement("option");
+          option.value = year;
+          option.textContent = year;
+          yearSelect.append(option);
         }
       }
 
       function sumDigits(value) {
-        return value.split('').reduce((acc, digit) => acc + Number(digit), 0);
+        return String(value).split("").reduce((acc, digit) => acc + Number(digit), 0);
       }
 
-      function reduceToLifePath(sum) {
-        while (sum > 9 && sum !== 11 && sum !== 22 && sum !== 33) {
-          sum = sumDigits(String(sum));
+      function reduceNumber(value) {
+        let total = value;
+        while (total > 9 && ![11, 22, 33].includes(total)) {
+          total = sumDigits(total);
         }
-        return sum;
+        return total;
       }
 
-      function calculateLifePathNumber(day, month, year) {
-        const digits = `${day}${month}${year}`;
-        const initialSum = sumDigits(digits);
-        return reduceToLifePath(initialSum);
-      }
-
-      function showError(message) {
-        errorEl.hidden = false;
-        errorEl.textContent = message;
-      }
-
-      function clearError() {
-        errorEl.hidden = true;
-        errorEl.textContent = '';
+      function calculateLifePath(day, month, year) {
+        const raw = `${day}${month}${year}`;
+        return reduceNumber(sumDigits(raw));
       }
 
       function isValidDate(day, month, year) {
-        const date = new Date(year, month - 1, day);
-        return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+        const d = new Date(year, month - 1, day);
+        return d.getFullYear() === year && d.getMonth() === month - 1 && d.getDate() === day;
       }
 
       function renderResult(number) {
-        const paragraphs = lifePathDescriptions[number] || [];
+        const text = lifePathTexts[number];
+        if (!text) {
+          resultEl.hidden = false;
+          resultEl.innerHTML = "<h3>Не удалось рассчитать число судьбы</h3><p>Попробуйте ещё раз с корректной датой рождения.</p>";
+          return;
+        }
+
+        const sectionsHtml = Object.entries(text.sections)
+          .map(([subtitle, content]) => `<section><h4>${subtitle}</h4><p>${content}</p></section>`)
+          .join("");
+
+        resultEl.innerHTML = `<h3>${text.title}</h3>${sectionsHtml}`;
         resultEl.hidden = false;
-        resultEl.innerHTML = `
-          <h3>Ваше число судьбы: ${number}</h3>
-          ${paragraphs.map((text) => `<p>${text}</p>`).join('')}
-        `;
-        resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
       }
 
-      calculateBtn.addEventListener('click', () => {
-        const month = Number(monthSelect.value);
+      function createFloatingNumbers() {
+        const layer = document.getElementById("floatingNumbers");
+        const chars = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "11", "22", "33"];
+        for (let i = 0; i < 26; i += 1) {
+          const item = document.createElement("span");
+          item.textContent = chars[Math.floor(Math.random() * chars.length)];
+          item.style.left = `${Math.random() * 100}%`;
+          item.style.fontSize = `${18 + Math.random() * 48}px`;
+          item.style.animationDuration = `${14 + Math.random() * 18}s`;
+          item.style.animationDelay = `${Math.random() * 12}s`;
+          layer.append(item);
+        }
+      }
+
+      button.addEventListener("click", () => {
         const day = Number(daySelect.value);
+        const month = Number(monthSelect.value);
         const year = Number(yearSelect.value);
 
+        errorEl.hidden = true;
+        resultEl.hidden = true;
+
         if (!day || !month || !year) {
-          resultEl.hidden = true;
-          showError('Пожалуйста, выберите месяц, день и год рождения.');
+          errorEl.hidden = false;
+          errorEl.textContent = "Пожалуйста, выберите месяц, день и год рождения.";
           return;
         }
 
         if (!isValidDate(day, month, year)) {
-          resultEl.hidden = true;
-          showError('Указана некорректная дата. Проверьте выбранные значения.');
+          errorEl.hidden = false;
+          errorEl.textContent = "Дата некорректна. Проверьте выбранные значения.";
           return;
         }
 
         const selectedDate = new Date(year, month - 1, day);
-        const now = new Date();
-        if (selectedDate > now) {
-          resultEl.hidden = true;
-          showError('Дата рождения не может быть в будущем.');
+        if (selectedDate > new Date()) {
+          errorEl.hidden = false;
+          errorEl.textContent = "Дата рождения не может быть в будущем.";
           return;
         }
 
-        clearError();
-        const number = calculateLifePathNumber(day, month, year);
-        renderResult(number);
+        renderResult(calculateLifePath(day, month, year));
       });
 
-      fillSelectOptions();
+      fillSelects();
+      createFloatingNumbers();
     </script>
   </body>
 </html>
