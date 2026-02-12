@@ -4,455 +4,237 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Дарья Погосян — нумеролог и психолог</title>
-    <style>
-      :root {
-        --bg-1: #120822;
-        --bg-2: #2f1358;
-        --bg-3: #4e1f86;
-        --surface: rgba(255, 255, 255, 0.08);
-        --surface-strong: rgba(255, 255, 255, 0.13);
-        --border: rgba(255, 220, 140, 0.34);
-        --text: #f7f2ff;
-        --muted: #d9cdf3;
-        --gold-1: #f7df9c;
-        --gold-2: #e1b44f;
-        --gold-glow: rgba(247, 223, 156, 0.38);
-        --shadow-soft: 0 16px 38px rgba(8, 2, 22, 0.36);
-      }
-
-      * { box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
-
-      body {
-        margin: 0;
-        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        color: var(--text);
-        background: radial-gradient(circle at 10% 10%, #5c259f 0%, transparent 40%),
-          radial-gradient(circle at 80% 30%, #3d1f77 0%, transparent 42%),
-          linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 55%, var(--bg-3) 100%);
-        overflow-x: hidden;
-      }
-
-      .floating-numbers {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-        overflow: hidden;
-      }
-
-      .floating-numbers span {
-        position: absolute;
-        bottom: -20vh;
-        color: rgba(255, 239, 208, 0.04);
-        font-weight: 700;
-        animation: drift linear infinite;
-      }
-
-      @keyframes drift {
-        from { transform: translateY(0) translateX(0); }
-        to { transform: translateY(-130vh) translateX(14px); }
-      }
-
-      .container {
-        width: min(1120px, 92%);
-        margin: 0 auto;
-        position: relative;
-        z-index: 1;
-      }
-
-      section {
-        margin: 24px 0;
-      }
-
-      .reveal {
-        opacity: 0;
-        transform: translateY(24px) scale(0.99);
-        transition: opacity 0.9s ease, transform 0.9s ease;
-      }
-
-      .reveal.visible {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-
-      .panel {
-        background: var(--surface);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        border-radius: 26px;
-        backdrop-filter: blur(10px);
-        box-shadow: var(--shadow-soft);
-      }
-
-      .hero {
-        display: grid;
-        gap: 24px;
-        align-items: center;
-        padding: 30px;
-      }
-
-      h1 {
-        margin: 0;
-        font-size: clamp(2rem, 6vw, 3.25rem);
-        line-height: 1.12;
-      }
-
-      .hero-subtitle {
-        margin: 14px 0 0;
-        color: var(--muted);
-        line-height: 1.65;
-      }
-
-      .hero-cta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 18px;
-      }
-
-      .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        text-decoration: none;
-        border-radius: 14px;
-        min-height: 52px;
-        padding: 0 20px;
-        border: 1px solid transparent;
-        font-weight: 700;
-        cursor: pointer;
-        transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-      }
-
-      .btn:focus-visible,
-      .field:focus-visible {
-        outline: 2px solid var(--gold-1);
-        outline-offset: 2px;
-      }
-
-      .btn-gold {
-        color: #2f174f;
-        background: linear-gradient(120deg, var(--gold-1), var(--gold-2));
-      }
-
-      .btn-gold:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0 24px var(--gold-glow);
-      }
-
-      .btn-ghost {
-        color: var(--text);
-        border-color: var(--border);
-        background: rgba(255, 255, 255, 0.05);
-      }
-
-      .btn-ghost:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 0 20px rgba(247, 223, 156, 0.22);
-      }
-
-      .hero-photo {
-        width: min(100%, 380px);
-        justify-self: center;
-        border-radius: 24px;
-        border: 2px solid rgba(247, 223, 156, 0.65);
-        box-shadow: 0 18px 38px rgba(0, 0, 0, 0.34), 0 0 24px rgba(247, 223, 156, 0.2);
-      }
-
-      .meta {
-        margin-top: 10px;
-        color: #f2e6bd;
-      }
-
-      .calculator { padding: 30px; }
-      .section-title { margin: 0 0 12px; font-size: clamp(1.65rem, 4vw, 2.2rem); }
-      .section-subtitle { margin: 0 0 16px; color: var(--muted); line-height: 1.6; }
-
-      .form-row {
-        display: grid;
-        gap: 12px;
-      }
-
-      .field-wrap label {
-        display: block;
-        margin-bottom: 6px;
-        color: #f3e5be;
-        font-size: 0.92rem;
-      }
-
-      .field {
-        width: 100%;
-        min-height: 50px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.22);
-        background: rgba(255, 255, 255, 0.93);
-        color: #331a52;
-        padding: 0 14px;
-        font-size: 1rem;
-      }
-
-      .hint { color: var(--muted); margin: 12px 0 16px; }
-      .error { color: #ffd8df; margin: 10px 0 0; }
-
-      .result {
-        margin-top: 20px;
-        border: 1px solid rgba(247, 223, 156, 0.44);
-        background: rgba(10, 4, 24, 0.56);
-        border-radius: 20px;
-        padding: 24px;
-        transform: scale(0.97);
-        opacity: 0;
-        transition: opacity 0.55s ease, transform 0.55s ease;
-      }
-
-      .result.visible {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      .result h3 { margin-top: 0; color: #ffe7ac; }
-      .result p { line-height: 1.68; color: #f6f1ff; }
-
-      .cards {
-        display: grid;
-        gap: 14px;
-      }
-
-      .card {
-        padding: 18px;
-        border-radius: 18px;
-        background: var(--surface-strong);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        box-shadow: 0 8px 24px rgba(8, 2, 22, 0.18);
-        transform: translateY(0);
-        transition: transform 0.35s ease, box-shadow 0.35s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 14px 26px rgba(8, 2, 22, 0.28);
-      }
-
-      .icon { font-size: 1.3rem; margin-bottom: 8px; color: #f4d889; }
-      .list { margin: 0; padding-left: 1.2rem; line-height: 1.7; color: #f1e9ff; }
-
-      .final { text-align: center; padding: 34px; }
-      footer { padding: 22px 0 32px; text-align: center; color: #d8c7ef; }
-
-      @media (min-width: 760px) {
-        .hero { grid-template-columns: 1.15fr 0.85fr; }
-        .form-row { grid-template-columns: repeat(3, 1fr); }
-        .cards.cols-2 { grid-template-columns: repeat(2, 1fr); }
-        .cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="floating-numbers" id="floatingNumbers" aria-hidden="true"></div>
-
-    <main class="container">
-      <section class="hero panel reveal">
-        <div>
-          <h1>Понимаю твою тревогу, освобождаю от тяжести и помогаю собрать себя заново — мягко и по-делу</h1>
-          <p class="hero-subtitle">
-            Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти ясность.
-            На консультации мы соединяем нумерологию и психологический подход, чтобы увидеть не только
-            события, но и глубинные причины того, что сейчас происходит в вашей жизни.
-          </p>
-          <div class="hero-cta">
-            <a class="btn btn-gold" href="#calculator">Узнать свою судьбу</a>
-            <a class="btn btn-ghost" href="https://t.me/" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
-          </div>
-          <div class="meta">30–60 минут • онлайн • конфиденциально</div>
-        </div>
+    <main class="page">
+      <section class="hero card fade-in">
         <img class="hero-photo" src="assets/darya.jpg" alt="Дарья Погосян" />
+        <div class="about card-inner">
+          <h1>Обо мне</h1>
+          <p>Дарья Погосян — нумеролог и психолог.</p>
+          <p>
+            Помогаю мягко пройти сложный период, вернуть внутреннюю опору и найти
+            ясность.
+          </p>
+          <p>Нумерология + психологический подход — бережно и по делу.</p>
+          <a class="btn btn-gold" href="https://t.me/darya_pogosyan" target="_blank" rel="noreferrer">Записаться на консультацию</a>
+        </div>
       </section>
 
-      <section class="calculator panel reveal" id="calculator">
-        <h2 class="section-title">Узнай свою судьбу</h2>
-        <p class="section-subtitle">Выберите дату рождения и получите персональную расшифровку вашего числа судьбы.</p>
-        <div class="form-row">
-          <div class="field-wrap">
-            <label for="month">Месяц</label>
-            <select id="month" class="field"></select>
+      <section class="calculator card fade-in" id="calculator">
+        <h2>Калькулятор числа судьбы</h2>
+        <p class="subtitle">Выберите дату рождения и получите расшифровку.</p>
+
+        <div class="select-grid">
+          <label>
+            <span>Месяц</span>
+            <select id="month"></select>
+          </label>
+          <label>
+            <span>День</span>
+            <select id="day"></select>
+          </label>
+          <label>
+            <span>Год</span>
+            <select id="year"></select>
+          </label>
+        </div>
+
+        <button class="btn btn-gold" id="calculate" type="button">Получить расшифровку</button>
+        <p class="error" id="error" hidden></p>
+
+        <article class="result card-inner" id="result" hidden>
+          <p class="result-number" id="resultNumber"></p>
+          <div class="result-text" id="resultText"></div>
+
+          <div class="mini-grid">
+            <div class="mini-card">
+              <h3>Деньги</h3>
+              <p>
+                Как ваше число влияет на денежные потоки, финансовые решения и способность
+                притягивать ресурс.
+              </p>
+            </div>
+            <div class="mini-card">
+              <h3>Отношения</h3>
+              <p>
+                Скрытые сценарии в любви, тип партнёров, эмоциональные потребности.
+              </p>
+            </div>
+            <div class="mini-card">
+              <h3>Хобби и таланты</h3>
+              <p>
+                Где вы раскрываетесь, что даёт энергию и вдохновение.
+              </p>
+            </div>
           </div>
-          <div class="field-wrap">
-            <label for="day">День</label>
-            <select id="day" class="field"></select>
-          </div>
-          <div class="field-wrap">
-            <label for="year">Год</label>
-            <select id="year" class="field"></select>
-          </div>
-        </div>
-        <p class="hint">Узнай своё число судьбы — глубокий персональный текст</p>
-        <button id="calculate" class="btn btn-gold" type="button">Получить расшифровку</button>
-        <p id="error" class="error" hidden></p>
-        <article id="result" class="result" hidden></article>
-      </section>
 
-      <section class="panel reveal" style="padding: 26px;">
-        <h2 class="section-title">Обо мне</h2>
-        <p class="section-subtitle">Я Дарья Погосян, практикующий нумеролог и психолог. Более 8 лет сопровождаю людей в периоды изменений: от личных кризисов до вопросов отношений, самоценности и профессионального выбора.</p>
-        <p class="section-subtitle">В работе опираюсь на бережный диалог, структурный анализ даты рождения и психологические инструменты, которые помогают не только понять «почему так», но и выбрать конкретные шаги «что делать дальше».</p>
-      </section>
-
-      <section class="reveal">
-        <h2 class="section-title">С чем я могу помочь</h2>
-        <div class="cards cols-3">
-          <article class="card"><div class="icon">✦</div><h3>Тревожность и перегруз</h3><p>Снимаем внутреннее напряжение и возвращаем состояние опоры.</p></article>
-          <article class="card"><div class="icon">✦</div><h3>Кризисы в отношениях</h3><p>Разбираем повторяющиеся сценарии и восстанавливаем честный контакт.</p></article>
-          <article class="card"><div class="icon">✦</div><h3>Потеря себя</h3><p>Помогаю снова услышать себя и выстроить личные границы без чувства вины.</p></article>
-        </div>
-      </section>
-
-      <section class="reveal">
-        <h2 class="section-title">Как проходит консультация</h2>
-        <div class="cards cols-2">
-          <article class="card"><h3>1. Мягкая диагностика</h3><p>Сначала определяем ваш запрос и эмоциональную точку, в которой вы сейчас находитесь.</p></article>
-          <article class="card"><h3>2. Анализ даты рождения</h3><p>Смотрим ключевые задачи, сильные стороны и узлы, которые удерживают вас в напряжении.</p></article>
-          <article class="card"><h3>3. Практические шаги</h3><p>Получаете ясный план действий на ближайший период без перегруза и жестких схем.</p></article>
-          <article class="card"><h3>4. Поддержка после встречи</h3><p>Вы уходите с чувством ясности, облегчения и пониманием, куда двигаться дальше.</p></article>
-        </div>
-      </section>
-
-      <section class="reveal">
-        <h2 class="section-title">Что вы получите</h2>
-        <div class="cards cols-3">
-          <article class="card"><p>Глубокое понимание своего числа судьбы и внутренних опор.</p></article>
-          <article class="card"><p>Персональные рекомендации по отношениям, работе и состоянию.</p></article>
-          <article class="card"><p>Пошаговые ориентиры, как выйти из тревожного состояния в устойчивость.</p></article>
-        </div>
-      </section>
-
-      <section class="reveal">
-        <h2 class="section-title">Отзывы</h2>
-        <div class="cards cols-2">
-          <article class="card"><p>«После консультации впервые за долгое время почувствовала спокойствие и ясность. Всё было очень бережно и точно.»</p><strong>— Елена, 34</strong></article>
-          <article class="card"><p>«Расшифровка удивила глубиной. Поняла, почему повторяются одни и те же ситуации, и как выйти из них.»</p><strong>— Марина, 29</strong></article>
-        </div>
-      </section>
-
-      <section class="final panel reveal">
-        <h2 class="section-title">Если чувствуете, что запутались — не оставайтесь с этим в одиночку</h2>
-        <p class="section-subtitle">Напишите мне в Telegram и получите спокойный, профессиональный разбор вашей ситуации.</p>
-        <a class="btn btn-gold" href="https://t.me/" target="_blank" rel="noopener noreferrer">Записаться на консультацию</a>
+          <a class="btn btn-gold telegram-btn" href="https://t.me/darya_pogosyan" target="_blank" rel="noreferrer">
+            Получить глубокий разбор в Telegram
+          </a>
+        </article>
       </section>
     </main>
-
-    <footer>© Дарья Погосян • Нумерология и психологическая поддержка</footer>
 
     <script>
       const monthSelect = document.getElementById('month');
       const daySelect = document.getElementById('day');
       const yearSelect = document.getElementById('year');
-      const resultEl = document.getElementById('result');
-      const errorEl = document.getElementById('error');
-      const button = document.getElementById('calculate');
+      const calculateBtn = document.getElementById('calculate');
+      const result = document.getElementById('result');
+      const resultNumber = document.getElementById('resultNumber');
+      const resultText = document.getElementById('resultText');
+      const error = document.getElementById('error');
 
-      const months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+      const months = [
+        'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+        'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'
+      ];
 
-      const lifePathTexts = {
-        1: [
-          'Единица — путь лидера и внутренней смелости. Вы рождены начинать новое и задавать направление там, где другие сомневаются.',
-          'Ваши сильные стороны — инициативность, самостоятельность, умение принимать решения в условиях неопределённости. Вы можете быть опорой для себя и для команды, когда важно двигаться вперёд.',
-          'Трудности часто проявляются в виде излишнего контроля, раздражения к медленным людям и страха показаться слабой. В такие периоды важно помнить: мягкость не отменяет силу, а делает её зрелой.',
-          'В отношениях вам нужен партнёр, который уважает ваше пространство и поддерживает амбиции. Реализация приходит через проекты, где вы создаёте собственные правила, а рекомендация — регулярно замедляться, чтобы слышать сердце. Вы уже на своём пути: ваша решительность способна стать светом и для вас, и для других.'
-        ],
-        2: [
-          'Двойка — путь тонкого чувствования, дипломатии и внутренней гармонии. Вы умеете замечать нюансы, которые скрыты от большинства людей.',
-          'Ваши сильные стороны — эмпатия, тактичность, способность примирять и находить общее даже в конфликтных ситуациях. Вы создаёте атмосферу, в которой людям становится безопасно.',
-          'Сложности связаны с ранимостью, склонностью сомневаться в себе и откладывать важные решения из страха ошибиться. Для вас особенно важно укреплять личные границы и доверять своему голосу.',
-          'В любви вы раскрываетесь рядом с уважительным и эмоционально зрелым человеком. В профессии особенно успешны там, где нужны коммуникация, поддержка и точность. Рекомендация: ежедневно выбирайте хотя бы одно действие в пользу себя — так вы перестаёте растворяться и начинаете сиять.'
-        ],
-        3: [
-          'Тройка — путь самовыражения, вдохновения и творческой силы. Вы приходите в мир, чтобы оживлять пространство словом, идеей и настроением.',
-          'Ваши сильные стороны — харизма, лёгкость в общении, развитое воображение и талант вдохновлять людей. Вы можете быть голосом надежды даже в непростые периоды.',
-          'Трудности проявляются как расфокус, незавершённость дел и эмоциональные качели. Иногда вы прячете уязвимость за шуткой, хотя именно искренность делает ваш дар по-настоящему сильным.',
-          'В отношениях для вас важны тепло, юмор и живой диалог. Реализация приходит в сферах, где можно говорить, писать, обучать, создавать. Рекомендация: выберите один главный вектор на 90 дней и идите по нему — ваша энергия при концентрации творит чудеса.'
-        ],
-        4: [
-          'Четвёрка — путь структуры, надёжности и зрелого труда. Вы умеете превращать хаос в систему и доводить начатое до результата.',
-          'Ваши сильные стороны — дисциплина, терпение, ответственность и практичность. На вас можно опереться, когда нужно не просто мечтать, а строить прочный фундамент.',
-          'Сложности возникают, когда вы слишком ужесточаете требования к себе и окружающим. Перегруз и внутреннее напряжение появляются там, где нет места отдыху и гибкости.',
-          'В отношениях вам необходимы стабильность, честность и предсказуемость. В реализации вы раскрываетесь в управлении, аналитике, системной работе. Рекомендация: добавляйте в расписание пространство для радости — именно баланс порядка и живости открывает новый уровень силы.'
-        ],
-        5: [
-          'Пятёрка — путь свободы, перемен и расширения горизонтов. Вы несёте энергию движения и обновления.',
-          'Ваши сильные стороны — адаптивность, смелость к новому, быстрая обучаемость и интерес к жизни. Вы умеете находить возможности там, где другие видят ограничения.',
-          'Трудности проявляются в импульсивности, недоведённых делах и утомлении от собственного темпа. Иногда за внешней активностью скрывается страх остановиться и встретиться с глубинными чувствами.',
-          'В отношениях вам важны честность, живой интерес и пространство для личной свободы. Реализация часто связана с коммуникацией, путешествиями, продажами, медиа. Рекомендация: закрепляйте успех через простые ритуалы дисциплины — они не ограничивают вас, а усиливают ваш полёт.'
-        ],
-        6: [
-          'Шестёрка — путь любви, ответственности и создания гармоничного пространства. Вы умеете заботиться так, что рядом с вами людям становится теплее.',
-          'Ваши сильные стороны — преданность, чувство красоты, умение поддерживать и исцелять отношениями. Вы естественно становитесь центром семьи или команды.',
-          'Сложности возникают, когда забота превращается в контроль, а помощь — в самоотречение. Важно помнить: истинная любовь начинается с уважения к себе.',
-          'В партнёрстве вам нужны взаимность, нежность и зрелые договорённости. Реализация особенно успешна в помогающих и эстетических направлениях: психология, обучение, сервис, творчество. Рекомендация: выбирайте не спасательство, а сотрудничество — так ваша энергия приносит радость, а не усталость.'
-        ],
-        7: [
-          'Семёрка — путь глубины, смысла и внутреннего поиска истины. Вы мыслите тонко и видите скрытые взаимосвязи.',
-          'Ваши сильные стороны — аналитический ум, интуиция, наблюдательность и способность идти в суть. Вам важно не поверхностное знание, а подлинное понимание.',
-          'Трудности проявляются в закрытости, критичности и переизбытке мыслей. Когда вы уходите в изоляцию слишком надолго, может усиливаться тревога и ощущение отдалённости от мира.',
-          'В отношениях вам нужна интеллектуальная и духовная близость, уважение к личному пространству. Реализация приходит через исследование, обучение, консультирование, авторские методики. Рекомендация: делитесь своими открытиями с людьми — ваш опыт может стать для многих путеводной нитью.'
-        ],
-        8: [
-          'Восьмёрка — путь силы, управления и материального мастерства. Вы умеете мыслить масштабно и вести к результату.',
-          'Ваши сильные стороны — стратегичность, выдержка, воля и способность брать ответственность за большие процессы. У вас врождённое чувство эффективности и ресурса.',
-          'Сложности приходят через гиперконтроль, жёсткость к себе и страх потери влияния. Важно развивать не только внешнюю силу, но и эмоциональную гибкость.',
-          'В отношениях вам подходят союз и партнёрство равных, где есть уважение и поддержка амбиций. Реализация ярко проявляется в бизнесе, управлении, финансах, продюсировании. Рекомендация: соединяйте успех с человечностью — так вы становитесь не просто сильной, а по-настоящему вдохновляющей фигурой.'
-        ],
-        9: [
-          'Девятка — путь мудрости, завершения циклов и служения большему. Вы чувствуете глубину человеческих историй и умеете видеть картину целиком.',
-          'Ваши сильные стороны — сострадание, масштабное мышление, творческая и гуманитарная направленность. Вы можете вдохновлять людей на внутренние перемены.',
-          'Трудности связаны с эмоциональной перегрузкой, идеализмом и сложностью отпускать прошлое. Иногда вы несёте чужие боли слишком близко к сердцу.',
-          'В отношениях вам нужна духовная близость, уважение ценностей и зрелость. В реализации вы сильны там, где есть польза людям: образование, психология, искусство, социальные проекты. Рекомендация: учитесь завершать и отпускать — освобождая пространство, вы входите в новый этап с ещё большей силой.'
-        ],
-        11: [
-          '11 — мастер-число интуиции и вдохновения. Вы словно проводник тонких смыслов: чувствуете наперёд, улавливаете настроение пространства, видите суть за словами.',
-          'Ваши сильные стороны — духовная чувствительность, мощная интуиция, способность вдохновлять одним присутствием. Вы можете зажигать в людях веру в себя.',
-          'Трудности проявляются в тревожности, перепадах энергии и внутреннем напряжении между идеалом и реальностью. Вам важно бережно обращаться со своей нервной системой и не жить в постоянной спешке.',
-          'В отношениях для вас критична эмоциональная честность и тонкая настройка друг на друга. Реализация приходит через наставничество, творчество, психологию, публичные смыслы. Рекомендация: заземляйте вдохновение конкретными шагами — именно так ваш дар становится ощутимой силой в мире.'
-        ],
-        22: [
-          '22 — мастер-число архитектора реальности. Вы умеете превращать большие идеи в работающие системы и создавать проекты с долгим влиянием.',
-          'Ваши сильные стороны — масштаб, практический ум, лидерство и способность держать большие нагрузки. Вы чувствуете, как собрать людей, ресурсы и стратегию в единое целое.',
-          'Трудности возникают через внутреннее давление, страх ошибки и сверхответственность. Иногда вы забываете о себе, пытаясь соответствовать слишком высокой планке.',
-          'В отношениях важны уважение к вашему делу, надёжность и общие цели. В реализации 22 раскрывается в предпринимательстве, управлении, системных изменениях. Рекомендация: стройте великое маленькими шагами и сохраняйте контакт с телом — так ваш путь будет не только успешным, но и устойчивым.'
-        ],
-        33: [
-          '33 — мастер-число любви, исцеления и служения. Ваша энергия несёт принятие, сострадание и редкую способность поддерживать людей в переломные моменты.',
-          'Ваши сильные стороны — сердечность, мудрость, эмпатия и талант быть наставником без давления. Вы можете менять судьбы через слово, пример и присутствие.',
-          'Трудности связаны с выгоранием, если вы отдаёте больше, чем успеваете восстанавливать. Также возможна склонность брать на себя чужую ответственность.',
-          'В отношениях вам нужен баланс: не жертвенность, а взаимная забота и зрелость. Реализация приходит в обучении, терапии, социальной и творческой деятельности. Рекомендация: берегите свои границы и цените свой труд — когда вы в ресурсе, ваша любовь становится по-настоящему преобразующей силой.'
-        ]
+      const interpretations = {
+        1: {
+          title: '1 — Лидер пути',
+          text: [
+            'Ваше число судьбы говорит о врождённой силе, стремлении к самостоятельности и желании создавать путь там, где его ещё нет. Вы ощущаете ответственность за свою жизнь и никогда не перекладываете её на других. Мир регулярно ставит перед вами вызовы, чтобы пробудить лидера внутри.',
+            'Ваша энергия направлена на развитие независимости, способности видеть возможности раньше других и действовать первым. Но рядом с этим — страх оказаться уязвимым и необходимость всё держать под контролем.',
+            'Ваш рост начинается там, где вы позволяете себе принимать помощь. Стоит только отпустить давление — и жизнь начнёт открывать двери, которые раньше казались закрытыми.',
+            'Вы рождены вести, вдохновлять, показывать пример. Ваш потенциал раскрывается, когда вы выбираете свою миссию, а не боретесь с обстоятельствами.'
+          ]
+        },
+        2: {
+          title: '2 — Создатель гармонии',
+          text: [
+            'Число судьбы 2 приносит тонкую чувствительность, интуицию, умение создавать мир и соединять людей. Вы чувствуете вибрации пространства, эмоции других, скрытые мотивы. Ваша миссия — быть балансом там, где есть напряжение.',
+            'Но ваша мягкость — это сила, а не слабость. Иногда вы слишком много отдаёте и теряете себя. Мир учит вас держать границы, говорить “нет” и выбирать себя.',
+            'Ваш путь — партнёрства, глубокие отношения, поддержка, работа с эмоциями.',
+            'Вы удивительным образом влияете на людей: успокаиваете, вдохновляете, помогаете увидеть правду.'
+          ]
+        },
+        3: {
+          title: '3 — Создатель вдохновения',
+          text: [
+            'Энергия тройки — яркость, творчество, лёгкость, общительность. Вы умеете видеть красоту в мелочах и превращать идеи в живые эмоции. Вас тянет к людям, к сцене, к самовыражению.',
+            'Но иногда внутри живёт ранимая часть, которая боится быть непринятой.',
+            'Ваш путь — раскрывать свои идеи честно и смело. Не играть роль, а выражать себя настоящего.',
+            'Когда вы это делаете, вы становитесь магнитом для возможностей и людей.'
+          ]
+        },
+        4: {
+          title: '4 — Архитектор судьбы',
+          text: [
+            'Число 4 — энергия структуры, стабильности, мастерства. Вы умеете создавать порядок из хаоса и доводить до конца то, что начали. На вас можно положиться.',
+            'Но иногда вы слишком жёстко держитесь за привычное и боитесь перемен.',
+            'Ваш рост — в гибкости. Когда вы учитесь отпускать контроль, ваша сила становится вдвойне мощнее.',
+            'Вы пришли строить — проекты, семью, карьеру, устойчивые системы.'
+          ]
+        },
+        5: {
+          title: '5 — Энергия свободы и перемен',
+          text: [
+            'Жизненный путь 5 наполнен движением, опытом, сменой ролей и расширением горизонтов. Вы пришли в этот мир, чтобы попробовать многое, путешествовать, изучать людей и мир, исследовать границы возможного.',
+            'Но тревога может появляться, когда вы слишком ограничены.',
+            'Ваш путь — обрести внутреннюю опору, оставаясь свободным.',
+            'Когда вы направляете энергию в одно направление, вы делаете невозможное возможным.'
+          ]
+        },
+        6: {
+          title: '6 — Сердце и ответственность',
+          text: [
+            'Шестёрка — энергия дома, заботы, любви, гармонии. Вы чувствуете людей глубже, чем они сами. Вы умеете создать уют не только вокруг, но и внутри человека.',
+            'Но вы часто берёте на себя слишком много.',
+            'Ваш путь — научиться помогать, не жертвуя собой.',
+            'Когда вы находите баланс, ваша энергия становится исцеляющей, а жизнь — спокойной и наполненной.'
+          ]
+        },
+        7: {
+          title: '7 — Искатель истины',
+          text: [
+            'Вы — человек глубины. Вас притягивает смысл, духовность, внутренний мир. Вы замечаете то, что другие пропускают.',
+            'Число 7 приносит аналитический ум, интуицию и тягу к саморазвитию.',
+            'Но иногда вы чувствуете одиночество, будто никто не понимает ваших мыслей.',
+            'Ваш путь — соединить знание и интуицию, принять свою необычность. Вы способны быть проводником для других — тем, кто ищет ответы.'
+          ]
+        },
+        8: {
+          title: '8 — Реализация и сила',
+          text: [
+            'Восьмёрка — энергия ресурса, лидерства, результата. Вы пришли в этот мир, чтобы создавать масштаб. Внутри вас есть умение управлять, влиять, строить, добиваться.',
+            'Ваши уроки связаны с властью, деньгами, ответственностью.',
+            'Когда вы используете силу мудро — успех приходит легко.',
+            'Ваш путь — стать примером зрелого лидерства.'
+          ]
+        },
+        9: {
+          title: '9 — Миссия души',
+          text: [
+            'Вы несёте энергию сострадания, мудрости и желания помогать. Девятка — число завершения и исцеления.',
+            'Вы чувствуете боль других, иногда даже сильнее, чем свою.',
+            'Ваш путь — помогать, сохраняя себя.',
+            'Когда вы ставите границы, ваша интуиция усиливается, а помощь становится чище и сильнее.'
+          ]
+        },
+        11: {
+          title: '11 — Пробуждение',
+          text: [
+            'Мастер-число 11 — сверхчувствительность, интуиция, духовное зрение. Вы видите знаки, чувствуете людей, ощущаете тонкие процессы.',
+            'Ваш урок — научиться управлять своим светом и не путать интуицию с тревогой.',
+            'Вы рождены вдохновлять.'
+          ]
+        },
+        22: {
+          title: '22 — Мастер-строитель',
+          text: [
+            'Это число больших проектов и глобальной реализации.',
+            'Вы ощущаете, что можете больше — и это правда.',
+            'Ваш путь — не бояться масштаба.',
+            'Когда вы выбираете своё направление, мир начинает помогать вам.'
+          ]
+        },
+        33: {
+          title: '33 — Мастер-сострадание',
+          text: [
+            'Энергия безусловной любви, поддержки, исцеления.',
+            'Ваш дар — чувствовать и помогать так, как не умеют другие.',
+            'Ваш урок — забота о себе.',
+            'Когда вы не выгораете — вы способны творить чудеса.'
+          ]
+        }
       };
 
-      function fillSelect(select, placeholder, values) {
-        const initial = document.createElement('option');
-        initial.value = '';
-        initial.textContent = placeholder;
-        select.append(initial);
-
-        values.forEach((item) => {
-          const option = document.createElement('option');
-          option.value = item.value;
-          option.textContent = item.label;
-          select.append(option);
-        });
+      function fillSelect(select, placeholder, options) {
+        select.innerHTML = `<option value="">${placeholder}</option>` + options
+          .map((option) => `<option value="${option.value}">${option.label}</option>`)
+          .join('');
       }
 
-      function initSelects() {
-        fillSelect(monthSelect, 'Выберите месяц', months.map((m, i) => ({ value: i + 1, label: m })));
-        fillSelect(daySelect, 'Выберите день', Array.from({ length: 31 }, (_, i) => ({ value: i + 1, label: i + 1 })));
+      function initForm() {
+        fillSelect(
+          monthSelect,
+          'Выберите месяц',
+          months.map((month, index) => ({ value: index + 1, label: month }))
+        );
+        fillSelect(
+          daySelect,
+          'Выберите день',
+          Array.from({ length: 31 }, (_, index) => ({ value: index + 1, label: index + 1 }))
+        );
+
         const currentYear = new Date().getFullYear();
-        fillSelect(yearSelect, 'Выберите год', Array.from({ length: currentYear - 1899 }, (_, i) => {
-          const year = currentYear - i;
-          return { value: year, label: year };
-        }));
+        fillSelect(
+          yearSelect,
+          'Выберите год',
+          Array.from({ length: currentYear - 1899 }, (_, index) => {
+            const year = currentYear - index;
+            return { value: year, label: year };
+          })
+        );
       }
 
-      function sumDigits(input) {
-        return String(input).split('').reduce((sum, digit) => sum + Number(digit), 0);
+      function sumDigits(value) {
+        return String(value)
+          .split('')
+          .reduce((sum, digit) => sum + Number(digit), 0);
       }
 
       function calculateLifePath(day, month, year) {
@@ -469,76 +251,46 @@
       }
 
       function renderResult(number) {
-        const paragraphs = lifePathTexts[number];
-        if (!paragraphs) return;
+        const data = interpretations[number];
+        if (!data) return;
 
-        resultEl.innerHTML = `<h3>Ваше число судьбы: ${number}</h3>${paragraphs.map((text) => `<p>${text}</p>`).join('')}`;
-        resultEl.hidden = false;
-        requestAnimationFrame(() => resultEl.classList.add('visible'));
-        resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultNumber.textContent = `Ваше число судьбы: ${data.title}`;
+        resultText.innerHTML = data.text.map((paragraph) => `<p>${paragraph}</p>`).join('');
+        result.hidden = false;
+        requestAnimationFrame(() => result.classList.add('visible'));
       }
 
-      function createFloatingNumbers() {
-        const layer = document.getElementById('floatingNumbers');
-        const chars = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '11', '22'];
-        for (let i = 0; i < 24; i += 1) {
-          const item = document.createElement('span');
-          item.textContent = chars[Math.floor(Math.random() * chars.length)];
-          item.style.left = `${Math.random() * 100}%`;
-          item.style.fontSize = `${20 + Math.random() * 44}px`;
-          item.style.animationDuration = `${16 + Math.random() * 16}s`;
-          item.style.animationDelay = `${Math.random() * 8}s`;
-          layer.append(item);
-        }
-      }
-
-      function initReveal() {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.15 });
-
-        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-      }
-
-      button.addEventListener('click', () => {
+      calculateBtn.addEventListener('click', () => {
         const day = Number(daySelect.value);
         const month = Number(monthSelect.value);
         const year = Number(yearSelect.value);
-        const now = new Date();
 
-        errorEl.hidden = true;
-        resultEl.hidden = true;
-        resultEl.classList.remove('visible');
+        error.hidden = true;
+        result.hidden = true;
+        result.classList.remove('visible');
 
         if (!day || !month || !year) {
-          errorEl.textContent = 'Пожалуйста, выберите месяц, день и год рождения.';
-          errorEl.hidden = false;
+          error.textContent = 'Пожалуйста, выберите месяц, день и год.';
+          error.hidden = false;
           return;
         }
 
         if (!isValidDate(day, month, year)) {
-          errorEl.textContent = 'Дата некорректна. Проверьте выбранные значения.';
-          errorEl.hidden = false;
+          error.textContent = 'Проверьте корректность выбранной даты.';
+          error.hidden = false;
           return;
         }
 
-        if (new Date(year, month - 1, day) > now) {
-          errorEl.textContent = 'Дата рождения не может быть в будущем.';
-          errorEl.hidden = false;
+        if (new Date(year, month - 1, day) > new Date()) {
+          error.textContent = 'Дата рождения не может быть в будущем.';
+          error.hidden = false;
           return;
         }
 
         renderResult(calculateLifePath(day, month, year));
       });
 
-      initSelects();
-      createFloatingNumbers();
-      initReveal();
+      initForm();
     </script>
   </body>
 </html>
