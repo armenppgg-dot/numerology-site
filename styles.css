@@ -105,7 +105,8 @@ h2 { font-size: clamp(1.5rem, 3.1vw, 2.2rem); }
 }
 
 .about__photo { width: 100%; height: 100%; object-fit: cover; border-radius: 14px; }
-.about__content p { margin: 0; line-height: 1.6; }
+.about__content p { margin: 0 0 12px; line-height: 1.6; }
+.about__content p:last-child { margin-bottom: 0; }
 
 .grid {
   display: grid;
@@ -147,9 +148,57 @@ select {
   line-height: 1.7;
 }
 
+.cta-card {
+  text-align: center;
+}
+
+.cta-card__text {
+  margin: 0 0 18px;
+  line-height: 1.6;
+}
+
+.telegram-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: min(100%, 620px);
+  padding: 18px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  font-size: clamp(1rem, 2.3vw, 1.2rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, #3ca8ff, #1b7dff 48%, #2f64ff);
+  box-shadow: 0 16px 30px rgba(23, 64, 172, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.telegram-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 20px 34px rgba(23, 64, 172, 0.42);
+}
+
+.telegram-btn__icon {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+}
+
+.telegram-btn__icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
 @media (max-width: 768px) {
   .container { padding-top: 24px; }
   .about { grid-template-columns: 1fr; }
   .calculator__controls { grid-template-columns: 1fr; }
   .hero { padding: 36px 8px; }
+  .telegram-btn {
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 20px;
+  }
 }
