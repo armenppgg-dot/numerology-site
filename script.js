@@ -101,7 +101,32 @@ calculateBtn.addEventListener('click', () => {
   resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
 });
 
+
+function initScrollReveal() {
+  const revealBlocks = document.querySelectorAll('.reveal-on-scroll');
+  if (!revealBlocks.length) {
+    return;
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    revealBlocks.forEach((block) => block.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.18 });
+
+  revealBlocks.forEach((block) => observer.observe(block));
+}
+
 initSelectors();
+initScrollReveal();
 
 if (telegramLink) {
   telegramLink.href = `https://t.me/${TELEGRAM_USERNAME}`;

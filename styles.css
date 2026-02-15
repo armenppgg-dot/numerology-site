@@ -148,6 +148,52 @@ select {
   line-height: 1.7;
 }
 
+.result__extra {
+  margin-top: 24px;
+}
+
+.result__extra h3,
+.cta-card h3 {
+  margin: 0 0 12px;
+  font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+}
+
+.info-list {
+  margin: 0 0 14px;
+  padding-left: 20px;
+  line-height: 1.65;
+}
+
+.info-list li {
+  margin-bottom: 8px;
+}
+
+.info-note,
+.cta-card__bonus {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.cta-compare {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.cta-card__bonus {
+  margin-top: 16px;
+}
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .cta-card {
   text-align: center;
 }
