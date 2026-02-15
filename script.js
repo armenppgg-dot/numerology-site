@@ -6,6 +6,9 @@ const errorEl = document.getElementById('error');
 const resultSection = document.getElementById('result');
 const resultTitle = document.getElementById('result-title');
 const resultContent = document.getElementById('result-content');
+const telegramLink = document.getElementById('telegram-link');
+
+const TELEGRAM_USERNAME = 'daryapogosyan';
 
 const monthNames = ['Месяц', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
@@ -99,3 +102,7 @@ calculateBtn.addEventListener('click', () => {
 });
 
 initSelectors();
+
+if (telegramLink) {
+  telegramLink.href = `https://t.me/${TELEGRAM_USERNAME}`;
+}
