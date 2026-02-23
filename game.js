@@ -17,9 +17,9 @@
   const restartBtn = document.getElementById('restartBtn');
 
   const DIFFICULTIES = {
-    easy: { fishCount: 6, spawnRate: 1.2, speed: 0.8, time: 70, missPenalty: 0 },
-    normal: { fishCount: 8, spawnRate: 1.8, speed: 1, time: 60, missPenalty: 2 },
-    hard: { fishCount: 11, spawnRate: 2.6, speed: 1.25, time: 50, missPenalty: 4 }
+    easy: { fishCount: 6, spawnRate: 1.2, speed: 0.8, time: 180, missPenalty: 0 },
+    normal: { fishCount: 8, spawnRate: 1.8, speed: 1, time: 250, missPenalty: 2 },
+    hard: { fishCount: 11, spawnRate: 2.6, speed: 1.25, time: 150,missPenalty: 4 }
   };
 
   const FISH_TYPES = {
