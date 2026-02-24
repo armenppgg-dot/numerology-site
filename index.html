@@ -459,6 +459,7 @@
       player.hitFlash = 0.34;
       beep('square', 180, 0.18, 0.06);
 
+      // Merge-safe: 0 lives must stay terminal (game over), do not coerce back to 1
       if (player.lives <= 0) {
         player.lives = 0;
         running = false;
@@ -1012,6 +1013,7 @@
     });
 
     // PWA install UX (Android/Chromium)
+    // Merge-safe PWA install flow
     window.addEventListener('beforeinstallprompt', (event) => {
       event.preventDefault();
       deferredPrompt = event;
