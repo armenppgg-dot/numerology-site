@@ -4,15 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Котёнок: Полоса испытаний</title>
-  <!-- Single game entry: kitten obstacle course -->
-  <meta name="theme-color" content="#3c66cf" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Котёнок Ниндзя" />
-  <!-- PWA: keep manifest/service-worker links during merges -->
-  <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="icons/icon-192.svg" />
   <style>
     :root {
       --bg-1: #86d8ff;
@@ -160,31 +151,6 @@
       color: #3b1900;
     }
 
-    .install-hint {
-      margin: 12px 0 0;
-      font-size: clamp(12px, 2.6vw, 14px);
-      opacity: 0.92;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      padding: 8px 10px;
-      line-height: 1.35;
-    }
-
-    .install-btn {
-      margin-top: 10px;
-      border: 1px solid rgba(255,255,255,0.35);
-      border-radius: 10px;
-      background: linear-gradient(150deg, #7dffca, #6ac9ff);
-      color: #052a4b;
-      font-weight: 800;
-      padding: 10px 14px;
-      cursor: pointer;
-      display: none;
-    }
-
-    .install-btn.show { display: inline-block; }
-
     .controls {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -252,8 +218,6 @@
           <h1 class="title">Котёнок на полосе испытаний</h1>
           <p class="desc">Беги к финишу через батуты, платформы, маятники и другие испытания. Кнопки снизу: Влево, Вправо, Прыжок, Вниз. На клавиатуре: ← →, Space/↑, ↓.</p>
           <button id="startBtn" class="main-btn" type="button">Старт</button>
-          <button id="installBtn" class="install-btn" type="button">Установить приложение</button>
-          <p class="install-hint">Можно установить на телефон: <strong>Добавить на главный экран</strong>.<br>iPhone: Поделиться → На экран «Домой».</p>
         </div>
       </div>
 
@@ -285,7 +249,6 @@
     const startOverlay = document.getElementById('startOverlay');
     const winOverlay = document.getElementById('winOverlay');
     const winText = document.getElementById('winText');
-    const installBtn = document.getElementById('installBtn');
 
     const controls = {
       left: false,
@@ -402,7 +365,6 @@
     let lastTime = performance.now();
     let soundEnabled = true;
     let audioCtx;
-    let deferredPrompt = null;
 
     function ensureAudio() {
       if (!audioCtx) {
@@ -459,18 +421,10 @@
       player.lives -= 1;
       player.hitFlash = 0.34;
       beep('square', 180, 0.18, 0.06);
-
-      // Merge-safe: 0 lives must stay terminal (game over), do not coerce back to 1
       if (player.lives <= 0) {
-        player.lives = 0;
-        running = false;
-        winText.textContent = 'Жизни закончились. Попробуй снова!';
-        winOverlay.hidden = false;
-        updateHud();
-        if (reason === 'fall') beep('triangle', 130, 0.16, 0.05);
-        return;
+        player.lives = 1;
+        player.checkpointId = Math.max(0, player.checkpointId - 1);
       }
-
       resetGame(false);
       if (reason === 'fall') beep('triangle', 130, 0.16, 0.05);
     }
@@ -1012,36 +966,6 @@
       soundBtn.textContent = `Звук: ${soundEnabled ? 'вкл' : 'выкл'}`;
       if (soundEnabled) beep('sine', 820, 0.04, 0.03);
     });
-
-    // PWA install UX (Android/Chromium)
-    // Merge-safe PWA install flow
-    window.addEventListener('beforeinstallprompt', (event) => {
-      event.preventDefault();
-      deferredPrompt = event;
-      installBtn.classList.add('show');
-    });
-
-    installBtn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
-      installBtn.classList.remove('show');
-    });
-
-    window.addEventListener('appinstalled', () => {
-      deferredPrompt = null;
-      installBtn.classList.remove('show');
-    });
-
-    // PWA offline support
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch((error) => {
-          console.warn('Service worker registration failed:', error);
-        });
-      });
-    }
 
     setupControls();
     resetGame(true);
