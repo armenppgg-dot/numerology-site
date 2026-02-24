@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Рыбалка</title>
+  <style>
+    :root {
+      --bg: #0e1220;
+      --panel: #151b2e;
+      --panel-soft: rgba(21, 27, 46, 0.88);
+      --line: #2f3c63;
+      --text: #f4f7ff;
+      --accent: #56e3ff;
+      --accent-2: #7dff77;
+      --danger: #ff5b7d;
+      --warning: #ffd66b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 20% 0%, #1c2550 0%, var(--bg) 42%), #0b1020;
+      color: var(--text);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      padding: 16px;
+    }
+
+    .game-shell {
+      width: min(100%, 460px);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.38);
+      position: relative;
+    }
+
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .hud__stats {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sound-toggle {
+      border: 1px solid var(--line);
+      background: #1d2644;
+      color: var(--text);
+      border-radius: 10px;
+      font-size: 13px;
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 1px solid #30406a;
+      background: linear-gradient(#3f4e7d 0%, #252f4f 100%);
+      touch-action: none;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 12px;
+      border-radius: 12px;
+      background: linear-gradient(rgba(8, 11, 20, 0.82), rgba(10, 15, 25, 0.92));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16px;
+      z-index: 2;
+    }
+
+    .overlay[hidden] {
+      display: none;
+    }
+
+    .panel {
+      max-width: 320px;
+    }
+
+    .title {
+      margin: 0 0 10px;
+      font-size: clamp(24px, 5vw, 34px);
+      letter-spacing: 0.5px;
+    }
+
+    .hint {
+      margin: 0 0 18px;
+      color: #dbe5ff;
+      opacity: 0.92;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 20px;
+      color: #061322;
+      background: linear-gradient(135deg, var(--accent), #81efff);
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 26px rgba(86, 227, 255, 0.35);
+      min-width: 170px;
+      font-size: 16px;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .restart-note {
+      margin-top: 10px;
+      color: #d2dcf7;
+      font-size: 13px;
+      opacity: 0.9;
+    }
+
+    .controls {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .control-btn {
+      border: 1px solid #33467a;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      background: #1c2746;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    .control-btn:active { background: #263763; }
+
+    @media (max-width: 430px) {
+      .game-shell { padding: 10px; }
+      .overlay { inset: 10px; }
+      .controls { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="game-shell">
+    <div class="hud">
+      <div class="hud__stats">
+        <span>Очки: <strong id="score">0</strong></span>
+        <span>Жизни: <strong id="lives">3</strong></span>
+      </div>
+      <button class="sound-toggle" id="soundToggle" type="button">Звук: вкл</button>
+    </div>
+
+    <canvas id="game" width="420" height="640" aria-label="Гоночная игра"></canvas>
+
+    <div class="overlay" id="startOverlay">
+      <div class="panel">
+        <h1 class="title">Рыбалка</h1>
+        <p class="hint">Поймай как можно больше рыбы. Управление: ← → на клавиатуре или кнопки снизу на телефоне.</p>
+        <button class="btn" id="startBtn" type="button">Старт</button>
+      </div>
+    </div>
+
+    <div class="overlay" id="gameOverOverlay" hidden>
+      <div class="panel">
+        <h2 class="title" style="font-size: clamp(22px, 5vw, 30px);">Игра окончена</h2>
+        <p class="hint">Финальные очки: <strong id="finalScore">0</strong></p>
+        <button class="btn" id="playAgainBtn" type="button">Играть снова</button>
+        <p class="restart-note">Можно перезапустить также пробелом или тапом по экрану.</p>
+      </div>
+    </div>
+
+    <div class="controls" aria-label="Мобильное управление">
+      <button class="control-btn" id="leftBtn" type="button">←</button>
+      <button class="control-btn" id="rightBtn" type="button">→</button>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('game');
+    const ctx = canvas.getContext('2d');
+
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const finalScoreEl = document.getElementById('finalScore');
+    const startOverlay = document.getElementById('startOverlay');
+    const gameOverOverlay = document.getElementById('gameOverOverlay');
+    const startBtn = document.getElementById('startBtn');
+    const playAgainBtn = document.getElementById('playAgainBtn');
+    const soundToggle = document.getElementById('soundToggle');
+
+    const leftBtn = document.getElementById('leftBtn');
+    const rightBtn = document.getElementById('rightBtn');
+
+    const laneWidth = canvas.width / 3;
+    const roadLineOffsetMax = 44;
+
+    const state = {
+      started: false,
+      gameOver: false,
+      score: 0,
+      lives: 3,
+      speed: 4.2,
+      roadOffset: 0,
+      keys: { left: false, right: false },
+      player: {
+        width: 44,
+        height: 78,
+        lane: 1,
+        x: laneWidth + (laneWidth - 44) / 2,
+        y: canvas.height - 105
+      },
+      enemies: [],
+      flags: [],
+      enemySpawnCooldown: 0,
+      flagSpawnCooldown: 0,
+      touchRestartArmed: false
+    };
+
+    const audio = {
+      enabled: true,
+      ctx: null,
+      engineOsc: null,
+      engineGain: null
+    };
+
+    function ensureAudioContext() {
+      if (!audio.ctx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        audio.ctx = new AudioContext();
+      }
+
+      if (audio.ctx.state === 'suspended') {
+        audio.ctx.resume().catch(() => {});
+      }
+    }
+
+    function tone({ frequency = 440, type = 'sine', duration = 0.12, gain = 0.15, sweepTo = null }) {
+      if (!audio.enabled) return;
+      ensureAudioContext();
+      if (!audio.ctx) return;
+
+      const now = audio.ctx.currentTime;
+      const osc = audio.ctx.createOscillator();
+      const gainNode = audio.ctx.createGain();
+
+      osc.type = type;
+      osc.frequency.setValueAtTime(frequency, now);
+      if (sweepTo !== null) {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(20, sweepTo), now + duration);
+      }
+
+      gainNode.gain.setValueAtTime(0.0001, now);
+      gainNode.gain.exponentialRampToValueAtTime(gain, now + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      osc.connect(gainNode);
+      gainNode.connect(audio.ctx.destination);
+      osc.start(now);
+      osc.stop(now + duration + 0.02);
+    }
+
+    function playStartSound() {
+      tone({ frequency: 520, type: 'triangle', duration: 0.08, gain: 0.1, sweepTo: 700 });
+      setTimeout(() => tone({ frequency: 760, type: 'triangle', duration: 0.1, gain: 0.09, sweepTo: 980 }), 70);
+    }
+
+    function playCollisionSound() {
+      tone({ frequency: 180, type: 'sawtooth', duration: 0.25, gain: 0.16, sweepTo: 55 });
+      setTimeout(() => tone({ frequency: 100, type: 'square', duration: 0.2, gain: 0.08, sweepTo: 60 }), 40);
+    }
+
+    function startEngineSound() {
+      if (!audio.enabled) return;
+      ensureAudioContext();
+      if (!audio.ctx || audio.engineOsc) return;
+
+      audio.engineOsc = audio.ctx.createOscillator();
+      audio.engineGain = audio.ctx.createGain();
+
+      audio.engineOsc.type = 'sawtooth';
+      audio.engineOsc.frequency.value = 84;
+      audio.engineGain.gain.value = 0.014;
+
+      audio.engineOsc.connect(audio.engineGain);
+      audio.engineGain.connect(audio.ctx.destination);
+      audio.engineOsc.start();
+    }
+
+    function stopEngineSound() {
+      if (audio.engineOsc) {
+        audio.engineOsc.stop();
+        audio.engineOsc.disconnect();
+        audio.engineOsc = null;
+      }
+      if (audio.engineGain) {
+        audio.engineGain.disconnect();
+        audio.engineGain = null;
+      }
+    }
+
+    function updateEnginePitch() {
+      if (audio.engineOsc && audio.engineGain && audio.enabled && state.started && !state.gameOver) {
+        const target = 78 + Math.min(state.speed, 8) * 6 + (state.keys.left || state.keys.right ? 3 : 0);
+        audio.engineOsc.frequency.setTargetAtTime(target, audio.ctx.currentTime, 0.08);
+      }
+    }
+
+    function setSoundEnabled(enabled) {
+      audio.enabled = enabled;
+      soundToggle.textContent = enabled ? 'Звук: вкл' : 'Звук: выкл';
+      if (!enabled) {
+        stopEngineSound();
+      } else if (state.started && !state.gameOver) {
+        startEngineSound();
+      }
+    }
+
+    function laneCenterX(lane) {
+      return lane * laneWidth + laneWidth / 2;
+    }
+
+    function resetEntities() {
+      state.enemies = [];
+      state.flags = [];
+      state.enemySpawnCooldown = 0;
+      state.flagSpawnCooldown = 35;
+      state.roadOffset = 0;
+      state.speed = 4.2;
+      state.player.lane = 1;
+      state.player.x = laneCenterX(1) - state.player.width / 2;
+    }
+
+    function startGame() {
+      ensureAudioContext();
+      playStartSound();
+      startOverlay.hidden = true;
+      gameOverOverlay.hidden = true;
+      state.started = true;
+      state.gameOver = false;
+      state.score = 0;
+      state.lives = 3;
+      state.touchRestartArmed = false;
+      resetEntities();
+      updateHud();
+      startEngineSound();
+    }
+
+    function gameOver() {
+      state.gameOver = true;
+      state.touchRestartArmed = true;
+      finalScoreEl.textContent = state.score;
+      gameOverOverlay.hidden = false;
+      stopEngineSound();
+    }
+
+    function restartIfPossible() {
+      if (state.gameOver) {
+        startGame();
+      }
+    }
+
+    function updateHud() {
+      scoreEl.textContent = state.score;
+      livesEl.textContent = state.lives;
+    }
+
+    function createEnemy() {
+      const lane = Math.floor(Math.random() * 3);
+      const width = 40;
+      const height = 76;
+      return {
+        lane,
+        width,
+        height,
+        x: laneCenterX(lane) - width / 2,
+        y: -height - 20,
+        speed: state.speed + 1.2 + Math.random() * 1.6,
+        color: ['#ff7f66', '#ffc23d', '#ff4f9a'][Math.floor(Math.random() * 3)]
+      };
+    }
+
+    function createFlag() {
+      const lane = Math.floor(Math.random() * 3);
+      return {
+        lane,
+        width: 28,
+        height: 52,
+        x: laneCenterX(lane) - 14,
+        y: -70,
+        speed: state.speed + 0.8,
+        color: '#ffffff'
+      };
+    }
+
+    function rectIntersect(a, b) {
+      return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
+    }
+
+    function onHitObstacle() {
+      state.lives -= 1;
+      playCollisionSound();
+      if (state.lives <= 0) {
+        state.lives = 0;
+        updateHud();
+        gameOver();
+      } else {
+        updateHud();
+      }
+    }
+
+    function movePlayer() {
+      if (state.keys.left) state.player.lane = Math.max(0, state.player.lane - 1);
+      if (state.keys.right) state.player.lane = Math.min(2, state.player.lane + 1);
+      state.keys.left = false;
+      state.keys.right = false;
+      state.player.x += (laneCenterX(state.player.lane) - state.player.width / 2 - state.player.x) * 0.28;
+    }
+
+    function updateGame() {
+      if (!state.started || state.gameOver) return;
+
+      state.roadOffset = (state.roadOffset + state.speed) % roadLineOffsetMax;
+      state.speed = Math.min(8, state.speed + 0.0008);
+
+      movePlayer();
+
+      state.enemySpawnCooldown -= 1;
+      if (state.enemySpawnCooldown <= 0) {
+        state.enemies.push(createEnemy());
+        state.enemySpawnCooldown = Math.max(24, 62 - Math.floor(state.score / 12));
+      }
+
+      state.flagSpawnCooldown -= 1;
+      if (state.flagSpawnCooldown <= 0) {
+        state.flags.push(createFlag());
+        state.flagSpawnCooldown = Math.max(44, 96 - Math.floor(state.score / 20));
+      }
+
+      for (let i = state.enemies.length - 1; i >= 0; i--) {
+        const enemy = state.enemies[i];
+        enemy.y += enemy.speed;
+
+        if (rectIntersect(state.player, enemy)) {
+          state.enemies.splice(i, 1);
+          onHitObstacle();
+          if (state.gameOver) return;
+          continue;
+        }
+
+        if (enemy.y > canvas.height + 30) {
+          state.enemies.splice(i, 1);
+          state.score += 10;
+        }
+      }
+
+      for (let i = state.flags.length - 1; i >= 0; i--) {
+        const flag = state.flags[i];
+        flag.y += flag.speed;
+
+        if (rectIntersect(state.player, flag)) {
+          state.flags.splice(i, 1);
+          onHitObstacle();
+          if (state.gameOver) return;
+          continue;
+        }
+
+        if (flag.y > canvas.height + 30) {
+          state.flags.splice(i, 1);
+          state.score += 5;
+        }
+      }
+
+      updateHud();
+      updateEnginePitch();
+    }
+
+    function drawRoad() {
+      ctx.fillStyle = '#2d365d';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#4b5f97';
+      ctx.fillRect(0, 0, 16, canvas.height);
+      ctx.fillRect(canvas.width - 16, 0, 16, canvas.height);
+
+      ctx.strokeStyle = '#8ea3de';
+      ctx.lineWidth = 5;
+      ctx.setLineDash([28, 16]);
+      ctx.lineDashOffset = -state.roadOffset;
+      ctx.beginPath();
+      ctx.moveTo(laneWidth, 0);
+      ctx.lineTo(laneWidth, canvas.height);
+      ctx.moveTo(laneWidth * 2, 0);
+      ctx.lineTo(laneWidth * 2, canvas.height);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    function drawCar(x, y, width, height, color) {
+      ctx.fillStyle = color;
+      ctx.fillRect(x, y, width, height);
+
+      ctx.fillStyle = '#1e2948';
+      ctx.fillRect(x + 5, y + 10, width - 10, height - 20);
+
+      ctx.fillStyle = '#b8d6ff';
+      ctx.fillRect(x + 9, y + 14, width - 18, 18);
+
+      ctx.fillStyle = '#101726';
+      ctx.fillRect(x + 4, y + 6, 6, 13);
+      ctx.fillRect(x + width - 10, y + 6, 6, 13);
+      ctx.fillRect(x + 4, y + height - 19, 6, 13);
+      ctx.fillRect(x + width - 10, y + height - 19, 6, 13);
+    }
+
+    function drawFlag(flag) {
+      const x = flag.x;
+      const y = flag.y;
+      const w = flag.width;
+      const h = flag.height;
+
+      ctx.fillStyle = '#c8cedf';
+      ctx.fillRect(x + w / 2 - 2, y + 6, 4, h - 8);
+
+      ctx.fillStyle = '#ff4d6d';
+      ctx.beginPath();
+      ctx.moveTo(x + w / 2, y + 9);
+      ctx.lineTo(x + w / 2 + 12, y + 17);
+      ctx.lineTo(x + w / 2, y + 25);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    function draw() {
+      drawRoad();
+
+      for (const enemy of state.enemies) {
+        drawCar(enemy.x, enemy.y, enemy.width, enemy.height, enemy.color);
+      }
+
+      for (const flag of state.flags) {
+        drawFlag(flag);
+      }
+
+      drawCar(state.player.x, state.player.y, state.player.width, state.player.height, '#4fffb0');
+
+      if (!state.started) {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.35)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+
+    function loop() {
+      updateGame();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    document.addEventListener('keydown', (event) => {
+      if (event.code === 'ArrowLeft') {
+        event.preventDefault();
+        state.keys.left = true;
+      }
+      if (event.code === 'ArrowRight') {
+        event.preventDefault();
+        state.keys.right = true;
+      }
+      if (event.code === 'Space') {
+        event.preventDefault();
+        restartIfPossible();
+      }
+    });
+
+    function bindHoldButton(button, keyName) {
+      const activate = (event) => {
+        event.preventDefault();
+        state.keys[keyName] = true;
+      };
+      button.addEventListener('touchstart', activate, { passive: false });
+      button.addEventListener('mousedown', activate);
+    }
+
+    bindHoldButton(leftBtn, 'left');
+    bindHoldButton(rightBtn, 'right');
+
+    canvas.addEventListener('pointerdown', () => {
+      if (state.touchRestartArmed && state.gameOver) {
+        restartIfPossible();
+      }
+    });
+
+    startBtn.addEventListener('click', startGame);
+    playAgainBtn.addEventListener('click', startGame);
+
+    soundToggle.addEventListener('click', () => {
+      setSoundEnabled(!audio.enabled);
+      if (audio.enabled) {
+        tone({ frequency: 620, type: 'triangle', duration: 0.06, gain: 0.06, sweepTo: 760 });
+      }
+    });
+
+    updateHud();
+    draw();
+    loop();
+  </script>
+</body>
+</html>

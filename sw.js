@@ -2,6 +2,7 @@ const CACHE_NAME = 'kitten-obstacle-v1';
 const ASSETS = [
   './',
   './index.html',
+  './fishing.html',
   './manifest.webmanifest',
   './sw.js',
   './icons/icon-192.svg',

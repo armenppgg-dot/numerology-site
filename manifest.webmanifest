@@ -1,7 +1,7 @@
 {
   "name": "Котёнок: Полоса испытаний",
   "short_name": "Котёнок Ниндзя",
-  "start_url": "./index.html",
+  "start_url": "./",
   "display": "standalone",
   "theme_color": "#3c66cf",
   "background_color": "#86d8ff",
