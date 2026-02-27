@@ -2,65 +2,59 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Мини-игра «Рыбалка»</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Дарья Погосян — Нумерология</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="game-shell">
-    <header class="hud">
-      <div class="hud-group">
-        <span>Очки: <strong id="score">0</strong></span>
-        <span>Жизни: <strong id="lives">3</strong></span>
-        <span>Время: <strong id="timer">60</strong>с</span>
-      </div>
-      <div class="hud-group">
-        <label for="difficulty">Сложность:</label>
-        <select id="difficulty" aria-label="Выбор сложности">
-          <option value="easy">Лёгкий</option>
-          <option value="normal" selected>Нормальный</option>
-          <option value="hard">Сложный</option>
-        </select>
-        <button id="soundToggle" type="button" class="btn">🔊 Звук: Вкл</button>
-      </div>
-    </header>
+  <header class="hero">
+    <div class="hero__content reveal-on-scroll">
+      <p class="eyebrow">Персональная нумерология</p>
+      <h1>Дарья Погосян</h1>
+      <p class="lead">Практичная расшифровка числа судьбы, чтобы лучше понять сильные стороны, отношения, реализацию и внутренние опоры.</p>
+      <a class="btn" id="telegram-link" href="#" target="_blank" rel="noopener noreferrer">Записаться в Telegram</a>
+    </div>
+    <img class="hero__photo reveal-on-scroll" src="assets/darya.jpg" alt="Дарья Погосян" />
+  </header>
 
-    <section class="stage-wrap">
-      <canvas id="gameCanvas" width="1200" height="700" aria-label="Игра Рыбалка"></canvas>
+  <main>
+    <section class="calculator reveal-on-scroll" aria-labelledby="calc-title">
+      <h2 id="calc-title">Рассчитать число судьбы</h2>
+      <p>Выберите дату рождения и получите персональную расшифровку.</p>
 
-      <div class="overlay" id="startOverlay">
-        <div class="panel">
-          <h1>🎣 Рыбалка</h1>
-          <p>
-            Лови рыбу крючком! На ПК используй <strong>← ↑ ↓ →</strong> или <strong>WASD</strong>.<br />
-            На телефоне — кнопки снизу.
-          </p>
-          <ul>
-            <li>Щука — средние очки и рывки.</li>
-            <li>Пиранья — быстрая, но дешёвая.</li>
-            <li>Акула — редкая и дорогая.</li>
-          </ul>
-          <button id="startBtn" class="btn primary" type="button">Начать игру</button>
-        </div>
+      <div class="controls">
+        <label>
+          Месяц
+          <select id="month" aria-label="Месяц рождения"></select>
+        </label>
+        <label>
+          День
+          <select id="day" aria-label="День рождения"></select>
+        </label>
+        <label>
+          Год
+          <select id="year" aria-label="Год рождения"></select>
+        </label>
       </div>
 
-      <div class="overlay" id="gameOverOverlay" hidden>
-        <div class="panel">
-          <h2>Игра окончена</h2>
-          <p>Ваш счёт: <strong id="finalScore">0</strong></p>
-          <button id="restartBtn" class="btn primary" type="button">Играть снова</button>
-        </div>
-      </div>
+      <button class="btn" id="calculate" type="button">Получить расшифровку</button>
+      <p class="error" id="error" hidden></p>
     </section>
 
-    <section class="mobile-controls" aria-label="Мобильное управление">
-      <button class="btn control" data-action="left" type="button">◀</button>
-      <button class="btn control" data-action="up" type="button">▲</button>
-      <button class="btn control" data-action="down" type="button">▼</button>
-      <button class="btn control" data-action="right" type="button">▶</button>
+    <section class="highlights reveal-on-scroll" aria-label="Ключевые направления">
+      <article><img src="assets/icon-selfesteem.svg" alt="" /><h3>Самооценка</h3></article>
+      <article><img src="assets/icon-relationships.svg" alt="" /><h3>Отношения</h3></article>
+      <article><img src="assets/icon-money.svg" alt="" /><h3>Финансы</h3></article>
+      <article><img src="assets/icon-period.svg" alt="" /><h3>Периоды</h3></article>
+      <article><img src="assets/icon-anxiety.svg" alt="" /><h3>Снижение тревоги</h3></article>
+    </section>
+
+    <section class="result reveal-on-scroll" id="result" hidden aria-live="polite">
+      <h2 id="result-title"></h2>
+      <div id="result-content"></div>
     </section>
   </main>
 
-  <script src="game.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
