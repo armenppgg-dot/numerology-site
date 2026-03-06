@@ -166,5 +166,9 @@ select {
 }
 
 @media (max-width: 560px) {
+  .hero__content { padding: 14px 12px; }
+  .eyebrow { font-size: 12px; letter-spacing: .07em; }
+  h1 { margin: 6px 0 10px; font-size: 30px; line-height: 1.18; }
+  .lead { font-size: 15px; line-height: 1.45; }
   .controls, .highlights { grid-template-columns: 1fr; }
 }
