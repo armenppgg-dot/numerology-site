@@ -94,6 +94,24 @@ h2 { margin-top: 0; }
   display: inline-block;
 }
 
+.hero__content .btn {
+  background: linear-gradient(135deg, #8f7dff, #7f97ff);
+  box-shadow: 0 8px 18px rgba(86, 104, 196, 0.26);
+  transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.hero__content .btn:hover {
+  background: linear-gradient(135deg, #9584ff, #86a0ff);
+  box-shadow: 0 10px 20px rgba(86, 104, 196, 0.3);
+  transform: translateY(-1px);
+}
+
+.hero__content .btn:active {
+  background: linear-gradient(135deg, #8b79fb, #7b93fa);
+  box-shadow: 0 6px 14px rgba(86, 104, 196, 0.24);
+  transform: translateY(0);
+}
+
 main {
   padding-bottom: 42px;
   display: grid;
