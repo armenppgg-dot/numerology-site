@@ -145,16 +145,37 @@ main {
   margin-bottom: 14px;
 }
 
-label { display: grid; gap: 6px; color: var(--muted); font-size: 14px; }
+.calculator label {
+  display: grid;
+  gap: 6px;
+  color: #c4cdf2;
+  font-size: 14px;
+}
 
-select {
+.calculator select {
   width: 100%;
-  background: var(--surface);
-  color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(160deg, rgba(35, 46, 88, 0.9), rgba(26, 35, 69, 0.92));
+  color: #edf1ff;
+  border: 1px solid rgba(180, 194, 255, 0.24);
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px 12px;
   font: inherit;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 6px 12px rgba(6, 9, 24, 0.22);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.calculator select:focus {
+  outline: none;
+  border-color: rgba(182, 204, 255, 0.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 0 0 3px rgba(132, 154, 230, 0.22);
+}
+
+.calculator select:invalid {
+  color: #aeb8e2;
 }
 
 .error { color: var(--danger); margin: 12px 0 0; }
