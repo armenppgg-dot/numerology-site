@@ -128,6 +128,3 @@ function initScrollReveal() {
 initSelectors();
 initScrollReveal();
 
-if (telegramLink) {
-  telegramLink.href = `https://t.me/${TELEGRAM_USERNAME}`;
-}
