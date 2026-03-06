@@ -31,13 +31,40 @@ main {
   gap: 24px;
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
+  position: relative;
+  isolation: isolate;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #0c122c 0%, #121b3f 52%, #171f45 100%);
+  box-shadow: 0 20px 38px rgba(4, 8, 22, 0.38);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(160, 132, 255, 0.16), transparent 42%),
+    radial-gradient(circle at 75% 15%, rgba(96, 155, 255, 0.12), transparent 45%);
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hero__content {
+  padding: 18px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(208, 219, 255, 0.18);
+  background: linear-gradient(150deg, rgba(24, 35, 77, 0.42), rgba(14, 20, 44, 0.22));
+  box-shadow: 0 14px 30px rgba(3, 7, 20, 0.24);
+  backdrop-filter: blur(2px);
 }
 
 .hero__photo {
   width: 100%;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(227, 235, 255, 0.2);
+  box-shadow: 0 16px 32px rgba(5, 9, 23, 0.34);
 }
 
 .eyebrow {
