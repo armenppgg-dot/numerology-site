@@ -201,7 +201,12 @@ main {
 .highlights article > img {
   width: 32px;
   height: 32px;
-  filter: drop-shadow(0 2px 4px rgba(132, 166, 255, 0.24));
+  filter:
+    brightness(1.2)
+    contrast(1.08)
+    saturate(1.05)
+    drop-shadow(0 3px 8px rgba(144, 178, 255, 0.28));
+  opacity: 0.96;
 }
 
 .highlights h3 {
