@@ -184,17 +184,31 @@ main {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
+  padding: 18px;
+  background: linear-gradient(160deg, rgba(24, 31, 64, 0.7), rgba(16, 22, 46, 0.62));
+  border-color: rgba(166, 180, 242, 0.2);
 }
 
 .highlights article {
-  background: var(--surface-soft);
+  background: linear-gradient(165deg, rgba(40, 52, 102, 0.78), rgba(30, 40, 82, 0.72));
+  border: 1px solid rgba(190, 204, 255, 0.16);
   border-radius: 14px;
-  padding: 14px;
+  padding: 13px;
   text-align: center;
+  box-shadow: 0 8px 16px rgba(6, 10, 24, 0.2);
 }
 
-.highlights img { width: 32px; height: 32px; }
-.highlights h3 { margin: 10px 0 0; font-size: 15px; }
+.highlights article > img {
+  width: 32px;
+  height: 32px;
+  filter: drop-shadow(0 2px 4px rgba(132, 166, 255, 0.24));
+}
+
+.highlights h3 {
+  margin: 9px 0 0;
+  font-size: 15px;
+  color: #e5ecff;
+}
 
 .result p { color: #dde4ff; }
 
