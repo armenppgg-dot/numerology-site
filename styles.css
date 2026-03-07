@@ -237,15 +237,26 @@ main {
 }
 
 .result h2 {
-  margin: 0 0 14px;
-  font-size: clamp(24px, 4vw, 30px);
+  margin: 0 0 12px;
+  font-size: clamp(22px, 3.6vw, 27px);
+  line-height: 1.25;
   letter-spacing: 0.01em;
   color: #f0f4ff;
 }
 
 .result #result-content {
   display: grid;
-  gap: 10px;
+  gap: 12px;
+  max-width: 70ch;
+}
+
+.result #result-content p {
+  margin: 0;
+  line-height: 1.72;
+}
+
+.result #result-content p + p {
+  margin-top: 4px;
 }
 
 .reveal-on-scroll {
