@@ -225,6 +225,29 @@ main {
 
 .result p { color: #dde4ff; }
 
+.result {
+  padding: 26px 28px;
+  border-radius: 22px;
+  border: 1px solid rgba(189, 204, 255, 0.26);
+  background:
+    linear-gradient(160deg, rgba(23, 33, 74, 0.9), rgba(14, 21, 50, 0.88));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    0 16px 34px rgba(3, 8, 24, 0.34);
+}
+
+.result h2 {
+  margin: 0 0 14px;
+  font-size: clamp(24px, 4vw, 30px);
+  letter-spacing: 0.01em;
+  color: #f0f4ff;
+}
+
+.result #result-content {
+  display: grid;
+  gap: 10px;
+}
+
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(24px);
