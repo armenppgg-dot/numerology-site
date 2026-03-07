@@ -261,6 +261,57 @@ main {
   margin-top: 4px;
 }
 
+.consultation-benefits {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid rgba(183, 197, 250, 0.2);
+  background: linear-gradient(158deg, rgba(22, 31, 68, 0.78), rgba(15, 22, 49, 0.72));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 14px 28px rgba(4, 8, 23, 0.24);
+}
+
+.consultation-benefits h2 {
+  margin: 0;
+  font-size: clamp(23px, 3.2vw, 28px);
+  line-height: 1.28;
+}
+
+.consultation-benefits > p {
+  margin: 0;
+  max-width: 68ch;
+  color: #d3dcff;
+}
+
+.consultation-benefits__items {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 2px;
+}
+
+.consultation-benefits__items article {
+  padding: 14px 15px;
+  border-radius: 14px;
+  border: 1px solid rgba(189, 203, 255, 0.18);
+  background: linear-gradient(165deg, rgba(38, 50, 96, 0.76), rgba(28, 38, 76, 0.7));
+  box-shadow: 0 8px 16px rgba(5, 9, 24, 0.2);
+}
+
+.consultation-benefits__items h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+  line-height: 1.35;
+  color: #e7eeff;
+}
+
+.consultation-benefits__items p {
+  margin: 0;
+  color: #cad4fa;
+}
+
 .reveal-on-scroll {
   opacity: 0;
   transform: translateY(24px);
@@ -283,4 +334,6 @@ main {
   h1 { margin: 6px 0 10px; font-size: 30px; line-height: 1.18; }
   .lead { font-size: 15px; line-height: 1.45; }
   .controls, .highlights { grid-template-columns: 1fr; }
+  .consultation-benefits { padding: 20px; }
+  .consultation-benefits__items { grid-template-columns: 1fr; }
 }
