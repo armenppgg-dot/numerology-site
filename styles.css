@@ -261,6 +261,11 @@ main {
   margin-top: 4px;
 }
 
+.result__telegram-link {
+  justify-self: start;
+  margin-top: 6px;
+}
+
 .consultation-benefits {
   display: grid;
   gap: 16px;

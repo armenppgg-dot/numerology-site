@@ -8,7 +8,7 @@ const resultTitle = document.getElementById('result-title');
 const resultContent = document.getElementById('result-content');
 const telegramLink = document.getElementById('telegram-link');
 
-const TELEGRAM_USERNAME = 'daryapogosyan';
+const TELEGRAM_BOT_URL = 'https://t.me/pogosyan_numerology_bot';
 
 const monthNames = ['Месяц', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
@@ -95,7 +95,7 @@ calculateBtn.addEventListener('click', () => {
   const paragraphs = buildParagraphs(number);
 
   resultTitle.textContent = `Ваше число судьбы: ${number} (${profiles[number].name})`;
-  resultContent.innerHTML = paragraphs.map((text) => `<p>${text}</p>`).join('');
+  resultContent.innerHTML = `${paragraphs.map((text) => `<p>${text}</p>`).join('')}<a class="btn result__telegram-link" href="${TELEGRAM_BOT_URL}" target="_blank" rel="noopener noreferrer">Продолжить разбор в Telegram</a>`;
 
   resultSection.hidden = false;
   resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -127,4 +127,3 @@ function initScrollReveal() {
 
 initSelectors();
 initScrollReveal();
-
