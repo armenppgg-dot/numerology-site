@@ -13,6 +13,7 @@
       <h1>Дарья Погосян</h1>
       <p class="lead">Глубокая расшифровка числа судьбы, которая помогает лучше понять свои сильные стороны, внутренние ресурсы, особенности отношений и путь реализации. Это возможность увидеть свои природные качества, жизненные задачи и точки опоры, чтобы принимать решения более осознанно и чувствовать больше ясности в своей жизни.</p>
       <a class="btn" id="telegram-link" href="https://t.me/pogosyan_numerology_bot" target="_blank" rel="noopener noreferrer">Открыть Telegram-бот</a>
+      <button class="btn btn--secondary hero__ask-daria" id="ask-daria-open" type="button">Спросить Дарью</button>
     </div>
     <img class="hero__photo reveal-on-scroll" src="assets/darya.jpg" alt="Дарья Погосян" />
   </header>
@@ -201,6 +202,21 @@
       <a href="https://t.me/pogosyan_numerology_bot" target="_blank" rel="noopener noreferrer">Записаться на личный разбор</a>
     </section>
   </main>
+
+  <div class="modal-overlay" id="daria-modal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="daria-modal-title">
+      <button class="modal__close" id="daria-modal-close" type="button" aria-label="Закрыть окно">×</button>
+      <h2 class="modal__title" id="daria-modal-title">Дарья онлайн</h2>
+      <div class="modal__avatar" aria-hidden="true">Аватар Дарьи</div>
+      <p class="modal__text">Здесь будет живой аватар с мимикой</p>
+      <div class="modal__composer">
+        <input class="modal__input" id="daria-question" type="text" placeholder="Введите ваш вопрос..." />
+        <button class="modal__icon-button" type="button" aria-label="Голосовой ввод">🎤</button>
+      </div>
+      <button class="btn modal__action" type="button">Отправить</button>
+      <button class="btn btn--secondary modal__action" type="button">Записаться на консультацию</button>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

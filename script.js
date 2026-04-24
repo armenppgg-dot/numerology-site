@@ -7,6 +7,9 @@ const resultSection = document.getElementById('result');
 const resultTitle = document.getElementById('result-title');
 const resultContent = document.getElementById('result-content');
 const telegramLink = document.getElementById('telegram-link');
+const askDariaOpen = document.getElementById('ask-daria-open');
+const dariaModal = document.getElementById('daria-modal');
+const dariaModalClose = document.getElementById('daria-modal-close');
 
 const TELEGRAM_BOT_URL = 'https://t.me/pogosyan_numerology_bot';
 
@@ -125,5 +128,28 @@ function initScrollReveal() {
   revealBlocks.forEach((block) => observer.observe(block));
 }
 
+function initDariaModal() {
+  if (!askDariaOpen || !dariaModal || !dariaModalClose) {
+    return;
+  }
+
+  const openModal = () => {
+    dariaModal.hidden = false;
+  };
+
+  const closeModal = () => {
+    dariaModal.hidden = true;
+  };
+
+  askDariaOpen.addEventListener('click', openModal);
+  dariaModalClose.addEventListener('click', closeModal);
+  dariaModal.addEventListener('click', (event) => {
+    if (event.target === dariaModal) {
+      closeModal();
+    }
+  });
+}
+
 initSelectors();
 initScrollReveal();
+initDariaModal();
